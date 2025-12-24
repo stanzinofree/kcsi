@@ -24,18 +24,41 @@ Currently implemented:
 - kubectl installed and configured
 - Access to a Kubernetes cluster
 
+### Download Pre-built Binaries
+
+Pre-built binaries are available for multiple platforms in the `bin/` directory after running the build script:
+
+- macOS (Intel): `kcsi-darwin-amd64`
+- macOS (Apple Silicon): `kcsi-darwin-arm64`
+- Linux (x86_64): `kcsi-linux-amd64`
+- Linux (ARM64): `kcsi-linux-arm64`
+- Linux (ARM): `kcsi-linux-arm`
+
 ### Build from source
 
+#### Quick build (current platform)
 ```bash
 git clone <repository-url>
 cd kcsi
 go build -o kcsi
 ```
 
+#### Multi-platform build
+```bash
+# Build for all supported platforms
+./build.sh
+
+# Binaries will be created in the bin/ directory
+```
+
 ### Install
 
 ```bash
-# Move to a directory in your PATH
+# Using pre-built binary (example for Linux ARM64)
+sudo cp bin/kcsi-linux-arm64 /usr/local/bin/kcsi
+sudo chmod +x /usr/local/bin/kcsi
+
+# Or using locally built binary
 sudo mv kcsi /usr/local/bin/
 ```
 
@@ -129,17 +152,27 @@ kcsi/
 └── main.go          # Entry point
 ```
 
+### Building
+
+```bash
+# Quick build for current platform
+go build -o kcsi
+
+# Multi-platform build
+./build.sh
+```
+
 ### Testing
 
 ```bash
-# Build
-go build -o kcsi
-
 # Run
 ./kcsi get pods -n <namespace>
 
 # Test autocompletion (after setting up completion scripts)
 ./kcsi get pods -n <TAB>
+
+# Test specific platform binary
+./bin/kcsi-linux-arm64 --version
 ```
 
 ## Contributing

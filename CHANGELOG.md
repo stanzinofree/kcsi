@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Multi-platform build script (`build.sh`) for creating binaries
+- Support for darwin/amd64, darwin/arm64, linux/amd64, linux/arm64, and linux/arm
+- Build instructions in README for multi-platform compilation
+
 ## [0.1.0] - 2025-12-24
 
 ### Added
