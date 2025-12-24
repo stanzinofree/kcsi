@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-12-24
+
+### Added - Phase 3: Extended Resource Support
+- `kcsi get` commands for all major resource types:
+  - `get services` (aliases: svc, service) with namespace autocompletion
+  - `get deployments` (aliases: deploy, deployment) with namespace autocompletion
+  - `get nodes` (aliases: no, node) with cluster-wide autocompletion
+  - `get namespaces` (aliases: ns, namespace) for listing all namespaces
+  - `get configmaps` (aliases: cm, configmap) with namespace autocompletion
+  - `get secrets` (alias: secret) with namespace autocompletion
+- `kcsi describe` commands for all resource types:
+  - `describe service` with cascading autocompletion
+  - `describe deployment` with cascading autocompletion
+  - `describe node` with node name autocompletion
+  - `describe configmap` with cascading autocompletion
+  - `describe secret` with cascading autocompletion
+- New kubernetes client functions:
+  - `GetServices()` for retrieving service names
+  - `GetDeployments()` for retrieving deployment names
+  - `GetNodes()` for retrieving node names
+  - `GetConfigMaps()` for retrieving configmap names
+  - `GetSecrets()` for retrieving secret names
+- New completion functions:
+  - `ServiceCompletion()` for service name autocompletion
+  - `DeploymentCompletion()` for deployment name autocompletion
+  - `NodeCompletion()` for node name autocompletion
+  - `ConfigMapCompletion()` for configmap name autocompletion
+  - `SecretCompletion()` for secret name autocompletion
+- Comprehensive usage examples in README for all new resource types
+
+### Changed
+- Refactored `cmd/get.go` for better modularity with generic `runKubectlGet()` function
+- Refactored `cmd/describe.go` for better modularity with generic `runKubectlDescribe()` function
+- Updated README with Phase 3 completion status
+- Enhanced roadmap with completed Phase 3 and new Phase 4/5 planning
+- Version bumped to 0.3.0
+
+### Technical Details
+- All resource retrieval uses consistent jsonpath queries for efficiency
+- Aliases implemented using Cobra's Aliases feature
+- Generic command runners reduce code duplication
+- Consistent namespace flag handling across all commands
+
 ## [0.2.0] - 2025-12-24
 
 ### Added - Phase 2: Expanded Commands
@@ -66,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only supports `get pods` command in this POC
 - Requires kubectl to be installed and configured
 
-[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/alessandro/kcsi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/alessandro/kcsi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/alessandro/kcsi/releases/tag/v0.1.0

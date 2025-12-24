@@ -74,3 +74,86 @@ func GetContainers(namespace, podName string) ([]string, error) {
 	containers := strings.Fields(strings.TrimSpace(output))
 	return containers, nil
 }
+
+// GetServices returns a list of services in the specified namespace
+func GetServices(namespace string) ([]string, error) {
+	args := []string{"get", "services", "-o", "jsonpath={.items[*].metadata.name}"}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, "--all-namespaces")
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	services := strings.Fields(strings.TrimSpace(output))
+	return services, nil
+}
+
+// GetDeployments returns a list of deployments in the specified namespace
+func GetDeployments(namespace string) ([]string, error) {
+	args := []string{"get", "deployments", "-o", "jsonpath={.items[*].metadata.name}"}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, "--all-namespaces")
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	deployments := strings.Fields(strings.TrimSpace(output))
+	return deployments, nil
+}
+
+// GetNodes returns a list of nodes in the cluster
+func GetNodes() ([]string, error) {
+	output, err := ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[*].metadata.name}")
+	if err != nil {
+		return nil, err
+	}
+
+	nodes := strings.Fields(strings.TrimSpace(output))
+	return nodes, nil
+}
+
+// GetConfigMaps returns a list of configmaps in the specified namespace
+func GetConfigMaps(namespace string) ([]string, error) {
+	args := []string{"get", "configmaps", "-o", "jsonpath={.items[*].metadata.name}"}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, "--all-namespaces")
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	configmaps := strings.Fields(strings.TrimSpace(output))
+	return configmaps, nil
+}
+
+// GetSecrets returns a list of secrets in the specified namespace
+func GetSecrets(namespace string) ([]string, error) {
+	args := []string{"get", "secrets", "-o", "jsonpath={.items[*].metadata.name}"}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, "--all-namespaces")
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	secrets := strings.Fields(strings.TrimSpace(output))
+	return secrets, nil
+}

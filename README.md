@@ -11,13 +11,31 @@ A kubectl wrapper with intelligent autocompletion for namespaces, pods, and othe
 
 ## Current Status
 
-**Version:** 0.2.0 - Phase 2 Complete
+**Version:** 0.3.0 - Extended Resource Support
 
 Currently implemented:
-- `kcsi get pods -n <namespace>` with namespace autocompletion
-- `kcsi describe pod -n <namespace> <pod>` with cascading autocompletion
-- `kcsi logs -n <namespace> <pod>` with cascading autocompletion and full flags support
+
+**Get Commands:**
+- `kcsi get pods` - List pods with namespace autocompletion
+- `kcsi get services` (alias: `svc`) - List services
+- `kcsi get deployments` (alias: `deploy`) - List deployments
+- `kcsi get namespaces` (alias: `ns`) - List namespaces
+- `kcsi get nodes` (alias: `no`) - List nodes
+- `kcsi get configmaps` (alias: `cm`) - List configmaps
+- `kcsi get secrets` - List secrets
+
+**Describe Commands:**
+- `kcsi describe pod` - Describe a specific pod
+- `kcsi describe service` - Describe a service
+- `kcsi describe deployment` - Describe a deployment
+- `kcsi describe node` - Describe a node
+- `kcsi describe configmap` - Describe a configmap
+- `kcsi describe secret` - Describe a secret
+
+**Other Commands:**
+- `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
 - Container autocompletion for multi-container pods
+- Cascading autocompletion: namespace → resource → container
 
 ## Installation
 
@@ -192,6 +210,53 @@ kubectl logs my-pod -c my-container -n kube-system
 kubectl logs -p my-pod -n kube-system
 ```
 
+### Get other resources
+
+```bash
+# Get services
+kcsi get services -n <TAB>  # Shows namespaces
+kcsi get svc -n default <TAB>  # Shows services in default namespace
+
+# Get deployments
+kcsi get deployments -n <TAB>
+kcsi get deploy -n kube-system
+
+# Get nodes (cluster-wide)
+kcsi get nodes
+kcsi get no  # Short alias
+
+# Get namespaces
+kcsi get namespaces
+kcsi get ns  # Short alias
+
+# Get configmaps and secrets
+kcsi get configmaps -n default
+kcsi get cm -n default  # Short alias
+kcsi get secrets -n kube-system
+```
+
+### Describe resources
+
+```bash
+# Describe service
+kcsi describe service -n <TAB>  # Shows namespaces
+kcsi describe svc -n default <TAB>  # Shows services
+kcsi describe service -n default my-service
+
+# Describe deployment
+kcsi describe deployment -n production <TAB>
+kcsi describe deploy -n production my-app
+
+# Describe node
+kcsi describe node <TAB>  # Shows all nodes
+kcsi describe node worker-1
+
+# Describe configmap or secret
+kcsi describe configmap -n default <TAB>
+kcsi describe cm -n default my-config
+kcsi describe secret -n default my-secret
+```
+
 ## Roadmap
 
 ### Phase 1: Proof of Concept ✅
@@ -207,14 +272,23 @@ kubectl logs -p my-pod -n kube-system
 - [x] Container autocompletion for multi-container pods
 - [x] Full `logs` flags support (-f, --tail, -p, -c)
 
-### Phase 3: Additional Commands (Next)
-- [ ] `exec` command with interactive pod selection
-- [ ] `delete pod` command with confirmation
-- [ ] `get services` command
-- [ ] `get deployments` command
-- [ ] `port-forward` command
+### Phase 3: Extended Resource Support ✅
+- [x] `get services` command with autocompletion
+- [x] `get deployments` command with autocompletion
+- [x] `get nodes` command with autocompletion
+- [x] `get namespaces` command
+- [x] `get configmaps` command with autocompletion
+- [x] `get secrets` command with autocompletion
+- [x] `describe` commands for all resource types
+- [x] Aliases support (svc, deploy, cm, ns, no)
 
-### Phase 4: Enhancements
+### Phase 4: Additional Commands (Next)
+- [ ] `exec` command with interactive pod selection
+- [ ] `delete` commands with confirmation
+- [ ] `port-forward` command
+- [ ] `apply` and `edit` commands
+
+### Phase 5: Enhancements
 - [ ] Cache for faster autocompletion
 - [ ] Default context/namespace configuration
 - [ ] Custom aliases

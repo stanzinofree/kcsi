@@ -15,33 +15,26 @@ var getCmd = &cobra.Command{
 	Long:  `Get Kubernetes resources with smart autocompletion`,
 }
 
-var getPodsCmd = &cobra.Command{
-	Use:   "pods",
-	Short: "Get pods in a namespace",
-	Long:  `Get pods in a specific namespace with autocompletion support`,
-	RunE:  runGetPods,
-}
+// Namespace flags for different get commands
+var (
+	getPodsNamespace        string
+	getServicesNamespace    string
+	getDeploymentsNamespace string
+	getConfigMapsNamespace  string
+	getSecretsNamespace     string
+)
 
-var namespace string
-
-func init() {
-	rootCmd.AddCommand(getCmd)
-	getCmd.AddCommand(getPodsCmd)
-
-	// Add namespace flag with autocompletion
-	getPodsCmd.Flags().StringVarP(&namespace, "namespace", "n", "", "Kubernetes namespace")
-	getPodsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
-}
-
-func runGetPods(cmd *cobra.Command, args []string) error {
-	// Build kubectl command
-	kubectlArgs := []string{"get", "pods"}
+// Generic kubectl get command runner
+func runKubectlGet(resourceType, namespace string, args []string) error {
+	kubectlArgs := []string{"get", resourceType}
 	
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
 	}
 
-	// Execute kubectl
+	// Append any additional args passed
+	kubectlArgs = append(kubectlArgs, args...)
+
 	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
 	kubectlCmd.Stdout = os.Stdout
 	kubectlCmd.Stderr = os.Stderr
@@ -52,4 +45,115 @@ func runGetPods(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+// Pods command
+var getPodsCmd = &cobra.Command{
+	Use:   "pods [pod-name]",
+	Short: "Get pods in a namespace",
+	Long:  `Get pods in a specific namespace with autocompletion support`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("pods", getPodsNamespace, args)
+	},
+	ValidArgsFunction: completion.PodCompletion,
+}
+
+// Namespaces command
+var getNamespacesCmd = &cobra.Command{
+	Use:     "namespaces",
+	Aliases: []string{"ns", "namespace"},
+	Short:   "Get namespaces",
+	Long:    `Get all namespaces in the cluster`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("namespaces", "", args)
+	},
+}
+
+// Services command
+var getServicesCmd = &cobra.Command{
+	Use:     "services [service-name]",
+	Aliases: []string{"svc", "service"},
+	Short:   "Get services in a namespace",
+	Long:    `Get services in a specific namespace with autocompletion support`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("services", getServicesNamespace, args)
+	},
+	ValidArgsFunction: completion.ServiceCompletion,
+}
+
+// Deployments command
+var getDeploymentsCmd = &cobra.Command{
+	Use:     "deployments [deployment-name]",
+	Aliases: []string{"deploy", "deployment"},
+	Short:   "Get deployments in a namespace",
+	Long:    `Get deployments in a specific namespace with autocompletion support`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("deployments", getDeploymentsNamespace, args)
+	},
+	ValidArgsFunction: completion.DeploymentCompletion,
+}
+
+// Nodes command
+var getNodesCmd = &cobra.Command{
+	Use:     "nodes [node-name]",
+	Aliases: []string{"no", "node"},
+	Short:   "Get nodes",
+	Long:    `Get nodes in the cluster`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("nodes", "", args)
+	},
+	ValidArgsFunction: completion.NodeCompletion,
+}
+
+// ConfigMaps command
+var getConfigMapsCmd = &cobra.Command{
+	Use:     "configmaps [configmap-name]",
+	Aliases: []string{"cm", "configmap"},
+	Short:   "Get configmaps in a namespace",
+	Long:    `Get configmaps in a specific namespace with autocompletion support`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("configmaps", getConfigMapsNamespace, args)
+	},
+	ValidArgsFunction: completion.ConfigMapCompletion,
+}
+
+// Secrets command
+var getSecretsCmd = &cobra.Command{
+	Use:     "secrets [secret-name]",
+	Aliases: []string{"secret"},
+	Short:   "Get secrets in a namespace",
+	Long:    `Get secrets in a specific namespace with autocompletion support`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runKubectlGet("secrets", getSecretsNamespace, args)
+	},
+	ValidArgsFunction: completion.SecretCompletion,
+}
+
+func init() {
+	rootCmd.AddCommand(getCmd)
+	
+	// Add all subcommands
+	getCmd.AddCommand(getPodsCmd)
+	getCmd.AddCommand(getNamespacesCmd)
+	getCmd.AddCommand(getServicesCmd)
+	getCmd.AddCommand(getDeploymentsCmd)
+	getCmd.AddCommand(getNodesCmd)
+	getCmd.AddCommand(getConfigMapsCmd)
+	getCmd.AddCommand(getSecretsCmd)
+
+	// Add namespace flags with autocompletion for namespaced resources
+	getPodsCmd.Flags().StringVarP(&getPodsNamespace, "namespace", "n", "", "Kubernetes namespace")
+	getPodsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
+
+	getServicesCmd.Flags().StringVarP(&getServicesNamespace, "namespace", "n", "", "Kubernetes namespace")
+	getServicesCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
+
+	getDeploymentsCmd.Flags().StringVarP(&getDeploymentsNamespace, "namespace", "n", "", "Kubernetes namespace")
+	getDeploymentsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
+
+	getConfigMapsCmd.Flags().StringVarP(&getConfigMapsNamespace, "namespace", "n", "", "Kubernetes namespace")
+	getConfigMapsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
+
+	getSecretsCmd.Flags().StringVarP(&getSecretsNamespace, "namespace", "n", "", "Kubernetes namespace")
+	getSecretsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }
