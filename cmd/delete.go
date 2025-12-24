@@ -17,14 +17,18 @@ var deleteCmd = &cobra.Command{
 	Long:  `Delete Kubernetes resources with confirmation prompts for safety`,
 }
 
-// Namespace flags for different delete commands
+// Namespace and force flags for different delete commands
 var (
 	deletePodNamespace        string
 	deleteServiceNamespace    string
 	deleteDeploymentNamespace string
 	deleteConfigMapNamespace  string
 	deleteSecretNamespace     string
-	deleteForce               bool
+	deletePodForce            bool
+	deleteServiceForce        bool
+	deleteDeploymentForce     bool
+	deleteConfigMapForce      bool
+	deleteSecretForce         bool
 )
 
 // askForConfirmation prompts the user for yes/no confirmation
@@ -90,7 +94,7 @@ var deletePodCmd = &cobra.Command{
 	Long:  `Delete a specific pod with confirmation prompt`,
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDelete("pod", deletePodNamespace, args, deleteForce)
+		return runKubectlDelete("pod", deletePodNamespace, args, deletePodForce)
 	},
 	ValidArgsFunction: completion.PodCompletion,
 }
@@ -103,7 +107,7 @@ var deleteServiceCmd = &cobra.Command{
 	Long:    `Delete a specific service with confirmation prompt`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDelete("service", deleteServiceNamespace, args, deleteForce)
+		return runKubectlDelete("service", deleteServiceNamespace, args, deleteServiceForce)
 	},
 	ValidArgsFunction: completion.ServiceCompletion,
 }
@@ -116,7 +120,7 @@ var deleteDeploymentCmd = &cobra.Command{
 	Long:    `Delete a specific deployment with confirmation prompt`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDelete("deployment", deleteDeploymentNamespace, args, deleteForce)
+		return runKubectlDelete("deployment", deleteDeploymentNamespace, args, deleteDeploymentForce)
 	},
 	ValidArgsFunction: completion.DeploymentCompletion,
 }
@@ -129,7 +133,7 @@ var deleteConfigMapCmd = &cobra.Command{
 	Long:    `Delete a specific configmap with confirmation prompt`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDelete("configmap", deleteConfigMapNamespace, args, deleteForce)
+		return runKubectlDelete("configmap", deleteConfigMapNamespace, args, deleteConfigMapForce)
 	},
 	ValidArgsFunction: completion.ConfigMapCompletion,
 }
@@ -142,7 +146,7 @@ var deleteSecretCmd = &cobra.Command{
 	Long:    `Delete a specific secret with confirmation prompt`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDelete("secret", deleteSecretNamespace, args, deleteForce)
+		return runKubectlDelete("secret", deleteSecretNamespace, args, deleteSecretForce)
 	},
 	ValidArgsFunction: completion.SecretCompletion,
 }
@@ -159,22 +163,22 @@ func init() {
 
 	// Add namespace flags with autocompletion for namespaced resources
 	deletePodCmd.Flags().StringVarP(&deletePodNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deletePodCmd.Flags().BoolVarP(&deleteForce, "force", "f", false, "Skip confirmation prompt")
+	deletePodCmd.Flags().BoolVarP(&deletePodForce, "force", "f", false, "Skip confirmation prompt")
 	deletePodCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
 	deleteServiceCmd.Flags().StringVarP(&deleteServiceNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteServiceCmd.Flags().BoolVarP(&deleteForce, "force", "f", false, "Skip confirmation prompt")
+	deleteServiceCmd.Flags().BoolVarP(&deleteServiceForce, "force", "f", false, "Skip confirmation prompt")
 	deleteServiceCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
 	deleteDeploymentCmd.Flags().StringVarP(&deleteDeploymentNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteDeploymentCmd.Flags().BoolVarP(&deleteForce, "force", "f", false, "Skip confirmation prompt")
+	deleteDeploymentCmd.Flags().BoolVarP(&deleteDeploymentForce, "force", "f", false, "Skip confirmation prompt")
 	deleteDeploymentCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
 	deleteConfigMapCmd.Flags().StringVarP(&deleteConfigMapNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteConfigMapCmd.Flags().BoolVarP(&deleteForce, "force", "f", false, "Skip confirmation prompt")
+	deleteConfigMapCmd.Flags().BoolVarP(&deleteConfigMapForce, "force", "f", false, "Skip confirmation prompt")
 	deleteConfigMapCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
 	deleteSecretCmd.Flags().StringVarP(&deleteSecretNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteSecretCmd.Flags().BoolVarP(&deleteForce, "force", "f", false, "Skip confirmation prompt")
+	deleteSecretCmd.Flags().BoolVarP(&deleteSecretForce, "force", "f", false, "Skip confirmation prompt")
 	deleteSecretCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }
