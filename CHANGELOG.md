@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-12-24
+
+### Added - Phase 4: Delete Operations with Safety
+- `kcsi delete` commands for all major resource types:
+  - `delete pod` with confirmation prompt and namespace autocompletion
+  - `delete service` (aliases: svc, services) with confirmation
+  - `delete deployment` (aliases: deploy, deployments) with confirmation
+  - `delete configmap` (aliases: cm, configmaps) with confirmation
+  - `delete secret` (alias: secrets) with confirmation
+- Safety confirmation system:
+  - Interactive prompt before deletion showing resource type, name, and namespace
+  - Requires explicit 'y' or 'yes' response to proceed
+  - `--force` / `-f` flag to skip confirmation for automation/scripts
+  - Graceful cancellation with clear feedback
+- `askForConfirmation()` helper function for user interaction
+- Generic `runKubectlDelete()` function with confirmation handling
+- All delete commands support cascading autocompletion (namespace → resource)
+
+### Changed
+- Updated README with delete command examples and safety feature documentation
+- Enhanced roadmap with completed Phase 4 and reorganized future phases
+- Version bumped to 0.4.0
+
+### Technical Details
+- Confirmation prompt uses bufio.Reader for stdin interaction
+- Delete operations respect namespace scoping
+- Consistent error handling across all delete commands
+- Force flag properly bypasses confirmation while maintaining safety
+
 ## [0.3.0] - 2025-12-24
 
 ### Added - Phase 3: Extended Resource Support
@@ -109,7 +138,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only supports `get pods` command in this POC
 - Requires kubectl to be installed and configured
 
-[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/alessandro/kcsi/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/alessandro/kcsi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/alessandro/kcsi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/alessandro/kcsi/releases/tag/v0.1.0

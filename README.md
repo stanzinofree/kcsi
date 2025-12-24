@@ -11,7 +11,7 @@ A kubectl wrapper with intelligent autocompletion for namespaces, pods, and othe
 
 ## Current Status
 
-**Version:** 0.3.0 - Extended Resource Support
+**Version:** 0.4.0 - Complete CRUD Operations
 
 Currently implemented:
 
@@ -31,6 +31,14 @@ Currently implemented:
 - `kcsi describe node` - Describe a node
 - `kcsi describe configmap` - Describe a configmap
 - `kcsi describe secret` - Describe a secret
+
+**Delete Commands (with safety confirmation):**
+- `kcsi delete pod` - Delete a pod with confirmation prompt
+- `kcsi delete service` - Delete a service with confirmation
+- `kcsi delete deployment` - Delete a deployment with confirmation
+- `kcsi delete configmap` - Delete a configmap with confirmation
+- `kcsi delete secret` - Delete a secret with confirmation
+- All delete commands support `--force` flag to skip confirmation
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
@@ -257,6 +265,36 @@ kcsi describe cm -n default my-config
 kcsi describe secret -n default my-secret
 ```
 
+### Delete resources safely
+
+```bash
+# Delete pod with confirmation prompt
+kcsi delete pod -n <TAB>  # Shows namespaces
+kcsi delete pod -n default <TAB>  # Shows pods in namespace
+kcsi delete pod -n default my-pod
+# Output: Are you sure you want to delete pod 'my-pod' in namespace 'default'? [y/N]:
+
+# Delete with --force to skip confirmation (use with caution!)
+kcsi delete pod -n default my-pod --force
+kcsi delete pod -n default my-pod -f  # Short form
+
+# Delete other resources
+kcsi delete service -n default my-service
+kcsi delete deployment -n production my-app
+kcsi delete configmap -n default my-config
+kcsi delete secret -n default my-secret
+
+# All delete commands have autocompletion
+kcsi delete svc -n <TAB>  # Namespace autocomplete
+kcsi delete deploy -n prod <TAB>  # Deployment autocomplete
+```
+
+**Safety Features:**
+- Confirmation prompt shows resource type, name, and namespace
+- Requires explicit 'y' or 'yes' to proceed
+- Use `--force` or `-f` flag to skip confirmation (for scripts/automation)
+- All deletes support cascading autocompletion
+
 ## Roadmap
 
 ### Phase 1: Proof of Concept ✅
@@ -282,13 +320,22 @@ kcsi describe secret -n default my-secret
 - [x] `describe` commands for all resource types
 - [x] Aliases support (svc, deploy, cm, ns, no)
 
-### Phase 4: Additional Commands (Next)
+### Phase 4: Delete Operations ✅
+- [x] `delete pod` command with confirmation prompt
+- [x] `delete service` command with confirmation
+- [x] `delete deployment` command with confirmation
+- [x] `delete configmap` command with confirmation
+- [x] `delete secret` command with confirmation
+- [x] `--force` flag to skip confirmation for automation
+- [x] Safety prompts showing resource type, name, and namespace
+
+### Phase 5: Additional Commands (Next)
 - [ ] `exec` command with interactive pod selection
-- [ ] `delete` commands with confirmation
 - [ ] `port-forward` command
 - [ ] `apply` and `edit` commands
+- [ ] `rollout` commands (status, restart, undo)
 
-### Phase 5: Enhancements
+### Phase 6: Enhancements
 - [ ] Cache for faster autocompletion
 - [ ] Default context/namespace configuration
 - [ ] Custom aliases
