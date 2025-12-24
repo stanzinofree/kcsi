@@ -53,3 +53,24 @@ func GetPods(namespace string) ([]string, error) {
 	pods := strings.Fields(strings.TrimSpace(output))
 	return pods, nil
 }
+
+// GetContainers returns a list of container names in a specific pod
+func GetContainers(namespace, podName string) ([]string, error) {
+	if podName == "" {
+		return nil, fmt.Errorf("pod name is required")
+	}
+
+	args := []string{"get", "pod", podName, "-o", "jsonpath={.spec.containers[*].name}"}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	// Split the space-separated container names
+	containers := strings.Fields(strings.TrimSpace(output))
+	return containers, nil
+}

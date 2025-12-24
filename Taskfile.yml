@@ -1,0 +1,180 @@
+version: '3'
+
+vars:
+  APP_NAME: kcsi
+  VERSION: 0.2.0
+  BUILD_DIR: bin
+  LDFLAGS: -s -w
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  build:
+    desc: Build binary for current platform
+    cmds:
+      - go build -o {{.APP_NAME}} -ldflags="{{.LDFLAGS}}" .
+    sources:
+      - "**/*.go"
+      - go.mod
+      - go.sum
+    generates:
+      - "{{.APP_NAME}}"
+
+  build:all:
+    desc: Build binaries for all platforms
+    cmds:
+      - ./build.sh
+
+  build:darwin:
+    desc: Build for macOS (both Intel and ARM)
+    cmds:
+      - task: build:darwin-amd64
+      - task: build:darwin-arm64
+
+  build:darwin-amd64:
+    desc: Build for macOS Intel
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=darwin GOARCH=amd64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-darwin-amd64 -ldflags="{{.LDFLAGS}}" .
+
+  build:darwin-arm64:
+    desc: Build for macOS Apple Silicon
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=darwin GOARCH=arm64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-darwin-arm64 -ldflags="{{.LDFLAGS}}" .
+
+  build:linux:
+    desc: Build for Linux (amd64, arm64, arm)
+    cmds:
+      - task: build:linux-amd64
+      - task: build:linux-arm64
+      - task: build:linux-arm
+
+  build:linux-amd64:
+    desc: Build for Linux x86_64
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=linux GOARCH=amd64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-linux-amd64 -ldflags="{{.LDFLAGS}}" .
+
+  build:linux-arm64:
+    desc: Build for Linux ARM64
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=linux GOARCH=arm64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-linux-arm64 -ldflags="{{.LDFLAGS}}" .
+
+  build:linux-arm:
+    desc: Build for Linux ARM
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=linux GOARCH=arm go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-linux-arm -ldflags="{{.LDFLAGS}}" .
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf {{.BUILD_DIR}}
+      - rm -f {{.APP_NAME}}
+
+  install:
+    desc: Install kcsi to /usr/local/bin (requires sudo)
+    deps:
+      - build
+    cmds:
+      - sudo cp {{.APP_NAME}} /usr/local/bin/{{.APP_NAME}}
+      - sudo chmod +x /usr/local/bin/{{.APP_NAME}}
+      - echo "{{.APP_NAME}} installed to /usr/local/bin"
+
+  uninstall:
+    desc: Uninstall kcsi from /usr/local/bin (requires sudo)
+    cmds:
+      - sudo rm -f /usr/local/bin/{{.APP_NAME}}
+      - echo "{{.APP_NAME}} uninstalled"
+
+  run:
+    desc: "Build and run kcsi with arguments (usage: task run -- get pods -n default)"
+    deps:
+      - build
+    cmds:
+      - ./{{.APP_NAME}} {{.CLI_ARGS}}
+
+  test:
+    desc: Run tests
+    cmds:
+      - go test -v ./...
+
+  fmt:
+    desc: Format code
+    cmds:
+      - go fmt ./...
+
+  vet:
+    desc: Run go vet
+    cmds:
+      - go vet ./...
+
+  lint:
+    desc: Run linter (requires golangci-lint)
+    cmds:
+      - golangci-lint run
+
+  mod:
+    desc: Tidy and verify go modules
+    cmds:
+      - go mod tidy
+      - go mod verify
+
+  check:
+    desc: Run all checks (fmt, vet, test)
+    cmds:
+      - task: fmt
+      - task: vet
+      - task: test
+
+  completion:bash:
+    desc: Generate bash completion script
+    deps:
+      - build
+    cmds:
+      - ./{{.APP_NAME}} completion bash > completions/{{.APP_NAME}}.bash
+      - echo "Bash completion script generated in completions/{{.APP_NAME}}.bash"
+
+  completion:zsh:
+    desc: Generate zsh completion script
+    deps:
+      - build
+    cmds:
+      - mkdir -p completions
+      - ./{{.APP_NAME}} completion zsh > completions/_{{.APP_NAME}}
+      - echo "Zsh completion script generated in completions/_{{.APP_NAME}}"
+
+  completion:fish:
+    desc: Generate fish completion script
+    deps:
+      - build
+    cmds:
+      - mkdir -p completions
+      - ./{{.APP_NAME}} completion fish > completions/{{.APP_NAME}}.fish
+      - echo "Fish completion script generated in completions/{{.APP_NAME}}.fish"
+
+  completion:all:
+    desc: Generate all completion scripts
+    cmds:
+      - task: completion:bash
+      - task: completion:zsh
+      - task: completion:fish
+
+  dev:
+    desc: Development mode - build and install locally
+    cmds:
+      - task: build
+      - task: install
+
+  release:
+    desc: Prepare release (clean, check, build all)
+    cmds:
+      - task: clean
+      - task: check
+      - task: build:all
+      - echo "Release builds ready in {{.BUILD_DIR}}/"

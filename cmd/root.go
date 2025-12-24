@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Short: "A kubectl wrapper with smart autocompletion",
 	Long: `kcsi is a wrapper around kubectl that provides intelligent 
 autocompletion for namespaces, pods, and other Kubernetes resources.`,
-	Version: "0.1.0",
+	Version: "0.2.0",
 }
 
 func Execute() {
