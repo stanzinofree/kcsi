@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2025-12-25
+
+### Added - Interactive Pod Commands & Container Support
+- `kcsi attach` command for interactive shell attachment to pods:
+  - Automatic shell detection (tries bash → zsh → sh in order)
+  - `-n/--namespace` flag with namespace autocompletion
+  - `-c/--container` flag with container autocompletion for multi-container pods
+  - Namespace-first syntax for proper shell autocompletion
+  - Interactive TTY support for full shell experience
+- `kcsi execute` command for running custom commands in pods:
+  - Execute arbitrary commands in pod containers
+  - `-n/--namespace` flag with namespace autocompletion
+  - `-c/--container` flag with container autocompletion
+  - Namespace-first syntax for better autocompletion workflow
+  - Helpful error messages when namespace is missing
+  - Full command passthrough to kubectl exec
+- Container flag support extended to existing commands:
+  - `kcsi logs -c <container>` for viewing specific container logs
+  - `kcsi describe pod -c <container>` for container-specific information
+  - Container autocompletion works across all container-aware commands
+
+### Changed
+- Improved command syntax to namespace-first pattern for better autocompletion UX
+- Enhanced error messages with helpful hints (e.g., "try passing -n namespace")
+- Version bumped to 0.5.3
+
+### Fixed - Code Quality & Accessibility
+- Fixed SonarCloud string literal duplication issues:
+  - Created `cmd/constants.go` for shared flag descriptions
+  - Created constants in `pkg/kubernetes/client.go` for JSONPath queries
+  - Eliminated duplicate strings across codebase
+- Fixed WCAG AA text contrast issues in documentation:
+  - Updated text colors from #333 → #212529 and #666 → #495057
+  - Improved footer design with modern gradient and better contrast
+  - Enhanced accessibility compliance
+- Fixed test function naming to comply with SonarCloud regex:
+  - Renamed test functions to remove underscores
+  - Now follows Go naming convention: `^[A-Z][a-zA-Z0-9]+$`
+
+### Technical Details
+- Attach command attempts multiple shells gracefully, falling back if one fails
+- Execute command properly passes command arrays to kubectl exec
+- Container autocompletion queries pod spec for container names
+- Namespace-first argument ordering enables proper cascading autocompletion
+- All new commands maintain consistent flag patterns with existing codebase
+
 ## [0.5.2] - 2025-12-25
 
 ### Added - Documentation Improvements

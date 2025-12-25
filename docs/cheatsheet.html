@@ -109,6 +109,13 @@
                         <span class="tag tag-describe">DESCRIBE</span>
                     </div>
 
+                    <div class="command-card" data-tags="describe pod container specific sidecar">
+                        <div class="command-syntax">kcsi describe pod -n &lt;ns&gt; &lt;pod&gt; -c &lt;ctr&gt;</div>
+                        <div class="command-description">Describe specific container in pod</div>
+                        <div class="command-example">$ kcsi describe pod -n default app -c sidecar</div>
+                        <span class="tag tag-describe">DESCRIBE</span>
+                    </div>
+
                     <div class="command-card" data-tags="describe service svc details">
                         <div class="command-syntax">kcsi describe service -n &lt;ns&gt; &lt;svc&gt;</div>
                         <div class="command-description">Show detailed service information</div>
@@ -159,7 +166,7 @@
                         <span class="tag tag-logs">LOGS</span>
                     </div>
 
-                    <div class="command-card" data-tags="logs container multi specific">
+                    <div class="command-card" data-tags="logs container multi specific sidecar">
                         <div class="command-syntax">kcsi logs -n &lt;ns&gt; &lt;pod&gt; -c &lt;container&gt;</div>
                         <div class="command-description">View logs from specific container (with autocomplete)</div>
                         <div class="command-example">$ kcsi logs -n default my-app -c sidecar</div>
@@ -207,6 +214,42 @@
                         <div class="command-description">Delete deployment with confirmation</div>
                         <div class="command-example">$ kcsi delete deploy -n staging old-app</div>
                         <span class="tag tag-delete">DELETE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Pod Commands -->
+            <div class="category">
+                <div class="category-title">
+                    🖥️ Interactive Pod Commands
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="attach shell bash interactive tty">
+                        <div class="command-syntax">kcsi attach -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Attach interactive shell to pod (auto-detects bash/zsh/sh)</div>
+                        <div class="command-example">$ kcsi attach -n production api-server</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="attach container sidecar multi">
+                        <div class="command-syntax">kcsi attach -n &lt;ns&gt; &lt;pod&gt; -c &lt;container&gt;</div>
+                        <div class="command-description">Attach to specific container with autocompletion</div>
+                        <div class="command-example">$ kcsi attach -n default my-app -c sidecar</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="execute exec command run custom">
+                        <div class="command-syntax">kcsi execute -n &lt;ns&gt; &lt;pod&gt; -- &lt;cmd&gt;</div>
+                        <div class="command-description">Execute custom command in pod</div>
+                        <div class="command-example">$ kcsi execute -n prod api-pod -- ls -la /app</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="execute container specific multi">
+                        <div class="command-syntax">kcsi execute -n &lt;ns&gt; &lt;pod&gt; -c &lt;ctr&gt; -- &lt;cmd&gt;</div>
+                        <div class="command-description">Execute command in specific container</div>
+                        <div class="command-example">$ kcsi execute -n default app -c sidecar -- env</div>
+                        <span class="tag tag-exec">EXEC</span>
                     </div>
                 </div>
             </div>

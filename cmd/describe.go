@@ -15,9 +15,10 @@ var describeCmd = &cobra.Command{
 	Long:  `Describe Kubernetes resources with smart autocompletion`,
 }
 
-// Namespace flags for different describe commands
+// Namespace and container flags for different describe commands
 var (
 	describePodNamespace        string
+	describePodContainer        string
 	describeServiceNamespace    string
 	describeDeploymentNamespace string
 	describeConfigMapNamespace  string
@@ -25,15 +26,21 @@ var (
 )
 
 // Generic kubectl describe command runner
-func runKubectlDescribe(resourceType, namespace string, args []string) error {
+func runKubectlDescribe(resourceType, namespace, container string, args []string) error {
 	if len(args) == 0 {
 		return fmt.Errorf("resource name is required")
 	}
 
-	kubectlArgs := []string{"describe", resourceType, args[0]}
+	kubectlArgs := []string{"describe", resourceType}
 
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
+	}
+
+	kubectlArgs = append(kubectlArgs, args[0])
+
+	if container != "" {
+		kubectlArgs = append(kubectlArgs, "-c", container)
 	}
 
 	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
@@ -55,7 +62,7 @@ var describePodCmd = &cobra.Command{
 	Long:  `Describe a specific pod with namespace and pod name autocompletion`,
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("pod", describePodNamespace, args)
+		return runKubectlDescribe("pod", describePodNamespace, describePodContainer, args)
 	},
 	ValidArgsFunction: completion.PodCompletion,
 }
@@ -68,7 +75,7 @@ var describeServiceCmd = &cobra.Command{
 	Long:    `Describe a specific service with namespace and service name autocompletion`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("service", describeServiceNamespace, args)
+		return runKubectlDescribe("service", describeServiceNamespace, "", args)
 	},
 	ValidArgsFunction: completion.ServiceCompletion,
 }
@@ -81,7 +88,7 @@ var describeDeploymentCmd = &cobra.Command{
 	Long:    `Describe a specific deployment with namespace and deployment name autocompletion`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("deployment", describeDeploymentNamespace, args)
+		return runKubectlDescribe("deployment", describeDeploymentNamespace, "", args)
 	},
 	ValidArgsFunction: completion.DeploymentCompletion,
 }
@@ -94,7 +101,7 @@ var describeNodeCmd = &cobra.Command{
 	Long:    `Describe a specific node with node name autocompletion`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("node", "", args)
+		return runKubectlDescribe("node", "", "", args)
 	},
 	ValidArgsFunction: completion.NodeCompletion,
 }
@@ -107,7 +114,7 @@ var describeConfigMapCmd = &cobra.Command{
 	Long:    `Describe a specific configmap with namespace and configmap name autocompletion`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("configmap", describeConfigMapNamespace, args)
+		return runKubectlDescribe("configmap", describeConfigMapNamespace, "", args)
 	},
 	ValidArgsFunction: completion.ConfigMapCompletion,
 }
@@ -120,7 +127,7 @@ var describeSecretCmd = &cobra.Command{
 	Long:    `Describe a specific secret with namespace and secret name autocompletion`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runKubectlDescribe("secret", describeSecretNamespace, args)
+		return runKubectlDescribe("secret", describeSecretNamespace, "", args)
 	},
 	ValidArgsFunction: completion.SecretCompletion,
 }
@@ -138,7 +145,9 @@ func init() {
 
 	// Add namespace flags with autocompletion for namespaced resources
 	describePodCmd.Flags().StringVarP(&describePodNamespace, "namespace", "n", "", FlagDescNamespace)
+	describePodCmd.Flags().StringVarP(&describePodContainer, "container", "c", "", "Container name (for multi-container pods)")
 	describePodCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
+	describePodCmd.RegisterFlagCompletionFunc("container", completion.ContainerCompletion)
 
 	describeServiceCmd.Flags().StringVarP(&describeServiceNamespace, "namespace", "n", "", FlagDescNamespace)
 	describeServiceCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)

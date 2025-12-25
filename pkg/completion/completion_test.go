@@ -19,7 +19,7 @@ func TestNamespaceCompletion(_ *testing.T) {
 	}
 }
 
-func TestPodCompletion_NoNamespace(_ *testing.T) {
+func TestPodCompletionNoNamespace(_ *testing.T) {
 	cmd := &cobra.Command{}
 
 	// Test without namespace flag
@@ -31,7 +31,7 @@ func TestPodCompletion_NoNamespace(_ *testing.T) {
 	}
 }
 
-func TestContainerCompletion_NoPod(_ *testing.T) {
+func TestContainerCompletionNoPod(_ *testing.T) {
 	cmd := &cobra.Command{}
 
 	// Test without pod argument

@@ -1,4 +1,4 @@
-version: 0.5.2
+version: 0.5.3
 name: kcsi
 fullName: Kubectl Smart Interactive
 description: A kubectl wrapper with intelligent autocompletion
