@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestExecuteKubectl_InvalidCommand(t *testing.T) {
+func TestExecuteKubectlInvalidCommand(t *testing.T) {
 	// Test that invalid commands return an error
 	_, err := ExecuteKubectl("invalid-command-that-does-not-exist")
 	if err == nil {
@@ -12,7 +12,7 @@ func TestExecuteKubectl_InvalidCommand(t *testing.T) {
 	}
 }
 
-func TestGetContainers_EmptyPodName(t *testing.T) {
+func TestGetContainersEmptyPodName(t *testing.T) {
 	// Test that empty pod name returns an error
 	_, err := GetContainers("default", "")
 	if err == nil {
