@@ -231,9 +231,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only supports `get pods` command in this POC
 - Requires kubectl to be installed and configured
 
-[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.5.0...HEAD
-[0.5.0]: https://github.com/alessandro/kcsi/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/alessandro/kcsi/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/alessandro/kcsi/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/alessandro/kcsi/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/alessandro/kcsi/releases/tag/v0.1.0
+[Unreleased]: https://github.com/stanzinofree/kcsi/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/stanzinofree/kcsi/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/stanzinofree/kcsi/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/stanzinofree/kcsi/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/stanzinofree/kcsi/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/stanzinofree/kcsi/releases/tag/v0.1.0

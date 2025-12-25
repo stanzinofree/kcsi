@@ -1,7 +1,7 @@
 package completion
 
 import (
-	"github.com/alessandro/kcsi/pkg/kubernetes"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 	"github.com/spf13/cobra"
 )
 

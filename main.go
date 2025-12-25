@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/alessandro/kcsi/cmd"
+	"github.com/stanzinofree/kcsi/cmd"
 )
 
 func main() {

@@ -5,7 +5,7 @@ description: A kubectl wrapper with intelligent autocompletion
 author: Alessandro Middei
 contact: alessandro.middei@gmail.com
 license: MIT
-repository: https://github.com/alessandro/kcsi
+repository: https://github.com/stanzinofree/kcsi
 buildDate: ""  # Will be set during build
 
 # Project spirit and philosophy

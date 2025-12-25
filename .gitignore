@@ -30,3 +30,28 @@ kcsi
 
 # OS
 .DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage.out
+coverage.html
+*.coverprofile
+
+# Task cache
+.task/
+
+# Completion scripts (generated)
+completions/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Security and secrets
+*.key
+*.pem
+*.crt
+secrets.yaml

@@ -1,6 +1,6 @@
 # kcsi - Kubectl Smart Interactive Wrapper
 
-[![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/alessandro/kcsi/releases)
+[![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.21+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](#installation)
@@ -33,7 +33,7 @@
 
 ```bash
 # Install kcsi
-curl -sL https://raw.githubusercontent.com/alessandro/kcsi/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
 
 # Set up autocompletion (bash example)
 source <(kcsi completion bash)

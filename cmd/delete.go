@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/alessandro/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
 )
 

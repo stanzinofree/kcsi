@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/alessandro/kcsi/pkg/version"
+	"github.com/stanzinofree/kcsi/pkg/version"
 	"github.com/spf13/cobra"
 )
 
