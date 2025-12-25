@@ -1,0 +1,31 @@
+# CODEOWNERS file for kcsi
+# These owners will be the default owners for everything in the repo
+# They will be requested for review when someone opens a pull request
+
+# Default owner for all files
+* @stanzinofree
+
+# GitHub Actions workflows and CI/CD configurations
+/.github/ @stanzinofree
+/.github/workflows/ @stanzinofree
+
+# Documentation
+/docs/ @stanzinofree
+README.md @stanzinofree
+CHANGELOG.md @stanzinofree
+SECURITY.md @stanzinofree
+LICENSE @stanzinofree
+
+# Core source code
+/cmd/ @stanzinofree
+/pkg/ @stanzinofree
+main.go @stanzinofree
+
+# Configuration files
+go.mod @stanzinofree
+go.sum @stanzinofree
+Taskfile.yml @stanzinofree
+sonar-project.properties @stanzinofree
+
+# Build and scripts
+build.sh @stanzinofree
