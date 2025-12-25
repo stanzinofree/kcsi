@@ -30,11 +30,11 @@ func init() {
 	rootCmd.AddCommand(logsCmd)
 
 	// Add flags with autocompletion
-	logsCmd.Flags().StringVarP(&logsNamespace, "namespace", "n", "", "Kubernetes namespace")
+	logsCmd.Flags().StringVarP(&logsNamespace, "namespace", "n", "", FlagDescNamespace)
 	logsCmd.Flags().BoolVarP(&logsFollow, "follow", "f", false, "Follow log output")
 	logsCmd.Flags().BoolVarP(&logsPrevious, "previous", "p", false, "Print the logs for the previous instance of the container")
 	logsCmd.Flags().Int64Var(&logsTail, "tail", -1, "Lines of recent log file to display (default: all)")
-	logsCmd.Flags().StringVarP(&logsContainer, "container", "c", "", "Container name (if pod has multiple containers)")
+	logsCmd.Flags().StringVarP(&logsContainer, "container", "c", "", "Container name (for multi-container pods)")
 
 	logsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 	logsCmd.RegisterFlagCompletionFunc("container", completion.ContainerCompletion)
