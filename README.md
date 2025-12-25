@@ -10,7 +10,6 @@
 ### CI/CD & Quality
 
 [![Build and Test](https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
-[![CodeQL](https://github.com/stanzinofree/kcsi/workflows/CodeQL%20Security%20Analysis/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/codeql.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 
 ### Security & Code Quality
