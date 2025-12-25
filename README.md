@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](#installation)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ### CI/CD & Quality
@@ -158,6 +158,8 @@ Pre-built binaries are available for multiple platforms in the `bin/` directory 
 - Linux (x86_64): `kcsi-linux-amd64`
 - Linux (ARM64): `kcsi-linux-arm64`
 - Linux (ARM): `kcsi-linux-arm`
+- Windows (x86_64): `kcsi-windows-amd64.exe`
+- Windows (ARM64): `kcsi-windows-arm64.exe`
 
 ### Build from source
 
@@ -195,6 +197,8 @@ Using build script:
 
 ### Install
 
+#### macOS / Linux
+
 Using Task:
 ```bash
 # Build and install in one step
@@ -212,6 +216,25 @@ sudo chmod +x /usr/local/bin/kcsi
 
 # Or using locally built binary
 sudo mv kcsi /usr/local/bin/
+```
+
+#### Windows
+
+**PowerShell (Administrator):**
+```powershell
+# Using pre-built binary (example for Windows x86_64)
+Copy-Item bin\kcsi-windows-amd64.exe C:\Windows\System32\kcsi.exe
+
+# Or add to a custom directory and update PATH
+New-Item -ItemType Directory -Force -Path C:\Tools
+Copy-Item bin\kcsi-windows-amd64.exe C:\Tools\kcsi.exe
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools", "Machine")
+```
+
+**Command Prompt (Administrator):**
+```cmd
+# Using pre-built binary
+copy bin\kcsi-windows-amd64.exe C:\Windows\System32\kcsi.exe
 ```
 
 ## Setup Autocompletion
@@ -249,6 +272,18 @@ kcsi completion fish | source
 
 # Load for all sessions
 kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+```
+
+### PowerShell (Windows)
+
+```powershell
+# Generate completion script
+kcsi completion powershell | Out-String | Invoke-Expression
+
+# Load for all sessions - add to your PowerShell profile
+# Find your profile location with: $PROFILE
+# Then add this line to the profile:
+kcsi completion powershell | Out-String | Invoke-Expression
 ```
 
 ## Usage
@@ -573,7 +608,11 @@ task run -- get pods -n default
 | `task` | Show all available tasks |
 | `task build` | Build for current platform |
 | `task build:all` | Build for all platforms |
+| `task build:darwin` | Build for macOS (Intel + ARM) |
+| `task build:linux` | Build for Linux (amd64, arm64, arm) |
+| `task build:windows` | Build for Windows (amd64, arm64) |
 | `task build:linux-arm64` | Build for specific platform |
+| `task build:windows-amd64` | Build for Windows x86_64 |
 | `task clean` | Clean build artifacts |
 | `task install` | Build and install to /usr/local/bin |
 | `task uninstall` | Uninstall from /usr/local/bin |
