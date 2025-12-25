@@ -1,7 +1,7 @@
 package version
 
 import (
-	_ "embed"
+	_ "embed" // Embed directive is used to embed version.yaml into the binary
 	"fmt"
 	"runtime"
 	"strings"
