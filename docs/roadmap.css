@@ -35,7 +35,7 @@
 }
 
 .stat-label {
-    color: #666;
+    color: #495057;
     font-size: 0.9em;
     margin-top: 10px;
 }
@@ -72,7 +72,7 @@
 
 .phase-title {
     font-size: 1.8em;
-    color: #333;
+    color: #212529;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -93,7 +93,7 @@
 
 .badge-progress {
     background: #ffc107;
-    color: #333;
+    color: #212529;
 }
 
 .badge-pending {
@@ -162,21 +162,7 @@
     opacity: 0.7;
 }
 
-footer {
-    background: #2d2d2d;
-    color: white;
-    text-align: center;
-    padding: 30px;
-}
-
-footer a {
-    color: #667eea;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
+/* Footer styles moved to common.css */
 
 @media (max-width: 768px) {
     .progress-summary {
