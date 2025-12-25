@@ -137,18 +137,18 @@ func init() {
 	describeCmd.AddCommand(describeSecretCmd)
 
 	// Add namespace flags with autocompletion for namespaced resources
-	describePodCmd.Flags().StringVarP(&describePodNamespace, "namespace", "n", "", "Kubernetes namespace")
+	describePodCmd.Flags().StringVarP(&describePodNamespace, "namespace", "n", "", FlagDescNamespace)
 	describePodCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	describeServiceCmd.Flags().StringVarP(&describeServiceNamespace, "namespace", "n", "", "Kubernetes namespace")
+	describeServiceCmd.Flags().StringVarP(&describeServiceNamespace, "namespace", "n", "", FlagDescNamespace)
 	describeServiceCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	describeDeploymentCmd.Flags().StringVarP(&describeDeploymentNamespace, "namespace", "n", "", "Kubernetes namespace")
+	describeDeploymentCmd.Flags().StringVarP(&describeDeploymentNamespace, "namespace", "n", "", FlagDescNamespace)
 	describeDeploymentCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	describeConfigMapCmd.Flags().StringVarP(&describeConfigMapNamespace, "namespace", "n", "", "Kubernetes namespace")
+	describeConfigMapCmd.Flags().StringVarP(&describeConfigMapNamespace, "namespace", "n", "", FlagDescNamespace)
 	describeConfigMapCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	describeSecretCmd.Flags().StringVarP(&describeSecretNamespace, "namespace", "n", "", "Kubernetes namespace")
+	describeSecretCmd.Flags().StringVarP(&describeSecretNamespace, "namespace", "n", "", FlagDescNamespace)
 	describeSecretCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }

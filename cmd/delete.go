@@ -162,23 +162,23 @@ func init() {
 	deleteCmd.AddCommand(deleteSecretCmd)
 
 	// Add namespace flags with autocompletion for namespaced resources
-	deletePodCmd.Flags().StringVarP(&deletePodNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deletePodCmd.Flags().BoolVarP(&deletePodForce, "force", "f", false, "Skip confirmation prompt")
+	deletePodCmd.Flags().StringVarP(&deletePodNamespace, "namespace", "n", "", FlagDescNamespace)
+	deletePodCmd.Flags().BoolVarP(&deletePodForce, "force", "f", false, FlagDescSkipConfirm)
 	deletePodCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	deleteServiceCmd.Flags().StringVarP(&deleteServiceNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteServiceCmd.Flags().BoolVarP(&deleteServiceForce, "force", "f", false, "Skip confirmation prompt")
+	deleteServiceCmd.Flags().StringVarP(&deleteServiceNamespace, "namespace", "n", "", FlagDescNamespace)
+	deleteServiceCmd.Flags().BoolVarP(&deleteServiceForce, "force", "f", false, FlagDescSkipConfirm)
 	deleteServiceCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	deleteDeploymentCmd.Flags().StringVarP(&deleteDeploymentNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteDeploymentCmd.Flags().BoolVarP(&deleteDeploymentForce, "force", "f", false, "Skip confirmation prompt")
+	deleteDeploymentCmd.Flags().StringVarP(&deleteDeploymentNamespace, "namespace", "n", "", FlagDescNamespace)
+	deleteDeploymentCmd.Flags().BoolVarP(&deleteDeploymentForce, "force", "f", false, FlagDescSkipConfirm)
 	deleteDeploymentCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	deleteConfigMapCmd.Flags().StringVarP(&deleteConfigMapNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteConfigMapCmd.Flags().BoolVarP(&deleteConfigMapForce, "force", "f", false, "Skip confirmation prompt")
+	deleteConfigMapCmd.Flags().StringVarP(&deleteConfigMapNamespace, "namespace", "n", "", FlagDescNamespace)
+	deleteConfigMapCmd.Flags().BoolVarP(&deleteConfigMapForce, "force", "f", false, FlagDescSkipConfirm)
 	deleteConfigMapCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	deleteSecretCmd.Flags().StringVarP(&deleteSecretNamespace, "namespace", "n", "", "Kubernetes namespace")
-	deleteSecretCmd.Flags().BoolVarP(&deleteSecretForce, "force", "f", false, "Skip confirmation prompt")
+	deleteSecretCmd.Flags().StringVarP(&deleteSecretNamespace, "namespace", "n", "", FlagDescNamespace)
+	deleteSecretCmd.Flags().BoolVarP(&deleteSecretForce, "force", "f", false, FlagDescSkipConfirm)
 	deleteSecretCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }

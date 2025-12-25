@@ -34,19 +34,19 @@ for platform in "${platforms[@]}"; do
     platform_split=(${platform//\// })
     GOOS=${platform_split[0]}
     GOARCH=${platform_split[1]}
-    
+
     output_name="${BUILD_DIR}/${APP_NAME}-${GOOS}-${GOARCH}"
-    
-    if [ $GOOS = "windows" ]; then
+
+    if [[ $GOOS == "windows" ]]; then
         output_name+='.exe'
     fi
-    
+
     echo -e "${GREEN}Building for ${GOOS}/${GOARCH}...${NC}"
-    
+
     env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="-s -w" .
-    
-    if [ $? -ne 0 ]; then
-        echo "An error occurred building for ${GOOS}/${GOARCH}! Aborting..."
+
+    if [[ $? -ne 0 ]]; then
+        echo "An error occurred building for ${GOOS}/${GOARCH}! Aborting..." >&2
         exit 1
     fi
 done

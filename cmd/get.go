@@ -152,25 +152,25 @@ func init() {
 	getCmd.AddCommand(getSecretsCmd)
 
 	// Add namespace flags with autocompletion for namespaced resources
-	getPodsCmd.Flags().StringVarP(&getPodsNamespace, "namespace", "n", "", "Kubernetes namespace")
-	getPodsCmd.Flags().StringVarP(&getPodsOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getPodsCmd.Flags().StringVarP(&getPodsNamespace, "namespace", "n", "", FlagDescNamespace)
+	getPodsCmd.Flags().StringVarP(&getPodsOutput, "output", "o", "", FlagDescOutput)
 	getPodsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	getServicesCmd.Flags().StringVarP(&getServicesNamespace, "namespace", "n", "", "Kubernetes namespace")
-	getServicesCmd.Flags().StringVarP(&getServicesOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getServicesCmd.Flags().StringVarP(&getServicesNamespace, "namespace", "n", "", FlagDescNamespace)
+	getServicesCmd.Flags().StringVarP(&getServicesOutput, "output", "o", "", FlagDescOutput)
 	getServicesCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	getDeploymentsCmd.Flags().StringVarP(&getDeploymentsNamespace, "namespace", "n", "", "Kubernetes namespace")
-	getDeploymentsCmd.Flags().StringVarP(&getDeploymentsOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getDeploymentsCmd.Flags().StringVarP(&getDeploymentsNamespace, "namespace", "n", "", FlagDescNamespace)
+	getDeploymentsCmd.Flags().StringVarP(&getDeploymentsOutput, "output", "o", "", FlagDescOutput)
 	getDeploymentsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	getNodesCmd.Flags().StringVarP(&getNodesOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getNodesCmd.Flags().StringVarP(&getNodesOutput, "output", "o", "", FlagDescOutput)
 
-	getConfigMapsCmd.Flags().StringVarP(&getConfigMapsNamespace, "namespace", "n", "", "Kubernetes namespace")
-	getConfigMapsCmd.Flags().StringVarP(&getConfigMapsOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getConfigMapsCmd.Flags().StringVarP(&getConfigMapsNamespace, "namespace", "n", "", FlagDescNamespace)
+	getConfigMapsCmd.Flags().StringVarP(&getConfigMapsOutput, "output", "o", "", FlagDescOutput)
 	getConfigMapsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 
-	getSecretsCmd.Flags().StringVarP(&getSecretsNamespace, "namespace", "n", "", "Kubernetes namespace")
-	getSecretsCmd.Flags().StringVarP(&getSecretsOutput, "output", "o", "", "Output format (e.g., wide, yaml, json)")
+	getSecretsCmd.Flags().StringVarP(&getSecretsNamespace, "namespace", "n", "", FlagDescNamespace)
+	getSecretsCmd.Flags().StringVarP(&getSecretsOutput, "output", "o", "", FlagDescOutput)
 	getSecretsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }
