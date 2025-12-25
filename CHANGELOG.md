@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2025-12-25
+
+### Added - Documentation Improvements
+- Enhanced README with professional badges (version, Go version, license, platform, PRs welcome)
+- Added Quick Start section with installation and first steps
+- Added comprehensive Cheatsheet section:
+  - Most common commands table
+  - Resource aliases reference
+  - Useful flags reference
+  - Quick diagnostics examples
+- Created beautiful HTML mini-guide (`docs/guide.html`):
+  - Modern gradient design with responsive layout
+  - Interactive feature cards with hover effects
+  - Step-by-step installation guide
+  - Comprehensive command reference tables
+  - Practical examples section
+  - Advanced features documentation
+  - Mobile-friendly responsive design
+- Improved README navigation with anchor links
+- Added centered introduction and navigation menu
+
+### Changed
+- README now has a more professional and attractive appearance
+- Better organization of content with visual hierarchy
+- Version bumped to 0.5.2
+
 ## [0.5.1] - 2025-12-25
 
 ### Added - Version and Project Information System

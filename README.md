@@ -1,6 +1,25 @@
 # kcsi - Kubectl Smart Interactive Wrapper
 
-A kubectl wrapper with intelligent autocompletion for namespaces, pods, and other Kubernetes resources.
+[![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/alessandro/kcsi/releases)
+[![Go Version](https://img.shields.io/badge/go-1.21+-00ADD8.svg)](https://golang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](#installation)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+<p align="center">
+  <i>A kubectl wrapper with intelligent autocompletion for namespaces, pods, and other Kubernetes resources.</i>
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#cheatsheet">Cheatsheet</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#roadmap">Roadmap</a>
+</p>
+
+---
 
 ## Features
 
@@ -10,9 +29,76 @@ A kubectl wrapper with intelligent autocompletion for namespaces, pods, and othe
 - Centralized version and project information
 - Built with Go and Cobra
 
+## Quick Start
+
+```bash
+# Install kcsi
+curl -sL https://raw.githubusercontent.com/alessandro/kcsi/main/install.sh | bash
+
+# Set up autocompletion (bash example)
+source <(kcsi completion bash)
+
+# Start using kcsi!
+kcsi get pods -n <TAB>  # Press TAB to see all namespaces
+```
+
+## Cheatsheet
+
+### Most Common Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `kcsi get pods -n <ns>` | List pods with namespace autocomplete | `kcsi get pods -n kube-system` |
+| `kcsi logs -f -n <ns> <pod>` | Follow pod logs with autocomplete | `kcsi logs -f -n default my-app` |
+| `kcsi describe pod -n <ns> <pod>` | Describe pod with cascading autocomplete | `kcsi describe pod -n prod api-server` |
+| `kcsi delete pod -n <ns> <pod>` | Delete pod with confirmation prompt | `kcsi delete pod -n default old-pod` |
+| `kcsi events -n <ns> -w` | Watch cluster events | `kcsi events -n production -w` |
+| `kcsi check errors` | Find all problematic pods | `kcsi check errors` |
+| `kcsi get pods -o wide` | Get pods with extended info | `kcsi get pods -n default -o wide` |
+
+### Resource Aliases
+
+| Full Command | Short Alias |
+|--------------|-------------|
+| `get services` | `get svc` |
+| `get deployments` | `get deploy` |
+| `get namespaces` | `get ns` |
+| `get nodes` | `get no` |
+| `get configmaps` | `get cm` |
+| `describe service` | `describe svc` |
+| `delete deployment` | `delete deploy` |
+
+### Useful Flags
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `-n, --namespace` | Specify namespace (with autocomplete) | `kcsi get pods -n production` |
+| `-o, --output` | Output format (wide, yaml, json) | `kcsi get pods -o yaml` |
+| `-f, --follow` | Follow log output | `kcsi logs -f my-pod` |
+| `--tail <N>` | Show last N lines of logs | `kcsi logs --tail 100 my-pod` |
+| `-c, --container` | Specify container (with autocomplete) | `kcsi logs -c sidecar my-pod` |
+| `--force, -f` | Skip delete confirmation | `kcsi delete pod my-pod --force` |
+| `-w, --watch` | Watch events in real-time | `kcsi events -w` |
+
+### Quick Diagnostics
+
+```bash
+# Find all pods with errors across all namespaces
+kcsi check errors
+
+# Watch events in real-time for a namespace
+kcsi events -n production -w
+
+# Get detailed pod info with node placement
+kcsi get pods -n production -o wide
+
+# Follow logs from a specific container
+kcsi logs -f -n prod my-pod -c <TAB>  # Autocompletes containers
+```
+
 ## Current Status
 
-**Version:** 0.5.1 - Version & Project Information
+**Version:** 0.5.2 - Enhanced Documentation
 
 Currently implemented:
 

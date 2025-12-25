@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kcsi - Kubectl Smart Interactive - Quick Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .badges {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '$ ';
+            color: #50fa7b;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f7fa;
+        }
+
+        .install-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .install-section h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+
+        .step-container {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .tip {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip strong {
+            color: #155724;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 kcsi</h1>
+            <p>Kubectl Smart Interactive Wrapper</p>
+            <div class="badges">
+                <span class="badge">v0.5.2</span>
+                <span class="badge">Go 1.21+</span>
+                <span class="badge">MIT License</span>
+                <span class="badge">macOS | Linux</span>
+            </div>
+        </header>
+
+        <div class="content">
+            <section id="intro">
+                <h2>📖 What is kcsi?</h2>
+                <p>
+                    <strong>kcsi</strong> is a powerful kubectl wrapper that supercharges your Kubernetes workflow with 
+                    intelligent autocompletion. No more typing long resource names or memorizing complex commands—just 
+                    press <span class="highlight">TAB</span> and let kcsi do the work!
+                </p>
+            </section>
+
+            <section id="features">
+                <h2>✨ Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🎯 Smart Autocompletion</h4>
+                        <p>Autocomplete namespaces, pods, services, and all Kubernetes resources with TAB</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔗 Cascading Completion</h4>
+                        <p>Select namespace first, then see only pods/resources in that namespace</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🛡️ Safety First</h4>
+                        <p>Confirmation prompts before deletions prevent costly mistakes</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ Lightning Fast</h4>
+                        <p>Simplified commands and aliases make Kubernetes operations faster</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 Built-in Diagnostics</h4>
+                        <p>Check for pod errors and monitor events across your cluster</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Multiple Outputs</h4>
+                        <p>Support for wide, yaml, json, and all kubectl output formats</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="installation">
+                <h2>📥 Installation</h2>
+                
+                <div class="install-section">
+                    <h3>Quick Install (Recommended)</h3>
+                    <div class="code-block">curl -sL https://raw.githubusercontent.com/alessandro/kcsi/main/install.sh | bash</div>
+                </div>
+
+                <h3>Manual Installation</h3>
+                
+                <div class="step-container">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Download the latest release</strong>
+                        <div class="code-block">wget https://github.com/alessandro/kcsi/releases/latest/download/kcsi-linux-amd64</div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Make it executable and move to PATH</strong>
+                        <div class="code-block">chmod +x kcsi-linux-amd64</div>
+                        <div class="code-block">sudo mv kcsi-linux-amd64 /usr/local/bin/kcsi</div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Set up autocompletion</strong>
+                        <div class="code-block">echo 'source &lt;(kcsi completion bash)' >> ~/.bashrc</div>
+                        <div class="code-block">source ~/.bashrc</div>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 Tip:</strong> For Zsh users, replace <code>bash</code> with <code>zsh</code> and use <code>~/.zshrc</code>
+                </div>
+            </section>
+
+            <section id="quickstart">
+                <h2>🚀 Quick Start Guide</h2>
+                
+                <h3>Basic Commands</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi get pods -n &lt;TAB&gt;</code></td>
+                        <td>List pods with namespace autocomplete</td>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi logs -f -n &lt;ns&gt; &lt;pod&gt;</code></td>
+                        <td>Follow pod logs with cascading autocomplete</td>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi describe pod -n &lt;ns&gt; &lt;pod&gt;</code></td>
+                        <td>Describe a pod with autocomplete</td>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi delete pod -n &lt;ns&gt; &lt;pod&gt;</code></td>
+                        <td>Delete pod with confirmation prompt</td>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi events -w</code></td>
+                        <td>Watch cluster events in real-time</td>
+                    </tr>
+                    <tr>
+                        <td><code>kcsi check errors</code></td>
+                        <td>Find all problematic pods</td>
+                    </tr>
+                </table>
+
+                <h3>Resource Shortcuts</h3>
+                <table>
+                    <tr>
+                        <th>Full Command</th>
+                        <th>Shortcut</th>
+                    </tr>
+                    <tr>
+                        <td><code>get services</code></td>
+                        <td><code>get svc</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get deployments</code></td>
+                        <td><code>get deploy</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get namespaces</code></td>
+                        <td><code>get ns</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get configmaps</code></td>
+                        <td><code>get cm</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get nodes</code></td>
+                        <td><code>get no</code></td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="examples">
+                <h2>💡 Practical Examples</h2>
+                
+                <h3>Example 1: Debugging a Crashing Pod</h3>
+                <div class="code-block">kcsi check errors</div>
+                <p>Find all pods with issues</p>
+                <div class="code-block">kcsi logs -f -n production api-server-xxx</div>
+                <p>Follow the logs of the problematic pod</p>
+                <div class="code-block">kcsi describe pod -n production api-server-xxx</div>
+                <p>Get detailed information about the pod</p>
+
+                <h3>Example 2: Monitoring Production</h3>
+                <div class="code-block">kcsi events -n production -w</div>
+                <p>Watch events in the production namespace</p>
+                <div class="code-block">kcsi get pods -n production -o wide</div>
+                <p>See which nodes the pods are running on</p>
+
+                <h3>Example 3: Multi-Container Pod Logs</h3>
+                <div class="code-block">kcsi logs -n default my-pod -c &lt;TAB&gt;</div>
+                <p>Press TAB to autocomplete container names</p>
+                <div class="code-block">kcsi logs -f -n default my-pod -c sidecar --tail 100</div>
+                <p>Follow last 100 lines from specific container</p>
+
+                <div class="tip">
+                    <strong>💡 Pro Tip:</strong> Use <code>-o yaml</code> or <code>-o json</code> flags with any get command 
+                    to export configurations for backup or migration!
+                </div>
+            </section>
+
+            <section id="advanced">
+                <h2>🎓 Advanced Features</h2>
+                
+                <h3>Safety Mechanisms</h3>
+                <p>All delete operations require confirmation by default:</p>
+                <div class="code-block">kcsi delete pod -n production my-pod</div>
+                <p style="margin-top: 10px; color: #d63031;">
+                    ⚠ Are you sure you want to delete pod 'my-pod' in namespace 'production'? [y/N]:
+                </p>
+                <p style="margin-top: 20px;">Skip confirmation for automation:</p>
+                <div class="code-block">kcsi delete pod -n production my-pod --force</div>
+
+                <h3>Output Formats</h3>
+                <table>
+                    <tr>
+                        <th>Format</th>
+                        <th>Use Case</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>-o wide</code></td>
+                        <td>See node placement and IPs</td>
+                        <td><code>kcsi get pods -o wide</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>-o yaml</code></td>
+                        <td>Export/backup configurations</td>
+                        <td><code>kcsi get deploy -o yaml</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>-o json</code></td>
+                        <td>Programmatic processing</td>
+                        <td><code>kcsi get svc -o json</code></td>
+                    </tr>
+                </table>
+
+                <h3>Diagnostics Tools</h3>
+                <p><strong>Check for pod errors:</strong></p>
+                <div class="code-block">kcsi check errors</div>
+                <p>Shows all pods not in Running or Completed state with helpful suggestions</p>
+
+                <p style="margin-top: 20px;"><strong>Monitor cluster events:</strong></p>
+                <div class="code-block">kcsi events -n &lt;namespace&gt; -w</div>
+                <p>Watch events in real-time, sorted by timestamp</p>
+            </section>
+
+            <section id="info">
+                <h2>ℹ️ Project Information</h2>
+                <div class="code-block">kcsi --version</div>
+                <p>Show version and author</p>
+                <div class="code-block">kcsi --version-detailed</div>
+                <p>Show detailed build information</p>
+                <div class="code-block">kcsi about</div>
+                <p>Display project philosophy and principles</p>
+            </section>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ by Alessandro Middei</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/alessandro/kcsi">GitHub</a> • 
+                <a href="https://github.com/alessandro/kcsi/issues">Report Issues</a> • 
+                <a href="https://github.com/alessandro/kcsi/blob/main/LICENSE">MIT License</a>
+            </p>
+            <p style="margin-top: 20px; opacity: 0.7;">kcsi v0.5.2 - Kubectl Smart Interactive</p>
+        </footer>
+    </div>
+</body>
+</html>
