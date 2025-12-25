@@ -1,5 +1,6 @@
 name: Build and Test
-
+permissions:
+  contents: read
 on:
   push:
     branches: [ "main", "master" ]
@@ -13,7 +14,7 @@ jobs:
     strategy:
       matrix:
         go-version: ['1.21', '1.22', '1.23']
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
