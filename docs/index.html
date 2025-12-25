@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kcsi - Kubectl Smart Interactive Documentation</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: #667eea;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .doc-links {
+            background: #f8f9fa;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .doc-links h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .doc-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .doc-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .doc-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .doc-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .doc-desc {
+            color: #666;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🚀 kcsi</h1>
+        <p>Kubectl Smart Interactive - Your Kubernetes CLI Companion</p>
+        <div>
+            <a href="https://github.com/stanzinofree/kcsi" class="cta-button">View on GitHub</a>
+            <a href="cheatsheet.html" class="cta-button">Get Started</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Smart Autocompletion</div>
+            <div class="feature-description">
+                Intelligent tab completion for namespaces, pods, services, and all Kubernetes resources. 
+                Works seamlessly with your existing kubectl commands.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-title">Interactive Selection</div>
+            <div class="feature-description">
+                Cascading autocompletion guides you through command construction. 
+                Select namespace, then resource, then container - all with TAB.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-title">Safety First</div>
+            <div class="feature-description">
+                Delete operations require confirmation by default. 
+                Protect your production environments from accidental deletions.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <div class="feature-title">Built-in Diagnostics</div>
+            <div class="feature-description">
+                Find problematic pods instantly with <code>kcsi check errors</code>. 
+                Watch cluster events in real-time.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <div class="feature-title">Cross-Platform</div>
+            <div class="feature-description">
+                Works on macOS, Linux, and Windows. 
+                Single binary, no dependencies.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <div class="feature-title">Lightweight</div>
+            <div class="feature-description">
+                Built with Go, ~4MB binary. 
+                Fast startup, minimal resource usage.
+            </div>
+        </div>
+    </div>
+
+    <div class="doc-links">
+        <h2>📚 Documentation</h2>
+        <div class="doc-grid">
+            <a href="cheatsheet.html" class="doc-card">
+                <div class="doc-icon">📖</div>
+                <div class="doc-title">Command Cheatsheet</div>
+                <div class="doc-desc">Quick reference with interactive search</div>
+            </a>
+
+            <a href="roadmap.html" class="doc-card">
+                <div class="doc-icon">🗺️</div>
+                <div class="doc-title">Project Roadmap</div>
+                <div class="doc-desc">Development timeline and future plans</div>
+            </a>
+
+            <a href="https://github.com/stanzinofree/kcsi/blob/main/README.md" class="doc-card">
+                <div class="doc-icon">📄</div>
+                <div class="doc-title">README</div>
+                <div class="doc-desc">Installation and usage guide</div>
+            </a>
+
+            <a href="https://github.com/stanzinofree/kcsi/releases" class="doc-card">
+                <div class="doc-icon">📦</div>
+                <div class="doc-title">Releases</div>
+                <div class="doc-desc">Download pre-built binaries</div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>kcsi - Kubectl Smart Interactive</p>
+        <p style="margin-top: 10px;">
+            <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
+            <a href="https://github.com/stanzinofree/kcsi/issues">Report Issue</a> •
+            <a href="https://github.com/stanzinofree/kcsi/blob/main/LICENSE">License</a>
+        </p>
+    </footer>
+</body>
+</html>

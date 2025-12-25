@@ -33,8 +33,8 @@
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#usage">Usage</a> •
-  <a href="docs/cheatsheet.html">📖 Cheatsheet</a> •
-  <a href="docs/roadmap.html">🗺️ Roadmap</a>
+  <a href="https://stanzinofree.github.io/kcsi/cheatsheet.html">📖 Cheatsheet</a> •
+  <a href="https://stanzinofree.github.io/kcsi/roadmap.html">🗺️ Roadmap</a>
 </p>
 
 ---
@@ -64,7 +64,7 @@ kcsi get pods -n <TAB>  # Press TAB to see all namespaces
 
 ### Quick Reference
 
-For a complete interactive cheatsheet with search functionality, see **[📖 Full Cheatsheet](docs/cheatsheet.html)**.
+For a complete interactive cheatsheet with search functionality, see **[📖 Full Cheatsheet](https://stanzinofree.github.io/kcsi/cheatsheet.html)**.
 
 **Most Common Commands:**
 
@@ -92,7 +92,7 @@ kcsi events -w
 
 **Useful Flags:** `-n` (namespace), `-o` (output format), `-f` (follow/force), `--tail`, `-w` (watch)
 
-> 💡 **Tip:** Use the [interactive cheatsheet](docs/cheatsheet.html) to quickly search all available commands and options.
+> 💡 **Tip:** Use the [interactive cheatsheet](https://stanzinofree.github.io/kcsi/cheatsheet.html) to quickly search all available commands and options.
 
 ## Current Status
 
@@ -504,7 +504,7 @@ kcsi about
 
 ## Roadmap
 
-For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](docs/roadmap.html)**.
+For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
 **Current Status:** 5 phases completed (29 features delivered), 2 phases planned (12 features upcoming)
 
