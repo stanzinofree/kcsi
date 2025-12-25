@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kcsi - Project Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .phase {
+            margin-bottom: 50px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .phase.completed {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .phase.in-progress {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 5px solid #ffc107;
+        }
+
+        .phase.pending {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #6c757d;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .phase-title {
+            font-size: 1.8em;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phase-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-progress {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge-pending {
+            background: #6c757d;
+            color: white;
+        }
+
+        .progress-bar-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .task-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .task-item {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .task-checkbox.done {
+            background: #28a745;
+            color: white;
+        }
+
+        .task-checkbox.todo {
+            background: #e9ecef;
+            border: 2px solid #6c757d;
+        }
+
+        .task-text {
+            flex: 1;
+        }
+
+        .task-text.done {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .progress-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗺️ kcsi Roadmap</h1>
+            <p>Project Development Timeline & Future Plans</p>
+        </header>
+
+        <div class="progress-summary">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Completed Phases</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">29</div>
+                <div class="stat-label">Features Delivered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Upcoming Phases</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Planned Features</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Phase 1 -->
+            <div class="phase completed">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 1: Proof of Concept
+                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Basic CLI structure with Cobra</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get pods</code> command with namespace flag</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Namespace autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Completion script generation</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase completed">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 2: Expand Commands
+                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>logs</code> command with pod and namespace autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>describe pod</code> command with resource autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Cascading autocompletion (namespace → pod)</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Container autocompletion for multi-container pods</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Full <code>logs</code> flags support (-f, --tail, -p, -c)</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase completed">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 3: Extended Resource Support
+                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get services</code> command with autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get deployments</code> command with autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get nodes</code> command with autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get namespaces</code> command</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get configmaps</code> command with autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>get secrets</code> command with autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>describe</code> commands for all resource types</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Aliases support (svc, deploy, cm, ns, no)</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="phase completed">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 4: Delete Operations
+                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>delete pod</code> command with confirmation prompt</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>delete service</code> command with confirmation</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>delete deployment</code> command with confirmation</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>delete configmap</code> command with confirmation</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>delete secret</code> command with confirmation</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>--force</code> flag to skip confirmation for automation</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Safety prompts showing resource type, name, and namespace</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="phase completed">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 5: Diagnostics & Output Control
+                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>-o/--output</code> flag for all get commands (wide, yaml, json)</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>events</code> command with namespace filtering and watch mode</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>check errors</code> command to find problematic pods</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Helpful troubleshooting suggestions</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="phase pending">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 6: Additional Commands
+                        <span class="phase-badge badge-pending">Next</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text"><code>exec</code> command with interactive pod selection</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text"><code>port-forward</code> command</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text"><code>apply</code> and <code>edit</code> commands</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text"><code>rollout</code> commands (status, restart, undo)</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text"><code>top</code> commands for resource usage</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 7 -->
+            <div class="phase pending">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        Phase 7: Enhancements
+                        <span class="phase-badge badge-pending">Future</span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text">Cache for faster autocompletion</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text">Default context/namespace configuration</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text">Custom aliases</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text">Fuzzy matching for resources</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox todo"></div>
+                        <div class="task-text">Configuration file support</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>kcsi - Kubectl Smart Interactive</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
+                <a href="index.html">Home</a> • 
+                <a href="guide.html">Quick Guide</a> •
+                <a href="cheatsheet.html">Cheatsheet</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
