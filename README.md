@@ -10,11 +10,9 @@
 
 [![Build and Test](https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
 [![CodeQL](https://github.com/stanzinofree/kcsi/workflows/CodeQL%20Security%20Analysis/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/codeql.yml)
-[![SonarCloud](https://github.com/stanzinofree/kcsi/workflows/SonarCloud%20Analysis/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/sonarcloud.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 
 ### Security & Code Quality
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
