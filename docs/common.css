@@ -135,3 +135,31 @@ pre code {
     padding: 0;
     color: #212529;
 }
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, #a8b5d1 0%, #c3dfe0 50%, #b4d4d3 100%);
+    color: #2c3e50;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+footer p {
+    margin: 8px 0;
+    font-size: 0.95em;
+    opacity: 0.95;
+}
+
+footer a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #1a252f;
+    text-decoration: underline;
+}
