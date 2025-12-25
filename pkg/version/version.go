@@ -33,7 +33,7 @@ type Manifest struct {
 var manifest Manifest
 
 func init() {
-	if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
+	if yaml.Unmarshal(manifestData, &manifest) != nil {
 		// Fallback to defaults if manifest cannot be read
 		manifest.Version = "dev"
 		manifest.Name = "kcsi"
