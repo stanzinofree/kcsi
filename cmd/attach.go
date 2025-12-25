@@ -19,8 +19,8 @@ Tries bash, zsh, and sh in order to find an available shell.
 Examples:
   kcsi attach -n production my-pod
   kcsi attach -n production my-pod -c sidecar`,
-	Args: cobra.ExactArgs(1),
-	RunE: runAttach,
+	Args:              cobra.ExactArgs(1),
+	RunE:              runAttach,
 	ValidArgsFunction: completion.PodCompletion,
 }
 

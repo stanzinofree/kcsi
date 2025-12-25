@@ -20,8 +20,8 @@ Examples:
   kcsi execute -n production my-pod -- ls -la
   kcsi execute -n production my-pod -c sidecar -- cat /etc/hosts
   kcsi execute -n default api-pod -- curl localhost:8080/health`,
-	Args: cobra.MinimumNArgs(1),
-	RunE: runExecute,
+	Args:              cobra.MinimumNArgs(1),
+	RunE:              runExecute,
 	ValidArgsFunction: completion.PodCompletion,
 }
 
