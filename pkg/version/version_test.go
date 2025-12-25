@@ -10,8 +10,8 @@ func TestGetVersion(t *testing.T) {
 	if version == "" {
 		t.Error("GetVersion() returned empty string")
 	}
-	if version != "0.5.2" {
-		t.Errorf("Expected version 0.5.2, got %s", version)
+	if version != "0.5.3" {
+		t.Errorf("Expected version 0.5.3, got %s", version)
 	}
 }
 
@@ -53,8 +53,8 @@ func TestGetManifest(t *testing.T) {
 	if manifest.Name != "kcsi" {
 		t.Errorf("Expected manifest name 'kcsi', got %s", manifest.Name)
 	}
-	if manifest.Version != "0.5.2" {
-		t.Errorf("Expected manifest version '0.5.2', got %s", manifest.Version)
+	if manifest.Version != "0.5.3" {
+		t.Errorf("Expected manifest version '0.5.3', got %s", manifest.Version)
 	}
 	if manifest.License != "MIT" {
 		t.Errorf("Expected manifest license 'MIT', got %s", manifest.License)
