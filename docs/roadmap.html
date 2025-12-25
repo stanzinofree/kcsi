@@ -20,7 +20,7 @@
                 <div class="stat-label">Completed Phases</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">29</div>
+                <div class="stat-number">36</div>
                 <div class="stat-label">Features Delivered</div>
             </div>
             <div class="stat-card">
@@ -28,7 +28,7 @@
                 <div class="stat-label">Upcoming Phases</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">12</div>
+                <div class="stat-number">10</div>
                 <div class="stat-label">Planned Features</div>
             </div>
         </div>
@@ -194,7 +194,7 @@
             <div class="phase completed">
                 <div class="phase-header">
                     <div class="phase-title">
-                        Phase 5: Diagnostics & Output Control
+                        Phase 5: Diagnostics, Output Control & Interactive Commands
                         <span class="phase-badge badge-completed">✓ Completed</span>
                     </div>
                 </div>
@@ -218,6 +218,30 @@
                         <div class="task-checkbox done">✓</div>
                         <div class="task-text done">Helpful troubleshooting suggestions</div>
                     </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>attach</code> command with automatic shell detection (bash/zsh/sh)</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done"><code>execute</code> command for running custom commands in pods</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Container flag (<code>-c</code>) support for logs and describe pod</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">Namespace-first syntax for better autocompletion workflow</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">SonarCloud code quality fixes (string duplication, test naming)</div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox done">✓</div>
+                        <div class="task-text done">WCAG AA accessibility improvements in documentation</div>
+                    </li>
                 </ul>
             </div>
 
@@ -235,11 +259,7 @@
                 <ul class="task-list">
                     <li class="task-item">
                         <div class="task-checkbox todo"></div>
-                        <div class="task-text"><code>exec</code> command with interactive pod selection</div>
-                    </li>
-                    <li class="task-item">
-                        <div class="task-checkbox todo"></div>
-                        <div class="task-text"><code>port-forward</code> command</div>
+                        <div class="task-text"><code>port-forward</code> command with port autocompletion</div>
                     </li>
                     <li class="task-item">
                         <div class="task-checkbox todo"></div>
@@ -251,7 +271,7 @@
                     </li>
                     <li class="task-item">
                         <div class="task-checkbox todo"></div>
-                        <div class="task-text"><code>top</code> commands for resource usage</div>
+                        <div class="task-text"><code>top</code> commands for resource usage (pods, nodes)</div>
                     </li>
                 </ul>
             </div>
