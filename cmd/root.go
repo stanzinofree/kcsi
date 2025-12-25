@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stanzinofree/kcsi/pkg/version"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/version"
 )
 
 var (
@@ -28,7 +28,7 @@ func Execute() {
 			os.Exit(0)
 		}
 	}
-	
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -45,7 +45,7 @@ Author: %s
 
 	// Add detailed version flag - this needs to be handled before command execution
 	rootCmd.PersistentFlags().BoolVar(&showDetailedVersion, "version-detailed", false, "Show detailed version information")
-	
+
 	// PersistentPreRun executes before any command
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		if showDetailedVersion {

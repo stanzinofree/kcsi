@@ -5,16 +5,16 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 )
 
 var logsCmd = &cobra.Command{
-	Use:   "logs [pod-name]",
-	Short: "Get logs from a pod",
-	Long:  `Get logs from a specific pod with namespace and pod name autocompletion`,
-	Args:  cobra.ExactArgs(1),
-	RunE:  runLogs,
+	Use:               "logs [pod-name]",
+	Short:             "Get logs from a pod",
+	Long:              `Get logs from a specific pod with namespace and pod name autocompletion`,
+	Args:              cobra.ExactArgs(1),
+	RunE:              runLogs,
 	ValidArgsFunction: completion.PodCompletion,
 }
 
@@ -35,7 +35,7 @@ func init() {
 	logsCmd.Flags().BoolVarP(&logsPrevious, "previous", "p", false, "Print the logs for the previous instance of the container")
 	logsCmd.Flags().Int64Var(&logsTail, "tail", -1, "Lines of recent log file to display (default: all)")
 	logsCmd.Flags().StringVarP(&logsContainer, "container", "c", "", "Container name (if pod has multiple containers)")
-	
+
 	logsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 	logsCmd.RegisterFlagCompletionFunc("container", completion.ContainerCompletion)
 }
@@ -45,7 +45,7 @@ func runLogs(cmd *cobra.Command, args []string) error {
 
 	// Build kubectl command
 	kubectlArgs := []string{"logs"}
-	
+
 	if logsNamespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", logsNamespace)
 	}

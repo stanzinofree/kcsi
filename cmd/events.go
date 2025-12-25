@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 )
 
 var eventsCmd = &cobra.Command{

@@ -14,7 +14,8 @@ jobs:
       contents: read
     strategy:
       matrix:
-        go-version: ['1.21', '1.22', '1.23']
+        go-version: ['stable']
+      fail-fast: false
 
     steps:
     - name: Checkout code
@@ -82,7 +83,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: '1.21'
+        go-version: 'stable'
 
     - name: Build
       env:

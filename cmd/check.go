@@ -34,7 +34,7 @@ func runCheckErrors(cmd *cobra.Command, args []string) error {
 
 	// Get all pods with wide output
 	kubectlArgs := []string{"get", "pods", "--all-namespaces", "-o", "wide"}
-	
+
 	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
 	output, err := kubectlCmd.Output()
 	if err != nil {

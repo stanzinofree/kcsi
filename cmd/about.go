@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/stanzinofree/kcsi/pkg/version"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/version"
 )
 
 var aboutCmd = &cobra.Command{
