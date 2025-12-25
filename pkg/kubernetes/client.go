@@ -9,9 +9,9 @@ import (
 
 // JSONPath constants for kubectl queries
 const (
-	jsonPathMetadataName      = "jsonpath={.items[*].metadata.name}"
-	jsonPathContainerNames    = "jsonpath={.spec.containers[*].name}"
-	flagAllNamespaces         = "--all-namespaces"
+	jsonPathMetadataName   = "jsonpath={.items[*].metadata.name}"
+	jsonPathContainerNames = "jsonpath={.spec.containers[*].name}"
+	flagAllNamespaces      = "--all-namespaces"
 )
 
 // ExecuteKubectl runs a kubectl command and returns the output
