@@ -18,6 +18,6 @@ func init() {
 	rootCmd.AddCommand(aboutCmd)
 }
 
-func runAbout(cmd *cobra.Command, args []string) {
+func runAbout(_ *cobra.Command, _ []string) {
 	fmt.Println(version.GetAbout())
 }

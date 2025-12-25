@@ -40,7 +40,7 @@ func init() {
 	logsCmd.RegisterFlagCompletionFunc("container", completion.ContainerCompletion)
 }
 
-func runLogs(cmd *cobra.Command, args []string) error {
+func runLogs(_ *cobra.Command, args []string) error {
 	podName := args[0]
 
 	// Build kubectl command

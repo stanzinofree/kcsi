@@ -29,7 +29,7 @@ func init() {
 	eventsCmd.RegisterFlagCompletionFunc("namespace", completion.NamespaceCompletion)
 }
 
-func runEvents(cmd *cobra.Command, args []string) error {
+func runEvents(_ *cobra.Command, _ []string) error {
 	kubectlArgs := []string{"get", "events"}
 
 	if eventsNamespace != "" {

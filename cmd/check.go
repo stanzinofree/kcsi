@@ -27,7 +27,7 @@ func init() {
 	checkCmd.AddCommand(checkErrorsCmd)
 }
 
-func runCheckErrors(cmd *cobra.Command, args []string) error {
+func runCheckErrors(_ *cobra.Command, _ []string) error {
 	fmt.Println("Checking for pods with errors across all namespaces...")
 	fmt.Println("(Excluding: Running, Completed)")
 	fmt.Println()
