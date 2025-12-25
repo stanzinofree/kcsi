@@ -7,6 +7,13 @@ import (
 	"strings"
 )
 
+// JSONPath constants for kubectl queries
+const (
+	jsonPathMetadataName   = "jsonpath={.items[*].metadata.name}"
+	jsonPathContainerNames = "jsonpath={.spec.containers[*].name}"
+	flagAllNamespaces      = "--all-namespaces"
+)
+
 // ExecuteKubectl runs a kubectl command and returns the output
 func ExecuteKubectl(args ...string) (string, error) {
 	cmd := exec.Command("kubectl", args...)
@@ -25,7 +32,7 @@ func ExecuteKubectl(args ...string) (string, error) {
 
 // GetNamespaces returns a list of all namespaces in the cluster
 func GetNamespaces() ([]string, error) {
-	output, err := ExecuteKubectl("get", "namespaces", "-o", "jsonpath={.items[*].metadata.name}")
+	output, err := ExecuteKubectl("get", "namespaces", "-o", jsonPathMetadataName)
 	if err != nil {
 		return nil, err
 	}
@@ -37,11 +44,11 @@ func GetNamespaces() ([]string, error) {
 
 // GetPods returns a list of pods in the specified namespace
 func GetPods(namespace string) ([]string, error) {
-	args := []string{"get", "pods", "-o", "jsonpath={.items[*].metadata.name}"}
+	args := []string{"get", "pods", "-o", jsonPathMetadataName}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	} else {
-		args = append(args, "--all-namespaces")
+		args = append(args, flagAllNamespaces)
 	}
 
 	output, err := ExecuteKubectl(args...)
@@ -60,7 +67,7 @@ func GetContainers(namespace, podName string) ([]string, error) {
 		return nil, fmt.Errorf("pod name is required")
 	}
 
-	args := []string{"get", "pod", podName, "-o", "jsonpath={.spec.containers[*].name}"}
+	args := []string{"get", "pod", podName, "-o", jsonPathContainerNames}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	}
@@ -77,11 +84,11 @@ func GetContainers(namespace, podName string) ([]string, error) {
 
 // GetServices returns a list of services in the specified namespace
 func GetServices(namespace string) ([]string, error) {
-	args := []string{"get", "services", "-o", "jsonpath={.items[*].metadata.name}"}
+	args := []string{"get", "services", "-o", jsonPathMetadataName}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	} else {
-		args = append(args, "--all-namespaces")
+		args = append(args, flagAllNamespaces)
 	}
 
 	output, err := ExecuteKubectl(args...)
@@ -95,11 +102,11 @@ func GetServices(namespace string) ([]string, error) {
 
 // GetDeployments returns a list of deployments in the specified namespace
 func GetDeployments(namespace string) ([]string, error) {
-	args := []string{"get", "deployments", "-o", "jsonpath={.items[*].metadata.name}"}
+	args := []string{"get", "deployments", "-o", jsonPathMetadataName}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	} else {
-		args = append(args, "--all-namespaces")
+		args = append(args, flagAllNamespaces)
 	}
 
 	output, err := ExecuteKubectl(args...)
@@ -113,7 +120,7 @@ func GetDeployments(namespace string) ([]string, error) {
 
 // GetNodes returns a list of nodes in the cluster
 func GetNodes() ([]string, error) {
-	output, err := ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[*].metadata.name}")
+	output, err := ExecuteKubectl("get", "nodes", "-o", jsonPathMetadataName)
 	if err != nil {
 		return nil, err
 	}
@@ -124,11 +131,11 @@ func GetNodes() ([]string, error) {
 
 // GetConfigMaps returns a list of configmaps in the specified namespace
 func GetConfigMaps(namespace string) ([]string, error) {
-	args := []string{"get", "configmaps", "-o", "jsonpath={.items[*].metadata.name}"}
+	args := []string{"get", "configmaps", "-o", jsonPathMetadataName}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	} else {
-		args = append(args, "--all-namespaces")
+		args = append(args, flagAllNamespaces)
 	}
 
 	output, err := ExecuteKubectl(args...)
@@ -142,11 +149,11 @@ func GetConfigMaps(namespace string) ([]string, error) {
 
 // GetSecrets returns a list of secrets in the specified namespace
 func GetSecrets(namespace string) ([]string, error) {
-	args := []string{"get", "secrets", "-o", "jsonpath={.items[*].metadata.name}"}
+	args := []string{"get", "secrets", "-o", jsonPathMetadataName}
 	if namespace != "" {
 		args = append(args, "-n", namespace)
 	} else {
-		args = append(args, "--all-namespaces")
+		args = append(args, flagAllNamespaces)
 	}
 
 	output, err := ExecuteKubectl(args...)

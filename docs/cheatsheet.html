@@ -294,7 +294,7 @@
             let visibleCount = 0;
 
             commandCards.forEach(card => {
-                const tags = card.getAttribute('data-tags');
+                const tags = card.dataset.tags;
                 const syntax = card.querySelector('.command-syntax').textContent.toLowerCase();
                 const description = card.querySelector('.command-description').textContent.toLowerCase();
                 
