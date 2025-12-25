@@ -112,3 +112,8 @@ func GetAbout() string {
 func GetManifest() Manifest {
 	return manifest
 }
+
+// GetAuthor returns the author name
+func GetAuthor() string {
+	return manifest.Author
+}

@@ -36,11 +36,12 @@ func Execute() {
 }
 
 func init() {
-	// Custom version template with author info
-	rootCmd.SetVersionTemplate(`{{with .Name}}{{printf "%s " .}}{{end}}{{printf "version %s" .Version}}
-Author: Alessandro
+	// Custom version template with author info from manifest
+	versionTemplate := fmt.Sprintf(`{{with .Name}}{{printf "%%s " .}}{{end}}{{printf "version %%s" .Version}}
+Author: %s
 {{if .Short}}{{.Short}}{{end}}
-`)
+`, version.GetAuthor())
+	rootCmd.SetVersionTemplate(versionTemplate)
 
 	// Add detailed version flag - this needs to be handled before command execution
 	rootCmd.PersistentFlags().BoolVar(&showDetailedVersion, "version-detailed", false, "Show detailed version information")
