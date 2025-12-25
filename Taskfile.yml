@@ -71,6 +71,24 @@ tasks:
       - mkdir -p {{.BUILD_DIR}}
       - GOOS=linux GOARCH=arm go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-linux-arm -ldflags="{{.LDFLAGS}}" .
 
+  build:windows:
+    desc: Build for Windows (amd64, arm64)
+    cmds:
+      - task: build:windows-amd64
+      - task: build:windows-arm64
+
+  build:windows-amd64:
+    desc: Build for Windows x86_64
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=windows GOARCH=amd64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-windows-amd64.exe -ldflags="{{.LDFLAGS}}" .
+
+  build:windows-arm64:
+    desc: Build for Windows ARM64
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - GOOS=windows GOARCH=arm64 go build -o {{.BUILD_DIR}}/{{.APP_NAME}}-windows-arm64.exe -ldflags="{{.LDFLAGS}}" .
+
   clean:
     desc: Clean build artifacts
     cmds:

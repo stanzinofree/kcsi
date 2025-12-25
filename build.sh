@@ -26,6 +26,8 @@ platforms=(
     "linux/amd64"
     "linux/arm64"
     "linux/arm"
+    "windows/amd64"
+    "windows/arm64"
 )
 
 for platform in "${platforms[@]}"; do

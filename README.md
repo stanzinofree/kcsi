@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](#installation)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ### CI/CD & Quality
@@ -32,9 +32,9 @@
   <a href="#features">Features</a> •
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
-  <a href="#cheatsheet">Cheatsheet</a> •
   <a href="#usage">Usage</a> •
-  <a href="#roadmap">Roadmap</a>
+  <a href="https://stanzinofree.github.io/kcsi/cheatsheet.html">📖 Cheatsheet</a> •
+  <a href="https://stanzinofree.github.io/kcsi/roadmap.html">🗺️ Roadmap</a>
 </p>
 
 ---
@@ -62,57 +62,37 @@ kcsi get pods -n <TAB>  # Press TAB to see all namespaces
 
 ## Cheatsheet
 
-### Most Common Commands
+### Quick Reference
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `kcsi get pods -n <ns>` | List pods with namespace autocomplete | `kcsi get pods -n kube-system` |
-| `kcsi logs -f -n <ns> <pod>` | Follow pod logs with autocomplete | `kcsi logs -f -n default my-app` |
-| `kcsi describe pod -n <ns> <pod>` | Describe pod with cascading autocomplete | `kcsi describe pod -n prod api-server` |
-| `kcsi delete pod -n <ns> <pod>` | Delete pod with confirmation prompt | `kcsi delete pod -n default old-pod` |
-| `kcsi events -n <ns> -w` | Watch cluster events | `kcsi events -n production -w` |
-| `kcsi check errors` | Find all problematic pods | `kcsi check errors` |
-| `kcsi get pods -o wide` | Get pods with extended info | `kcsi get pods -n default -o wide` |
+For a complete interactive cheatsheet with search functionality, see **[📖 Full Cheatsheet](https://stanzinofree.github.io/kcsi/cheatsheet.html)**.
 
-### Resource Aliases
-
-| Full Command | Short Alias |
-|--------------|-------------|
-| `get services` | `get svc` |
-| `get deployments` | `get deploy` |
-| `get namespaces` | `get ns` |
-| `get nodes` | `get no` |
-| `get configmaps` | `get cm` |
-| `describe service` | `describe svc` |
-| `delete deployment` | `delete deploy` |
-
-### Useful Flags
-
-| Flag | Description | Example |
-|------|-------------|---------|
-| `-n, --namespace` | Specify namespace (with autocomplete) | `kcsi get pods -n production` |
-| `-o, --output` | Output format (wide, yaml, json) | `kcsi get pods -o yaml` |
-| `-f, --follow` | Follow log output | `kcsi logs -f my-pod` |
-| `--tail <N>` | Show last N lines of logs | `kcsi logs --tail 100 my-pod` |
-| `-c, --container` | Specify container (with autocomplete) | `kcsi logs -c sidecar my-pod` |
-| `--force, -f` | Skip delete confirmation | `kcsi delete pod my-pod --force` |
-| `-w, --watch` | Watch events in real-time | `kcsi events -w` |
-
-### Quick Diagnostics
+**Most Common Commands:**
 
 ```bash
-# Find all pods with errors across all namespaces
+# List pods with namespace autocomplete
+kcsi get pods -n <TAB>
+
+# Follow pod logs with autocomplete
+kcsi logs -f -n <ns> <pod>
+
+# Describe resources with cascading autocomplete
+kcsi describe pod -n <ns> <pod>
+
+# Delete resources with confirmation prompt
+kcsi delete pod -n <ns> <pod>
+
+# Find all problematic pods
 kcsi check errors
 
-# Watch events in real-time for a namespace
-kcsi events -n production -w
-
-# Get detailed pod info with node placement
-kcsi get pods -n production -o wide
-
-# Follow logs from a specific container
-kcsi logs -f -n prod my-pod -c <TAB>  # Autocompletes containers
+# Watch cluster events in real-time
+kcsi events -w
 ```
+
+**Resource Aliases:** `svc`, `deploy`, `ns`, `no`, `cm`
+
+**Useful Flags:** `-n` (namespace), `-o` (output format), `-f` (follow/force), `--tail`, `-w` (watch)
+
+> 💡 **Tip:** Use the [interactive cheatsheet](https://stanzinofree.github.io/kcsi/cheatsheet.html) to quickly search all available commands and options.
 
 ## Current Status
 
@@ -178,6 +158,8 @@ Pre-built binaries are available for multiple platforms in the `bin/` directory 
 - Linux (x86_64): `kcsi-linux-amd64`
 - Linux (ARM64): `kcsi-linux-arm64`
 - Linux (ARM): `kcsi-linux-arm`
+- Windows (x86_64): `kcsi-windows-amd64.exe`
+- Windows (ARM64): `kcsi-windows-arm64.exe`
 
 ### Build from source
 
@@ -215,6 +197,8 @@ Using build script:
 
 ### Install
 
+#### macOS / Linux
+
 Using Task:
 ```bash
 # Build and install in one step
@@ -232,6 +216,25 @@ sudo chmod +x /usr/local/bin/kcsi
 
 # Or using locally built binary
 sudo mv kcsi /usr/local/bin/
+```
+
+#### Windows
+
+**PowerShell (Administrator):**
+```powershell
+# Using pre-built binary (example for Windows x86_64)
+Copy-Item bin\kcsi-windows-amd64.exe C:\Windows\System32\kcsi.exe
+
+# Or add to a custom directory and update PATH
+New-Item -ItemType Directory -Force -Path C:\Tools
+Copy-Item bin\kcsi-windows-amd64.exe C:\Tools\kcsi.exe
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools", "Machine")
+```
+
+**Command Prompt (Administrator):**
+```cmd
+# Using pre-built binary
+copy bin\kcsi-windows-amd64.exe C:\Windows\System32\kcsi.exe
 ```
 
 ## Setup Autocompletion
@@ -269,6 +272,18 @@ kcsi completion fish | source
 
 # Load for all sessions
 kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+```
+
+### PowerShell (Windows)
+
+```powershell
+# Generate completion script
+kcsi completion powershell | Out-String | Invoke-Expression
+
+# Load for all sessions - add to your PowerShell profile
+# Find your profile location with: $PROFILE
+# Then add this line to the profile:
+kcsi completion powershell | Out-String | Invoke-Expression
 ```
 
 ## Usage
@@ -489,57 +504,18 @@ kcsi about
 
 ## Roadmap
 
-### Phase 1: Proof of Concept ✅
-- [x] Basic CLI structure with Cobra
-- [x] `get pods` command with namespace flag
-- [x] Namespace autocompletion
-- [x] Completion script generation
+For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-### Phase 2: Expand Commands ✅
-- [x] `logs` command with pod and namespace autocompletion
-- [x] `describe pod` command with resource autocompletion
-- [x] Cascading autocompletion (namespace → pod)
-- [x] Container autocompletion for multi-container pods
-- [x] Full `logs` flags support (-f, --tail, -p, -c)
+**Current Status:** 5 phases completed (29 features delivered), 2 phases planned (12 features upcoming)
 
-### Phase 3: Extended Resource Support ✅
-- [x] `get services` command with autocompletion
-- [x] `get deployments` command with autocompletion
-- [x] `get nodes` command with autocompletion
-- [x] `get namespaces` command
-- [x] `get configmaps` command with autocompletion
-- [x] `get secrets` command with autocompletion
-- [x] `describe` commands for all resource types
-- [x] Aliases support (svc, deploy, cm, ns, no)
+**Recently Completed:**
+- ✅ Phase 5: Diagnostics & Output Control (events, error checking, output formats)
+- ✅ Phase 4: Delete Operations with safety confirmations
+- ✅ Phase 3: Extended Resource Support (services, deployments, nodes, configmaps, secrets)
 
-### Phase 4: Delete Operations ✅
-- [x] `delete pod` command with confirmation prompt
-- [x] `delete service` command with confirmation
-- [x] `delete deployment` command with confirmation
-- [x] `delete configmap` command with confirmation
-- [x] `delete secret` command with confirmation
-- [x] `--force` flag to skip confirmation for automation
-- [x] Safety prompts showing resource type, name, and namespace
-
-### Phase 5: Diagnostics & Output Control ✅
-- [x] `-o/--output` flag for all get commands (wide, yaml, json)
-- [x] `events` command with namespace filtering and watch mode
-- [x] `check errors` command to find problematic pods
-- [x] Helpful troubleshooting suggestions
-
-### Phase 6: Additional Commands (Next)
-- [ ] `exec` command with interactive pod selection
-- [ ] `port-forward` command
-- [ ] `apply` and `edit` commands
-- [ ] `rollout` commands (status, restart, undo)
-- [ ] `top` commands for resource usage
-
-### Phase 7: Enhancements
-- [ ] Cache for faster autocompletion
-- [ ] Default context/namespace configuration
-- [ ] Custom aliases
-- [ ] Fuzzy matching for resources
-- [ ] Configuration file support
+**Next Up:**
+- 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)
+- 📋 Phase 7: Enhancements (caching, configuration, fuzzy matching)
 
 ## Development
 
@@ -632,7 +608,11 @@ task run -- get pods -n default
 | `task` | Show all available tasks |
 | `task build` | Build for current platform |
 | `task build:all` | Build for all platforms |
+| `task build:darwin` | Build for macOS (Intel + ARM) |
+| `task build:linux` | Build for Linux (amd64, arm64, arm) |
+| `task build:windows` | Build for Windows (amd64, arm64) |
 | `task build:linux-arm64` | Build for specific platform |
+| `task build:windows-amd64` | Build for Windows x86_64 |
 | `task clean` | Clean build artifacts |
 | `task install` | Build and install to /usr/local/bin |
 | `task uninstall` | Uninstall from /usr/local/bin |

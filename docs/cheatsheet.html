@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kcsi - Command Cheatsheet</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="cheatsheet.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 kcsi Cheatsheet</h1>
+            <p>Quick Reference for All Commands</p>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="Search commands (e.g., 'pods', 'delete', 'logs')..."
+                    autocomplete="off"
+                >
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="no-results" id="noResults">
+                No commands found matching your search.
+            </div>
+
+            <!-- Get Commands -->
+            <div class="category">
+                <div class="category-title">
+                    📦 Get Commands
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="get pods list namespace">
+                        <div class="command-syntax">kcsi get pods -n &lt;namespace&gt;</div>
+                        <div class="command-description">List all pods in a namespace with autocompletion</div>
+                        <div class="command-example">$ kcsi get pods -n kube-system</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pods wide output format">
+                        <div class="command-syntax">kcsi get pods -n &lt;ns&gt; -o wide</div>
+                        <div class="command-description">List pods with extended information (node, IP)</div>
+                        <div class="command-example">$ kcsi get pods -n production -o wide</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get services svc list">
+                        <div class="command-syntax">kcsi get services -n &lt;namespace&gt;</div>
+                        <div class="command-description">List services (alias: svc)</div>
+                        <div class="command-example">$ kcsi get svc -n default</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get deployments deploy list">
+                        <div class="command-syntax">kcsi get deployments -n &lt;ns&gt;</div>
+                        <div class="command-description">List deployments (alias: deploy)</div>
+                        <div class="command-example">$ kcsi get deploy -n production</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get nodes no list">
+                        <div class="command-syntax">kcsi get nodes</div>
+                        <div class="command-description">List all cluster nodes (alias: no)</div>
+                        <div class="command-example">$ kcsi get no -o wide</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get namespaces ns list">
+                        <div class="command-syntax">kcsi get namespaces</div>
+                        <div class="command-description">List all namespaces (alias: ns)</div>
+                        <div class="command-example">$ kcsi get ns</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get configmaps cm list">
+                        <div class="command-syntax">kcsi get configmaps -n &lt;ns&gt;</div>
+                        <div class="command-description">List configmaps (alias: cm)</div>
+                        <div class="command-example">$ kcsi get cm -n default</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get secrets list">
+                        <div class="command-syntax">kcsi get secrets -n &lt;ns&gt;</div>
+                        <div class="command-description">List secrets in namespace</div>
+                        <div class="command-example">$ kcsi get secrets -n kube-system</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Describe Commands -->
+            <div class="category">
+                <div class="category-title">
+                    🔍 Describe Commands
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="describe pod details info">
+                        <div class="command-syntax">kcsi describe pod -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Show detailed pod information with cascading autocomplete</div>
+                        <div class="command-example">$ kcsi describe pod -n default my-app</div>
+                        <span class="tag tag-describe">DESCRIBE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="describe service svc details">
+                        <div class="command-syntax">kcsi describe service -n &lt;ns&gt; &lt;svc&gt;</div>
+                        <div class="command-description">Show detailed service information</div>
+                        <div class="command-example">$ kcsi describe svc -n default api-service</div>
+                        <span class="tag tag-describe">DESCRIBE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="describe deployment deploy details">
+                        <div class="command-syntax">kcsi describe deployment -n &lt;ns&gt; &lt;deploy&gt;</div>
+                        <div class="command-description">Show detailed deployment information</div>
+                        <div class="command-example">$ kcsi describe deploy -n prod backend</div>
+                        <span class="tag tag-describe">DESCRIBE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="describe node details">
+                        <div class="command-syntax">kcsi describe node &lt;node-name&gt;</div>
+                        <div class="command-description">Show detailed node information</div>
+                        <div class="command-example">$ kcsi describe node worker-1</div>
+                        <span class="tag tag-describe">DESCRIBE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Commands -->
+            <div class="category">
+                <div class="category-title">
+                    📋 Logs Commands
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="logs pod view">
+                        <div class="command-syntax">kcsi logs -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">View pod logs with autocompletion</div>
+                        <div class="command-example">$ kcsi logs -n default my-app</div>
+                        <span class="tag tag-logs">LOGS</span>
+                    </div>
+
+                    <div class="command-card" data-tags="logs follow tail stream">
+                        <div class="command-syntax">kcsi logs -f -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Follow pod logs in real-time</div>
+                        <div class="command-example">$ kcsi logs -f -n production api-server</div>
+                        <span class="tag tag-logs">LOGS</span>
+                    </div>
+
+                    <div class="command-card" data-tags="logs tail limit lines">
+                        <div class="command-syntax">kcsi logs --tail &lt;N&gt; -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Show last N lines of logs</div>
+                        <div class="command-example">$ kcsi logs --tail 100 -n default my-app</div>
+                        <span class="tag tag-logs">LOGS</span>
+                    </div>
+
+                    <div class="command-card" data-tags="logs container multi specific">
+                        <div class="command-syntax">kcsi logs -n &lt;ns&gt; &lt;pod&gt; -c &lt;container&gt;</div>
+                        <div class="command-description">View logs from specific container (with autocomplete)</div>
+                        <div class="command-example">$ kcsi logs -n default my-app -c sidecar</div>
+                        <span class="tag tag-logs">LOGS</span>
+                    </div>
+
+                    <div class="command-card" data-tags="logs previous crashed restart">
+                        <div class="command-syntax">kcsi logs -p -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">View previous container logs (after crash)</div>
+                        <div class="command-example">$ kcsi logs -p -n production crashed-pod</div>
+                        <span class="tag tag-logs">LOGS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Commands -->
+            <div class="category">
+                <div class="category-title">
+                    🗑️ Delete Commands (with Safety)
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="delete pod remove">
+                        <div class="command-syntax">kcsi delete pod -n &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Delete pod with confirmation prompt</div>
+                        <div class="command-example">$ kcsi delete pod -n default old-pod</div>
+                        <span class="tag tag-delete">DELETE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="delete force skip confirmation">
+                        <div class="command-syntax">kcsi delete pod -n &lt;ns&gt; &lt;pod&gt; --force</div>
+                        <div class="command-description">Delete pod without confirmation (automation)</div>
+                        <div class="command-example">$ kcsi delete pod -n test test-pod -f</div>
+                        <span class="tag tag-delete">DELETE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="delete service svc remove">
+                        <div class="command-syntax">kcsi delete service -n &lt;ns&gt; &lt;svc&gt;</div>
+                        <div class="command-description">Delete service with confirmation</div>
+                        <div class="command-example">$ kcsi delete svc -n default old-service</div>
+                        <span class="tag tag-delete">DELETE</span>
+                    </div>
+
+                    <div class="command-card" data-tags="delete deployment deploy remove">
+                        <div class="command-syntax">kcsi delete deployment -n &lt;ns&gt; &lt;deploy&gt;</div>
+                        <div class="command-description">Delete deployment with confirmation</div>
+                        <div class="command-example">$ kcsi delete deploy -n staging old-app</div>
+                        <span class="tag tag-delete">DELETE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostics Commands -->
+            <div class="category">
+                <div class="category-title">
+                    🔧 Diagnostics & Monitoring
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="events monitor watch cluster">
+                        <div class="command-syntax">kcsi events</div>
+                        <div class="command-description">View cluster events sorted by timestamp</div>
+                        <div class="command-example">$ kcsi events</div>
+                        <span class="tag tag-diagnostic">DIAGNOSTIC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="events namespace watch filter">
+                        <div class="command-syntax">kcsi events -n &lt;ns&gt; -w</div>
+                        <div class="command-description">Watch events in namespace in real-time</div>
+                        <div class="command-example">$ kcsi events -n production -w</div>
+                        <span class="tag tag-diagnostic">DIAGNOSTIC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="check errors problems troubleshoot">
+                        <div class="command-syntax">kcsi check errors</div>
+                        <div class="command-description">Find all pods with issues (not Running/Completed)</div>
+                        <div class="command-example">$ kcsi check err</div>
+                        <span class="tag tag-diagnostic">DIAGNOSTIC</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Info Commands -->
+            <div class="category">
+                <div class="category-title">
+                    ℹ️ Project Information
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="version info">
+                        <div class="command-syntax">kcsi --version</div>
+                        <div class="command-description">Show version and author</div>
+                        <div class="command-example">$ kcsi --version</div>
+                    </div>
+
+                    <div class="command-card" data-tags="version detailed build info">
+                        <div class="command-syntax">kcsi --version-detailed</div>
+                        <div class="command-description">Show detailed version info (Go version, OS/Arch)</div>
+                        <div class="command-example">$ kcsi --version-detailed</div>
+                    </div>
+
+                    <div class="command-card" data-tags="about project philosophy spirit">
+                        <div class="command-syntax">kcsi about</div>
+                        <div class="command-description">Show project information and philosophy</div>
+                        <div class="command-example">$ kcsi about</div>
+                    </div>
+
+                    <div class="command-card" data-tags="completion autocomplete setup bash zsh fish">
+                        <div class="command-syntax">kcsi completion bash</div>
+                        <div class="command-description">Generate completion script (bash/zsh/fish)</div>
+                        <div class="command-example">$ source &lt;(kcsi completion bash)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>kcsi - Kubectl Smart Interactive</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
+                <a href="guide.html">Quick Guide</a> •
+                <a href="roadmap.html">Roadmap</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const commandCards = document.querySelectorAll('.command-card');
+        const categories = document.querySelectorAll('.category');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            commandCards.forEach(card => {
+                const tags = card.getAttribute('data-tags');
+                const syntax = card.querySelector('.command-syntax').textContent.toLowerCase();
+                const description = card.querySelector('.command-description').textContent.toLowerCase();
+                
+                const matches = tags.includes(searchTerm) || 
+                               syntax.includes(searchTerm) || 
+                               description.includes(searchTerm);
+
+                if (matches || searchTerm === '') {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Hide empty categories
+            categories.forEach(category => {
+                const visibleCards = category.querySelectorAll('.command-card:not(.hidden)');
+                if (visibleCards.length === 0 && searchTerm !== '') {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        });
+
+        // Add keyboard shortcut to focus search (Ctrl+K or Cmd+K)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
