@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-12-24
+
+### Added - Phase 5: Diagnostics & Output Control
+- `kcsi events` command for cluster event monitoring:
+  - `-n/--namespace` flag for filtering events by namespace
+  - `-w/--watch` flag for real-time event streaming
+  - Events automatically sorted by timestamp for readability
+  - All namespaces shown by default when namespace not specified
+- `kcsi check errors` command for finding problematic pods:
+  - Scans all namespaces for pods not in Running or Completed state
+  - Shows pods with issues: CrashLoopBackOff, Error, Pending, ImagePullBackOff, etc.
+  - Displays helpful troubleshooting suggestions
+  - Provides next-step commands for investigation (logs, describe)
+  - Clean output with success message when no issues found
+- `-o/--output` flag support for all `get` commands:
+  - Added to: get pods, services, deployments, nodes, configmaps, secrets
+  - Supports all kubectl output formats: wide, yaml, json, etc.
+  - Enables viewing node placement with `-o wide`
+  - Full kubectl output format compatibility
+
+### Changed
+- Updated README with Phase 5 completion status
+- Added comprehensive examples for events, check errors, and output formats
+- Enhanced roadmap with Phase 5 complete and reorganized future phases
+- Version bumped to 0.5.0
+
+### Technical Details
+- Events command passes through to kubectl with proper flag mapping
+- Check errors uses kubectl output parsing to filter pod states
+- Output flag cleanly integrates with existing get command structure
+- All new features maintain consistent autocompletion patterns
+
 ## [0.4.0] - 2025-12-24
 
 ### Added - Phase 4: Delete Operations with Safety
@@ -138,7 +170,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only supports `get pods` command in this POC
 - Requires kubectl to be installed and configured
 
-[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/alessandro/kcsi/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/alessandro/kcsi/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/alessandro/kcsi/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/alessandro/kcsi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/alessandro/kcsi/compare/v0.1.0...v0.2.0

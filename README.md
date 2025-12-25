@@ -11,18 +11,19 @@ A kubectl wrapper with intelligent autocompletion for namespaces, pods, and othe
 
 ## Current Status
 
-**Version:** 0.4.0 - Complete CRUD Operations
+**Version:** 0.5.0 - Diagnostics & Output Control
 
 Currently implemented:
 
-**Get Commands:**
-- `kcsi get pods` - List pods with namespace autocompletion
-- `kcsi get services` (alias: `svc`) - List services
-- `kcsi get deployments` (alias: `deploy`) - List deployments
+**Get Commands (with -o/--output flag):**
+- `kcsi get pods -o wide` - List pods with node information
+- `kcsi get services -o wide` (alias: `svc`) - List services with extended info
+- `kcsi get deployments -o wide` (alias: `deploy`) - List deployments
 - `kcsi get namespaces` (alias: `ns`) - List namespaces
-- `kcsi get nodes` (alias: `no`) - List nodes
+- `kcsi get nodes -o wide` (alias: `no`) - List nodes with details
 - `kcsi get configmaps` (alias: `cm`) - List configmaps
 - `kcsi get secrets` - List secrets
+- All get commands support `-o` for output formats: wide, yaml, json, etc.
 
 **Describe Commands:**
 - `kcsi describe pod` - Describe a specific pod
@@ -39,6 +40,12 @@ Currently implemented:
 - `kcsi delete configmap` - Delete a configmap with confirmation
 - `kcsi delete secret` - Delete a secret with confirmation
 - All delete commands support `--force` flag to skip confirmation
+
+**Diagnostics & Monitoring:**
+- `kcsi events` - Get cluster events sorted by timestamp
+- `kcsi events -w` - Watch events in real-time
+- `kcsi check errors` - Find all pods with issues (not Running/Completed)
+- Helpful diagnostics suggestions for troubleshooting
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
@@ -295,6 +302,62 @@ kcsi delete deploy -n prod <TAB>  # Deployment autocomplete
 - Use `--force` or `-f` flag to skip confirmation (for scripts/automation)
 - All deletes support cascading autocompletion
 
+### Get resources with output formats
+
+```bash
+# Get pods with wide output (shows node, IP, etc.)
+kcsi get pods -n production -o wide
+
+# Get services in yaml format
+kcsi get services -n default -o yaml
+
+# Get deployments as JSON
+kcsi get deploy -n kube-system -o json
+
+# Get nodes with extended information
+kcsi get nodes -o wide
+```
+
+### Monitor cluster events
+
+```bash
+# Get recent events across all namespaces (sorted by timestamp)
+kcsi events
+
+# Get events in a specific namespace
+kcsi events -n production
+
+# Watch events in real-time
+kcsi events -w
+kcsi events -n kube-system -w
+```
+
+### Check for pod errors
+
+```bash
+# Find all pods with issues (CrashLoopBackOff, Error, Pending, etc.)
+kcsi check errors
+# or
+kcsi check err
+
+# Output example:
+# Checking for pods with errors across all namespaces...
+# (Excluding: Running, Completed)
+#
+# NAMESPACE     NAME                    READY   STATUS             RESTARTS   AGE
+# production    api-server-xxx          0/1     CrashLoopBackOff   5          10m
+# staging       worker-yyy              0/1     ImagePullBackOff   0          5m
+#
+# ⚠ Found pods with issues. Common states to investigate:
+#   - CrashLoopBackOff: Pod is repeatedly crashing
+#   - Error: Pod encountered an error
+#   - Pending: Pod cannot be scheduled
+#   - ImagePullBackOff: Cannot pull container image
+#
+# Use 'kcsi logs -n <namespace> <pod>' to investigate further
+# Use 'kcsi describe pod -n <namespace> <pod>' for detailed information
+```
+
 ## Roadmap
 
 ### Phase 1: Proof of Concept ✅
@@ -329,13 +392,20 @@ kcsi delete deploy -n prod <TAB>  # Deployment autocomplete
 - [x] `--force` flag to skip confirmation for automation
 - [x] Safety prompts showing resource type, name, and namespace
 
-### Phase 5: Additional Commands (Next)
+### Phase 5: Diagnostics & Output Control ✅
+- [x] `-o/--output` flag for all get commands (wide, yaml, json)
+- [x] `events` command with namespace filtering and watch mode
+- [x] `check errors` command to find problematic pods
+- [x] Helpful troubleshooting suggestions
+
+### Phase 6: Additional Commands (Next)
 - [ ] `exec` command with interactive pod selection
 - [ ] `port-forward` command
 - [ ] `apply` and `edit` commands
 - [ ] `rollout` commands (status, restart, undo)
+- [ ] `top` commands for resource usage
 
-### Phase 6: Enhancements
+### Phase 7: Enhancements
 - [ ] Cache for faster autocompletion
 - [ ] Default context/namespace configuration
 - [ ] Custom aliases
