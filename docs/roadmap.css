@@ -49,17 +49,17 @@
 }
 
 .phase.completed {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    background: #d4edda;
     border-left: 5px solid #28a745;
 }
 
 .phase.in-progress {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    background: #fff3cd;
     border-left: 5px solid #ffc107;
 }
 
 .phase.pending {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #f8f9fa;
     border-left: 5px solid #6c757d;
 }
 
@@ -111,7 +111,7 @@
 
 .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: #6b7fd7;
     border-radius: 10px;
     transition: width 0.3s ease;
 }
