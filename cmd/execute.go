@@ -13,11 +13,13 @@ var executeCmd = &cobra.Command{
 	Use:   "execute [pod-name] -- [command...]",
 	Short: "Execute a command in a pod",
 	Long: `Execute a specific command in a pod.
+Use -n to specify namespace first for better autocompletion.
 Use -- to separate the pod name from the command to execute.
 
 Examples:
-  kcsi execute my-pod -n production -- ls -la
-  kcsi execute my-pod -c sidecar -- cat /etc/hosts`,
+  kcsi execute -n production my-pod -- ls -la
+  kcsi execute -n production my-pod -c sidecar -- cat /etc/hosts
+  kcsi execute -n default api-pod -- curl localhost:8080/health`,
 	Args: cobra.MinimumNArgs(1),
 	RunE: runExecute,
 	ValidArgsFunction: completion.PodCompletion,
@@ -36,11 +38,13 @@ func runExecute(_ *cobra.Command, args []string) error {
 	podName := args[0]
 	command := args[1:]
 
-	kubectlArgs := []string{"exec", podName}
+	kubectlArgs := []string{"exec"}
 
 	if executeNamespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", executeNamespace)
 	}
+
+	kubectlArgs = append(kubectlArgs, podName)
 
 	if executeContainer != "" {
 		kubectlArgs = append(kubectlArgs, "-c", executeContainer)
@@ -55,7 +59,12 @@ func runExecute(_ *cobra.Command, args []string) error {
 	kubectlCmd.Stdin = os.Stdin
 
 	if err := kubectlCmd.Run(); err != nil {
-		return fmt.Errorf("failed to execute command: %w", err)
+		// Provide helpful error message if pod not found
+		errMsg := err.Error()
+		if executeNamespace == "" {
+			return fmt.Errorf("failed to execute command: %w\nHint: Did you forget to specify the namespace with -n?", err)
+		}
+		return fmt.Errorf("failed to execute command: %s", errMsg)
 	}
 
 	return nil

@@ -13,7 +13,12 @@ var attachCmd = &cobra.Command{
 	Use:   "attach [pod-name]",
 	Short: "Attach to a pod with an interactive shell",
 	Long: `Attach to a pod and start an interactive shell session.
-Tries bash, zsh, and sh in order to find an available shell.`,
+Use -n to specify namespace first for better autocompletion.
+Tries bash, zsh, and sh in order to find an available shell.
+
+Examples:
+  kcsi attach -n production my-pod
+  kcsi attach -n production my-pod -c sidecar`,
 	Args: cobra.ExactArgs(1),
 	RunE: runAttach,
 	ValidArgsFunction: completion.PodCompletion,
@@ -31,11 +36,13 @@ func runAttach(_ *cobra.Command, args []string) error {
 	shells := []string{"bash", "zsh", "sh"}
 
 	for _, shell := range shells {
-		kubectlArgs := []string{"exec", "-it", podName}
+		kubectlArgs := []string{"exec", "-it"}
 
 		if attachNamespace != "" {
 			kubectlArgs = append(kubectlArgs, "-n", attachNamespace)
 		}
+
+		kubectlArgs = append(kubectlArgs, podName)
 
 		if attachContainer != "" {
 			kubectlArgs = append(kubectlArgs, "-c", attachContainer)
@@ -60,6 +67,10 @@ func runAttach(_ *cobra.Command, args []string) error {
 		fmt.Printf("%s not available, trying next shell...\n", shell)
 	}
 
+	// Provide helpful error message
+	if attachNamespace == "" {
+		return fmt.Errorf("no interactive shell found in pod %s\nHint: Did you forget to specify the namespace with -n?", podName)
+	}
 	return fmt.Errorf("no interactive shell found in pod %s", podName)
 }
 
