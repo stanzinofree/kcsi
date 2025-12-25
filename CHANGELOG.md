@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2025-12-25
+
+### Added - Version and Project Information System
+- Centralized version manifest (`pkg/version/version.yaml`):
+  - Single source of truth for version, author, and project metadata
+  - Contains project spirit and philosophy
+  - Includes license and repository information
+- `pkg/version` package for reading and presenting version information:
+  - `GetVersion()` returns simple version string
+  - `GetDetailedVersion()` shows version, author, build info, Go version, OS/Arch
+  - `GetAbout()` returns formatted project information with spirit/philosophy
+  - Uses go:embed to include manifest in binary
+- `kcsi about` command:
+  - Displays project name, version, and description
+  - Shows project spirit and key principles
+  - Includes author, license, and repository information
+  - Shows build details (Go version, OS/Arch)
+  - Beautiful formatted output with borders
+- Enhanced version flags:
+  - `--version` / `-v` shows version and author name
+  - `--version-detailed` shows comprehensive version information
+  - Custom version template in root command
+- Updated README with version/about command examples
+- Added feature to README: "Centralized version and project information"
+
+### Changed
+- Root command now uses version package instead of hardcoded version
+- Version bumped to 0.5.1
+
+### Technical Details
+- Manifest file uses YAML format for easy editing
+- go:embed ensures manifest is included in compiled binary
+- Version package provides clean API for version information
+- --version-detailed flag handled in Execute() before Cobra processing
+
 ## [0.5.0] - 2025-12-24
 
 ### Added - Phase 5: Diagnostics & Output Control

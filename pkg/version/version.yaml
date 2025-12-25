@@ -1,0 +1,31 @@
+version: 0.5.1
+name: kcsi
+fullName: Kubectl Smart Interactive
+description: A kubectl wrapper with intelligent autocompletion
+author: Alessandro Middei
+contact: alessandro.middei@gmail.com
+license: MIT
+repository: https://github.com/alessandro/kcsi
+buildDate: ""  # Will be set during build
+
+# Project spirit and philosophy
+spirit: |
+  kcsi is born from the frustration of typing long kubectl commands and
+  struggling to remember resource names. It aims to make Kubernetes
+  operations faster, safer, and more intuitive through smart autocompletion
+  and helpful diagnostics.
+
+  Key principles:
+  - Simplicity: Complex operations made simple
+  - Safety: Confirmation prompts prevent accidents
+  - Speed: Autocompletion for everything
+  - Helpfulness: Diagnostic tools that guide you
+
+# Contributors (add more as needed)
+contributors:
+  - Alessandro
+
+# Release information
+releases:
+  latest: 0.5.0
+  stable: 0.5.0

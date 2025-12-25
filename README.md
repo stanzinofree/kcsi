@@ -7,11 +7,12 @@ A kubectl wrapper with intelligent autocompletion for namespaces, pods, and othe
 - Smart autocompletion for Kubernetes namespaces
 - Interactive resource selection
 - Simplified kubectl commands with tab completion
+- Centralized version and project information
 - Built with Go and Cobra
 
 ## Current Status
 
-**Version:** 0.5.0 - Diagnostics & Output Control
+**Version:** 0.5.1 - Version & Project Information
 
 Currently implemented:
 
@@ -51,6 +52,9 @@ Currently implemented:
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
 - Container autocompletion for multi-container pods
 - Cascading autocompletion: namespace → resource → container
+- `kcsi about` - Show project information, philosophy, and author details
+- `kcsi --version` - Show version and author
+- `kcsi --version-detailed` - Show detailed version info (Go version, OS/Arch)
 
 ## Installation
 
@@ -356,6 +360,27 @@ kcsi check err
 #
 # Use 'kcsi logs -n <namespace> <pod>' to investigate further
 # Use 'kcsi describe pod -n <namespace> <pod>' for detailed information
+```
+
+### Show version and project information
+
+```bash
+# Show version and author
+kcsi --version
+# Output: kcsi version 0.5.0
+#         Author: Alessandro
+
+# Show detailed version information
+kcsi --version-detailed
+# Output: Kubectl Smart Interactive (kcsi)
+#         Version: 0.5.0
+#         Author: Alessandro Middei
+#         Go Version: go1.25.5
+#         OS/Arch: darwin/arm64
+
+# Show project information and philosophy
+kcsi about
+# Displays project spirit, key principles, author info, and license
 ```
 
 ## Roadmap
