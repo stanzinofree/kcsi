@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func TestNamespaceCompletion(t *testing.T) {
+func TestNamespaceCompletion(_ *testing.T) {
 	cmd := &cobra.Command{}
 
 	// Test that the function doesn't panic
@@ -19,7 +19,7 @@ func TestNamespaceCompletion(t *testing.T) {
 	}
 }
 
-func TestPodCompletion_NoNamespace(t *testing.T) {
+func TestPodCompletion_NoNamespace(_ *testing.T) {
 	cmd := &cobra.Command{}
 
 	// Test without namespace flag
@@ -31,7 +31,7 @@ func TestPodCompletion_NoNamespace(t *testing.T) {
 	}
 }
 
-func TestContainerCompletion_NoPod(t *testing.T) {
+func TestContainerCompletion_NoPod(_ *testing.T) {
 	cmd := &cobra.Command{}
 
 	// Test without pod argument
