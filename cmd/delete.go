@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 )
 
 var deleteCmd = &cobra.Command{
@@ -34,19 +34,19 @@ var (
 // askForConfirmation prompts the user for yes/no confirmation
 func askForConfirmation(resourceType, resourceName, namespace string) bool {
 	reader := bufio.NewReader(os.Stdin)
-	
+
 	nsInfo := ""
 	if namespace != "" {
 		nsInfo = fmt.Sprintf(" in namespace '%s'", namespace)
 	}
-	
+
 	fmt.Printf("Are you sure you want to delete %s '%s'%s? [y/N]: ", resourceType, resourceName, nsInfo)
-	
+
 	response, err := reader.ReadString('\n')
 	if err != nil {
 		return false
 	}
-	
+
 	response = strings.ToLower(strings.TrimSpace(response))
 	return response == "y" || response == "yes"
 }
@@ -68,7 +68,7 @@ func runKubectlDelete(resourceType, namespace string, args []string, force bool)
 	}
 
 	kubectlArgs := []string{"delete", resourceType, resourceName}
-	
+
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
 	}
@@ -153,7 +153,7 @@ var deleteSecretCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(deleteCmd)
-	
+
 	// Add all subcommands
 	deleteCmd.AddCommand(deletePodCmd)
 	deleteCmd.AddCommand(deleteServiceCmd)

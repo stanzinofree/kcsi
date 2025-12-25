@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 )
 
 var describeCmd = &cobra.Command{
@@ -31,7 +31,7 @@ func runKubectlDescribe(resourceType, namespace string, args []string) error {
 	}
 
 	kubectlArgs := []string{"describe", resourceType, args[0]}
-	
+
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
 	}
@@ -127,7 +127,7 @@ var describeSecretCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(describeCmd)
-	
+
 	// Add all subcommands
 	describeCmd.AddCommand(describePodCmd)
 	describeCmd.AddCommand(describeServiceCmd)

@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/stanzinofree/kcsi/pkg/completion"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/completion"
 )
 
 var getCmd = &cobra.Command{
@@ -33,7 +33,7 @@ var (
 // Generic kubectl get command runner
 func runKubectlGet(resourceType, namespace, output string, args []string) error {
 	kubectlArgs := []string{"get", resourceType}
-	
+
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
 	}
@@ -141,7 +141,7 @@ var getSecretsCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(getCmd)
-	
+
 	// Add all subcommands
 	getCmd.AddCommand(getPodsCmd)
 	getCmd.AddCommand(getNamespacesCmd)

@@ -1,8 +1,8 @@
 package completion
 
 import (
-	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 // NamespaceCompletion provides autocompletion for namespace flags
@@ -18,7 +18,7 @@ func NamespaceCompletion(cmd *cobra.Command, args []string, toComplete string) (
 // It reads the namespace from the -n flag if provided
 func PodCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	namespace, _ := cmd.Flags().GetString("namespace")
-	
+
 	pods, err := kubernetes.GetPods(namespace)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
@@ -36,7 +36,7 @@ func ContainerCompletion(cmd *cobra.Command, args []string, toComplete string) (
 
 	namespace, _ := cmd.Flags().GetString("namespace")
 	podName := args[0]
-	
+
 	containers, err := kubernetes.GetContainers(namespace, podName)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
@@ -47,7 +47,7 @@ func ContainerCompletion(cmd *cobra.Command, args []string, toComplete string) (
 // ServiceCompletion provides autocompletion for service names
 func ServiceCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	namespace, _ := cmd.Flags().GetString("namespace")
-	
+
 	services, err := kubernetes.GetServices(namespace)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
@@ -58,7 +58,7 @@ func ServiceCompletion(cmd *cobra.Command, args []string, toComplete string) ([]
 // DeploymentCompletion provides autocompletion for deployment names
 func DeploymentCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	namespace, _ := cmd.Flags().GetString("namespace")
-	
+
 	deployments, err := kubernetes.GetDeployments(namespace)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
@@ -78,7 +78,7 @@ func NodeCompletion(cmd *cobra.Command, args []string, toComplete string) ([]str
 // ConfigMapCompletion provides autocompletion for configmap names
 func ConfigMapCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	namespace, _ := cmd.Flags().GetString("namespace")
-	
+
 	configmaps, err := kubernetes.GetConfigMaps(namespace)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
@@ -89,7 +89,7 @@ func ConfigMapCompletion(cmd *cobra.Command, args []string, toComplete string) (
 // SecretCompletion provides autocompletion for secret names
 func SecretCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	namespace, _ := cmd.Flags().GetString("namespace")
-	
+
 	secrets, err := kubernetes.GetSecrets(namespace)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
