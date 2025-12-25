@@ -4,6 +4,7 @@
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg)](https://stanzinofree.github.io/kcsi/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ### CI/CD & Quality
@@ -18,7 +19,7 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=bugs)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=coverage)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
+[![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 
 ### Dependency Management
 
