@@ -72,11 +72,11 @@ func runDebug(cmd *cobra.Command, args []string) error {
 		image = selectDebugImage(namespace)
 	}
 
-	fmt.Printf("🐛 Attaching debug container to pod '%s' in namespace '%s'\n", podName, namespace)
+	fmt.Printf("🐛 Creating debug session for pod '%s' in namespace '%s'\n", podName, namespace)
 	fmt.Printf("📦 Using debug image: %s\n", image)
 	fmt.Println()
 
-	// Build kubectl debug command
+	// Build kubectl debug command with proper flags for interactive shell
 	kubectlArgs := []string{"debug", "-it", podName, "-n", namespace, "--image=" + image}
 
 	// Add target container if specified
@@ -84,9 +84,13 @@ func runDebug(cmd *cobra.Command, args []string) error {
 		kubectlArgs = append(kubectlArgs, "--target="+container)
 	}
 
-	// Add copy-to flag to create a copy if the pod is managed by a controller
-	// This allows debugging pods that don't support ephemeral containers
-	kubectlArgs = append(kubectlArgs, "--share-processes")
+	// Use --share-processes and provide explicit command
+	// This ensures we get an interactive shell
+	kubectlArgs = append(kubectlArgs, "--share-processes", "--")
+	
+	// Detect and run the best available shell
+	kubectlArgs = append(kubectlArgs, "sh", "-c", 
+		"if command -v bash >/dev/null 2>&1; then exec bash; elif command -v zsh >/dev/null 2>&1; then exec zsh; else exec sh; fi")
 
 	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 }
