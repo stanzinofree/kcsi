@@ -481,6 +481,25 @@ kcsi check err
 # Use 'kcsi describe pod -n <namespace> <pod>' for detailed information
 ```
 
+### Port forwarding
+
+```bash
+# Forward local port 8080 to pod port 80
+kcsi port-forward -n default my-pod 8080:80
+
+# Forward local port 3000 to pod port 8080
+kcsi port-forward -n production web-app 3000:8080
+
+# Forward privileged port (requires sudo for ports < 1024)
+sudo kcsi port-forward -n production nginx-pod 80:8080
+
+# Features:
+# - Validates port numbers (1-65535)
+# - Checks if running as root for privileged ports (< 1024)
+# - Checks if local port is already in use
+# - Interactive session (Ctrl+C to stop)
+```
+
 ### Show version and project information
 
 ```bash

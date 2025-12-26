@@ -3,6 +3,7 @@ package kubernetes
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -28,6 +29,21 @@ func ExecuteKubectl(args ...string) (string, error) {
 	}
 
 	return out.String(), nil
+}
+
+// ExecuteKubectlInteractive runs a kubectl command with stdin/stdout/stderr attached
+func ExecuteKubectlInteractive(args ...string) error {
+	cmd := exec.Command("kubectl", args...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
+	if err != nil {
+		return fmt.Errorf("kubectl error: %v", err)
+	}
+
+	return nil
 }
 
 // GetNamespaces returns a list of all namespaces in the cluster
