@@ -149,6 +149,8 @@ Currently implemented:
 - `kcsi dig [namespace] [pod] [domain]` - DNS debugging inside pods
   - Namespace-first autocompletion
   - Container selection with `-c` flag
+  - Automatic fallback: dig → nslookup → host
+  - Helpful installation instructions if no DNS tools found
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
