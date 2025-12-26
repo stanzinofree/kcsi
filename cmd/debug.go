@@ -117,7 +117,7 @@ func getPrimaryContainer(namespace, podName, userContainer string) string {
 }
 
 // selectDebugImage checks internet connectivity and returns appropriate debug image
-func selectDebugImage(namespace string) string {
+func selectDebugImage(_ string) string {
 	// Try to check internet connectivity by testing if we can resolve DNS
 	// We'll run a quick test pod or check existing pods' connectivity
 

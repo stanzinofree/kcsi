@@ -7,7 +7,7 @@ SCRIPTS_DIR="$(dirname "$0")/git-hooks"
 echo "Installing git hooks..."
 
 # Install pre-commit hook
-if [ -f "$SCRIPTS_DIR/pre-commit" ]; then
+if [[ -f "$SCRIPTS_DIR/pre-commit" ]]; then
     cp "$SCRIPTS_DIR/pre-commit" "$HOOKS_DIR/pre-commit"
     chmod +x "$HOOKS_DIR/pre-commit"
     echo "✓ Installed pre-commit hook (gofmt)"
