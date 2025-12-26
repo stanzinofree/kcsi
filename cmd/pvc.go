@@ -56,52 +56,71 @@ func init() {
 	}
 }
 
-func runPVCPods(cmd *cobra.Command, args []string) error {
+func runPVCPods(cmd *cobra.Command, _ []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	outputFormat, _ := cmd.Flags().GetString("output")
 
-	// If output format is specified, use kubectl directly
 	if outputFormat != "" {
-		kubectlArgs := []string{"get", "pvc"}
-		if namespace != "" {
-			kubectlArgs = append(kubectlArgs, "-n", namespace)
-		} else {
-			kubectlArgs = append(kubectlArgs, "--all-namespaces")
-		}
-		kubectlArgs = append(kubectlArgs, "-o", outputFormat)
-		return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
+		return executeKubectlWithFormat("pvc", namespace, outputFormat)
 	}
 
-	// Get PVCs
+	pvcOutput, err := fetchPVCsForDisplay(namespace)
+	if err != nil {
+		return err
+	}
+
+	podsJSON, err := fetchPodsJSONForPVC(namespace)
+	if err != nil {
+		return err
+	}
+
+	pvcToPods := buildPVCToPodMapping(podsJSON)
+	displayPVCsWithPods(pvcOutput, pvcToPods)
+	return nil
+}
+
+func executeKubectlWithFormat(resource, namespace, outputFormat string) error {
+	kubectlArgs := []string{"get", resource}
+	if namespace != "" {
+		kubectlArgs = append(kubectlArgs, "-n", namespace)
+	} else {
+		kubectlArgs = append(kubectlArgs, flagAllNamespaces)
+	}
+	kubectlArgs = append(kubectlArgs, "-o", outputFormat)
+	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
+}
+
+func fetchPVCsForDisplay(namespace string) (string, error) {
 	pvcArgs := []string{"get", "pvc", "-o", "custom-columns=NAMESPACE:metadata.namespace,NAME:metadata.name,STATUS:status.phase,VOLUME:spec.volumeName,CAPACITY:status.capacity.storage,STORAGECLASS:spec.storageClassName"}
 	if namespace != "" {
 		pvcArgs = append(pvcArgs, "-n", namespace)
 	} else {
-		pvcArgs = append(pvcArgs, "--all-namespaces")
+		pvcArgs = append(pvcArgs, flagAllNamespaces)
 	}
 
-	pvcOutput, err := kubernetes.ExecuteKubectl(pvcArgs...)
+	output, err := kubernetes.ExecuteKubectl(pvcArgs...)
 	if err != nil {
-		return fmt.Errorf("failed to get PVCs: %v", err)
+		return "", fmt.Errorf("failed to get PVCs: %v", err)
 	}
+	return output, nil
+}
 
-	// Get pods with volume info
+func fetchPodsJSONForPVC(namespace string) (string, error) {
 	podArgs := []string{"get", "pods", "-o", "json"}
 	if namespace != "" {
 		podArgs = append(podArgs, "-n", namespace)
 	} else {
-		podArgs = append(podArgs, "--all-namespaces")
+		podArgs = append(podArgs, flagAllNamespaces)
 	}
 
-	podsJSON, err := kubernetes.ExecuteKubectl(podArgs...)
+	output, err := kubernetes.ExecuteKubectl(podArgs...)
 	if err != nil {
-		return fmt.Errorf("failed to get pods: %v", err)
+		return "", fmt.Errorf("failed to get pods: %v", err)
 	}
+	return output, nil
+}
 
-	// Build PVC to Pod mapping
-	pvcToPods := buildPVCToPodMapping(podsJSON)
-
-	// Display results
+func displayPVCsWithPods(pvcOutput string, pvcToPods map[string][]string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
 	fmt.Fprintln(w, "NAMESPACE\tPVC\tSTATUS\tCAPACITY\tSTORAGECLASS\tUSED BY PODS")
 	fmt.Fprintln(w, "---------\t---\t------\t--------\t------------\t-------------")
@@ -131,36 +150,43 @@ func runPVCPods(cmd *cobra.Command, args []string) error {
 	}
 
 	w.Flush()
-	return nil
 }
 
-func runPVCUnbound(cmd *cobra.Command, args []string) error {
+func runPVCUnbound(cmd *cobra.Command, _ []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	outputFormat, _ := cmd.Flags().GetString("output")
 
-	// Get all PVCs
+	if outputFormat != "" {
+		return executeKubectlWithFormat("pvc", namespace, outputFormat)
+	}
+
+	output, err := fetchUnboundPVCs(namespace)
+	if err != nil {
+		return err
+	}
+
+	displayUnboundPVCs(output)
+	return nil
+}
+
+func fetchUnboundPVCs(namespace string) (string, error) {
 	pvcArgs := []string{"get", "pvc"}
 	if namespace != "" {
 		pvcArgs = append(pvcArgs, "-n", namespace)
 	} else {
-		pvcArgs = append(pvcArgs, "--all-namespaces")
+		pvcArgs = append(pvcArgs, flagAllNamespaces)
 	}
 
-	// If output format specified, add it
-	if outputFormat != "" {
-		pvcArgs = append(pvcArgs, "-o", outputFormat)
-		return kubernetes.ExecuteKubectlInteractive(pvcArgs...)
-	}
-
-	// Custom output to show only unbound PVCs
 	pvcArgs = append(pvcArgs, "-o", "custom-columns=NAMESPACE:metadata.namespace,NAME:metadata.name,STATUS:status.phase,VOLUME:spec.volumeName,CAPACITY:spec.resources.requests.storage,STORAGECLASS:spec.storageClassName,AGE:metadata.creationTimestamp")
 
 	output, err := kubernetes.ExecuteKubectl(pvcArgs...)
 	if err != nil {
-		return fmt.Errorf("failed to get PVCs: %v", err)
+		return "", fmt.Errorf("failed to get PVCs: %v", err)
 	}
+	return output, nil
+}
 
-	// Filter for non-Bound PVCs
+func displayUnboundPVCs(output string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
 	fmt.Fprintln(w, "NAMESPACE\tNAME\tSTATUS\tCAPACITY\tSTORAGECLASS\tAGE")
 	fmt.Fprintln(w, "---------\t----\t------\t--------\t------------\t---")
@@ -175,7 +201,6 @@ func runPVCUnbound(cmd *cobra.Command, args []string) error {
 		fields := strings.Fields(line)
 		if len(fields) >= 6 {
 			status := fields[2]
-			// Show anything that's NOT "Bound"
 			if status != "Bound" {
 				unboundCount++
 				ns := fields[0]
@@ -202,8 +227,6 @@ func runPVCUnbound(cmd *cobra.Command, args []string) error {
 		fmt.Println()
 		fmt.Printf("⚠️  Found %d unbound PVC(s)\n", unboundCount)
 	}
-
-	return nil
 }
 
 // buildPVCToPodMapping creates a map of PVC (namespace/name) to list of pod names

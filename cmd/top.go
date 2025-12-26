@@ -54,7 +54,7 @@ func init() {
 	})
 }
 
-func runTopPods(cmd *cobra.Command, args []string) error {
+func runTopPods(cmd *cobra.Command, _ []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 
 	kubectlArgs := []string{"top", "pods"}
@@ -62,13 +62,13 @@ func runTopPods(cmd *cobra.Command, args []string) error {
 	if namespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", namespace)
 	} else {
-		kubectlArgs = append(kubectlArgs, "--all-namespaces")
+		kubectlArgs = append(kubectlArgs, flagAllNamespaces)
 	}
 
 	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 }
 
-func runTopNodes(cmd *cobra.Command, args []string) error {
+func runTopNodes(_ *cobra.Command, args []string) error {
 	kubectlArgs := []string{"top", "nodes"}
 
 	if len(args) > 0 {

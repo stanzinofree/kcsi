@@ -35,7 +35,7 @@ func runEvents(_ *cobra.Command, _ []string) error {
 	if eventsNamespace != "" {
 		kubectlArgs = append(kubectlArgs, "-n", eventsNamespace)
 	} else {
-		kubectlArgs = append(kubectlArgs, "--all-namespaces")
+		kubectlArgs = append(kubectlArgs, flagAllNamespaces)
 	}
 
 	if eventsWatch {

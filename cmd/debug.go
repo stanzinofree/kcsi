@@ -71,7 +71,7 @@ func runDebug(cmd *cobra.Command, args []string) error {
 
 	// If fast mode, use busybox
 	if fast && image == "" {
-		image = "busybox:latest"
+		image = imageBusybox
 		fmt.Println("⚡ Fast mode: using busybox (lightweight, limited tools)")
 		fmt.Println()
 	} else if image == "" {
@@ -127,13 +127,13 @@ func selectDebugImage(namespace string) string {
 	nodesOutput, err := kubernetes.ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[0].metadata.name}")
 	if err != nil {
 		fmt.Println("  ⚠️  Could not check nodes, using safe fallback image")
-		return "busybox:latest"
+		return imageBusybox
 	}
 
 	nodeName := strings.TrimSpace(nodesOutput)
 
 	// Check if common debug images are already present by looking at existing pods
-	imagesOutput, err := kubernetes.ExecuteKubectl("get", "pods", "--all-namespaces",
+	imagesOutput, err := kubernetes.ExecuteKubectl("get", "pods", flagAllNamespaces,
 		"-o", "jsonpath={.items[*].spec.containers[*].image}")
 
 	if err == nil {
@@ -156,7 +156,7 @@ func selectDebugImage(namespace string) string {
 	// Create a temporary test using kubectl run with --rm
 	fmt.Println("  Testing public registry access...")
 	testOutput, err := kubernetes.ExecuteKubectl("run", "kcsi-connectivity-test",
-		"--image=busybox:latest", "--rm", "-i", "--restart=Never",
+		"--image="+imageBusybox, "--rm", "-i", "--restart=Never",
 		"--command", "--", "echo", "connected")
 
 	if err == nil && strings.Contains(testOutput, "connected") {
@@ -174,5 +174,5 @@ func selectDebugImage(namespace string) string {
 	fmt.Println("       kcsi debug <ns> <pod> -i nicolaka/netshoot")
 	fmt.Println()
 
-	return "busybox:latest"
+	return imageBusybox
 }
