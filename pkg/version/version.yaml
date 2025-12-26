@@ -1,3 +1,15 @@
+# ============================================================================
+# KCSI Version Configuration
+# ============================================================================
+# This is the single source of truth for version information.
+# Update only this file when releasing a new version.
+# 
+# Used by:
+#   - build.sh (build script)
+#   - Taskfile.yml (task automation)
+#   - pkg/version/version.go (runtime version info)
+# ============================================================================
+
 version: 0.5.3
 name: kcsi
 fullName: Kubectl Smart Interactive
