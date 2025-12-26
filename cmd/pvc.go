@@ -232,40 +232,55 @@ func displayUnboundPVCs(output string) {
 // buildPVCToPodMapping creates a map of PVC (namespace/name) to list of pod names
 func buildPVCToPodMapping(podsJSON string) map[string][]string {
 	pvcToPods := make(map[string][]string)
-
-	// Simple JSON parsing - look for persistentVolumeClaim references
 	lines := strings.Split(podsJSON, "\n")
-	var currentNamespace, currentPod, currentPVC string
+	var currentNamespace, currentPod string
 
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
 
-		// Get namespace
-		if strings.Contains(line, `"namespace":`) {
-			parts := strings.Split(line, `"`)
-			if len(parts) >= 4 {
-				currentNamespace = parts[3]
-			}
+		if ns := extractNamespace(line); ns != "" {
+			currentNamespace = ns
 		}
 
-		// Get pod name
-		if strings.Contains(line, `"name":`) && currentNamespace != "" {
-			parts := strings.Split(line, `"`)
-			if len(parts) >= 4 {
-				currentPod = parts[3]
-			}
+		if name := extractPodName(line, currentNamespace); name != "" {
+			currentPod = name
 		}
 
-		// Get PVC claim name
-		if strings.Contains(line, `"claimName":`) && currentNamespace != "" && currentPod != "" {
-			parts := strings.Split(line, `"`)
-			if len(parts) >= 4 {
-				currentPVC = parts[3]
-				key := fmt.Sprintf("%s/%s", currentNamespace, currentPVC)
-				pvcToPods[key] = append(pvcToPods[key], currentPod)
-			}
+		if claimName := extractClaimName(line, currentNamespace, currentPod); claimName != "" {
+			key := fmt.Sprintf("%s/%s", currentNamespace, claimName)
+			pvcToPods[key] = append(pvcToPods[key], currentPod)
 		}
 	}
 
 	return pvcToPods
+}
+
+func extractNamespace(line string) string {
+	if strings.Contains(line, `"namespace":`) {
+		parts := strings.Split(line, `"`)
+		if len(parts) >= 4 {
+			return parts[3]
+		}
+	}
+	return ""
+}
+
+func extractPodName(line, currentNamespace string) string {
+	if strings.Contains(line, `"name":`) && currentNamespace != "" {
+		parts := strings.Split(line, `"`)
+		if len(parts) >= 4 {
+			return parts[3]
+		}
+	}
+	return ""
+}
+
+func extractClaimName(line, currentNamespace, currentPod string) string {
+	if strings.Contains(line, `"claimName":`) && currentNamespace != "" && currentPod != "" {
+		parts := strings.Split(line, `"`)
+		if len(parts) >= 4 {
+			return parts[3]
+		}
+	}
+	return ""
 }
