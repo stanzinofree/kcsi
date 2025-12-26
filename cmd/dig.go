@@ -56,31 +56,71 @@ func runDig(cmd *cobra.Command, args []string) error {
 	namespace := args[0]
 	podName := args[1]
 	
-	// Build the dig command
-	digCommand := "dig"
-	
-	// If domain is specified, add it
+	// Domain to query (optional)
+	domain := ""
 	if len(args) >= 3 {
-		digCommand = fmt.Sprintf("dig %s", args[2])
+		domain = args[2]
 	}
 	
-	// Add any additional dig arguments
+	// Additional arguments
+	additionalArgs := ""
 	if len(args) > 3 {
 		for i := 3; i < len(args); i++ {
-			digCommand = fmt.Sprintf("%s %s", digCommand, args[i])
+			additionalArgs = fmt.Sprintf("%s %s", additionalArgs, args[i])
 		}
 	}
 
-	kubectlArgs := []string{"exec", "-n", namespace, "-it", podName, "--"}
-	
 	// Check if container flag is set
 	container, _ := cmd.Flags().GetString("container")
-	if container != "" {
-		kubectlArgs = []string{"exec", "-n", namespace, "-it", podName, "-c", container, "--"}
-	}
 	
-	// Add the dig command
-	kubectlArgs = append(kubectlArgs, "sh", "-c", digCommand)
+	// Try dig, nslookup, host in order with fallback
+	dnsCommand := buildDNSCommandWithFallback(domain, additionalArgs)
+	
+	kubectlArgs := []string{"exec", "-n", namespace, "-it", podName}
+	if container != "" {
+		kubectlArgs = append(kubectlArgs, "-c", container)
+	}
+	kubectlArgs = append(kubectlArgs, "--", "sh", "-c", dnsCommand)
 
 	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
+}
+
+// buildDNSCommandWithFallback creates a command that tries dig, then nslookup, then host
+func buildDNSCommandWithFallback(domain, additionalArgs string) string {
+	// Build commands for each tool
+	digCmd := "dig"
+	nslookupCmd := "nslookup"
+	hostCmd := "host"
+	
+	if domain != "" {
+		digCmd = fmt.Sprintf("dig %s%s", domain, additionalArgs)
+		nslookupCmd = fmt.Sprintf("nslookup %s", domain)
+		hostCmd = fmt.Sprintf("host %s", domain)
+	}
+	
+	// Create fallback chain with informative messages
+	fallbackCommand := fmt.Sprintf(
+		`if command -v dig >/dev/null 2>&1; then
+  %s
+elif command -v nslookup >/dev/null 2>&1; then
+  echo "Note: 'dig' not found, using 'nslookup' instead"
+  echo ""
+  %s
+elif command -v host >/dev/null 2>&1; then
+  echo "Note: 'dig' and 'nslookup' not found, using 'host' instead"
+  echo ""
+  %s
+else
+  echo "Error: No DNS tools found in this container"
+  echo "Please install one of: dig (dnsutils), nslookup, or host"
+  echo ""
+  echo "Debian/Ubuntu: apt-get update && apt-get install -y dnsutils"
+  echo "Alpine: apk add --no-cache bind-tools"
+  echo "RHEL/CentOS: yum install -y bind-utils"
+  exit 1
+fi`,
+		digCmd, nslookupCmd, hostCmd,
+	)
+	
+	return fallbackCommand
 }

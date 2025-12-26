@@ -310,7 +310,7 @@
 
                     <div class="command-card" data-tags="dig dns debug resolve query nslookup">
                         <div class="command-syntax">kcsi dig &lt;ns&gt; &lt;pod&gt; &lt;domain&gt;</div>
-                        <div class="command-description">DNS debugging inside pod (namespace-first syntax)</div>
+                        <div class="command-description">DNS debugging inside pod (auto-fallback: dig → nslookup → host)</div>
                         <div class="command-example">$ kcsi dig prod api kubernetes.default.svc</div>
                         <span class="tag tag-exec">EXEC</span>
                     </div>
