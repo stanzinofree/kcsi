@@ -93,6 +93,20 @@
                         <div class="command-example">$ kcsi get secrets -n kube-system</div>
                         <span class="tag tag-get">GET</span>
                     </div>
+
+                    <div class="command-card" data-tags="get internal-domains idomains fqdn dns services pods">
+                        <div class="command-syntax">kcsi get internal-domains</div>
+                        <div class="command-description">List all internal Kubernetes FQDNs (services and pods)</div>
+                        <div class="command-example">$ kcsi get internal-domains --all-namespaces</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get internal-domains idomains namespace fqdn">
+                        <div class="command-syntax">kcsi get idomains -n &lt;ns&gt;</div>
+                        <div class="command-description">List internal FQDNs in specific namespace</div>
+                        <div class="command-example">$ kcsi get idom -n production</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
                 </div>
             </div>
 
