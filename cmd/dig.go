@@ -111,13 +111,23 @@ elif command -v host >/dev/null 2>&1; then
   echo ""
   %s
 else
-  echo "Error: No DNS tools found in this container"
-  echo "Please install one of: dig (dnsutils), nslookup, or host"
   echo ""
-  echo "Debian/Ubuntu: apt-get update && apt-get install -y dnsutils"
-  echo "Alpine: apk add --no-cache bind-tools"
-  echo "RHEL/CentOS: yum install -y bind-utils"
-  exit 1
+  echo "╔═══════════════════════════════════════════════════════════════════════════╗"
+  echo "║ ERROR: No DNS debugging tools found in this container                    ║"
+  echo "╚═══════════════════════════════════════════════════════════════════════════╝"
+  echo ""
+  echo "This container doesn't have dig, nslookup, or host installed."
+  echo ""
+  echo "To install DNS tools in this pod, run one of these commands:"
+  echo ""
+  echo "  Debian/Ubuntu:  apt-get update && apt-get install -y dnsutils"
+  echo "  Alpine Linux:   apk add --no-cache bind-tools"
+  echo "  RHEL/CentOS:    yum install -y bind-utils"
+  echo ""
+  echo "Alternatively, use 'kubectl debug' to attach a debug container with tools:"
+  echo "  kubectl debug -it <pod> --image=nicolaka/netshoot -n <namespace>"
+  echo ""
+  exit 0
 fi`,
 		digCmd, nslookupCmd, hostCmd,
 	)
