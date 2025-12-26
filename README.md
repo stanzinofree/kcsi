@@ -108,6 +108,10 @@ Currently implemented:
 - `kcsi get nodes -o wide` (alias: `no`) - List nodes with details
 - `kcsi get configmaps` (alias: `cm`) - List configmaps
 - `kcsi get secrets` - List secrets
+- `kcsi get internal-domains` (aliases: `idomains`, `idom`) - List all internal Kubernetes FQDNs
+  - Shows services: `service.namespace.svc.cluster.local`
+  - Shows pods: `pod-ip.namespace.pod.cluster.local`
+  - Displays resource type, name, namespace, FQDN, IP, and additional info
 - All get commands support `-o` for output formats: wide, yaml, json, etc.
 
 **Describe Commands:**
@@ -539,14 +543,14 @@ kcsi about
 
 For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-**Current Status:** 5 phases completed (37 features delivered), 2 phases planned (10 features upcoming)
+**Current Status:** 5 phases completed (38 features delivered), 2 phases planned (9 features upcoming)
 
 **Recently Completed:**
+- ✅ Internal domains listing with `get internal-domains` (shows all Kubernetes FQDNs)
 - ✅ Port-forward with root privilege check and port availability validation
 - ✅ Resource usage monitoring with `top` command (pods and nodes)
 - ✅ DNS debugging with `dig` command inside pods
 - ✅ Phase 5: Diagnostics & Output Control (events, error checking, output formats)
-- ✅ Phase 4: Delete Operations with safety confirmations
 
 **Next Up:**
 - 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)
