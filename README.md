@@ -1,6 +1,6 @@
-# kcsi - Kubectl Smart Interactive Wrapper
+# kcsi - Kubectl Cli Super Intuitive
 
-[![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
+[![Version](https://img.shields.io/badge/version-0.5.3-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
@@ -96,7 +96,7 @@ kcsi events -w
 
 ## Current Status
 
-**Version:** 0.5.2 - Enhanced Documentation
+**Version:** 0.5.3 - Resource Monitoring & DNS Debugging
 
 Currently implemented:
 
@@ -108,6 +108,16 @@ Currently implemented:
 - `kcsi get nodes -o wide` (alias: `no`) - List nodes with details
 - `kcsi get configmaps` (alias: `cm`) - List configmaps
 - `kcsi get secrets` - List secrets
+- `kcsi get internal-domains` (aliases: `idomains`, `idom`) - List all internal Kubernetes FQDNs
+  - Shows services: `service.namespace.svc.cluster.local`
+  - Shows pods: `pod-ip.namespace.pod.cluster.local`
+  - Displays resource type, name, namespace, FQDN, IP, and additional info
+- `kcsi get pvc pods` - Show PVCs with their associated pods
+  - Display which pods are using which PVCs
+  - Supports `-n` for namespace, `--all-namespaces` for cluster-wide view
+- `kcsi get pvc unbound` - Show unbound PVCs (Pending, Lost, etc.)
+  - Quickly identify storage issues
+  - Supports `-n` for namespace, `--all-namespaces` for cluster-wide view
 - All get commands support `-o` for output formats: wide, yaml, json, etc.
 
 **Describe Commands:**
@@ -131,6 +141,27 @@ Currently implemented:
 - `kcsi events -w` - Watch events in real-time
 - `kcsi check errors` - Find all pods with issues (not Running/Completed)
 - Helpful diagnostics suggestions for troubleshooting
+
+**Interactive & Execution Commands:**
+- `kcsi attach` - Attach to a running pod with automatic shell detection
+- `kcsi execute` - Execute custom commands in pods
+- `kcsi debug [namespace] [pod]` - Attach ephemeral debug container to pod
+  - Automatic internet connectivity check
+  - Smart image selection (netshoot → alpine → busybox)
+  - Full networking and debugging toolkit
+  - Namespace and pod autocompletion
+- `kcsi port-forward` - Forward local ports to pods with validation
+  - Root privilege check for ports < 1024
+  - Port availability check before forwarding
+
+**Resource Usage & Debugging:**
+- `kcsi top pods` - Display CPU and memory usage for pods
+- `kcsi top nodes` - Display CPU and memory usage for nodes
+- `kcsi dig [namespace] [pod] [domain]` - DNS debugging inside pods
+  - Namespace-first autocompletion
+  - Container selection with `-c` flag
+  - Automatic fallback: dig → nslookup → host
+  - Helpful installation instructions if no DNS tools found
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
@@ -525,12 +556,14 @@ kcsi about
 
 For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-**Current Status:** 5 phases completed (29 features delivered), 2 phases planned (12 features upcoming)
+**Current Status:** 5 phases completed (41 features delivered), 2 phases planned (6 features upcoming)
 
 **Recently Completed:**
-- ✅ Phase 5: Diagnostics & Output Control (events, error checking, output formats)
-- ✅ Phase 4: Delete Operations with safety confirmations
-- ✅ Phase 3: Extended Resource Support (services, deployments, nodes, configmaps, secrets)
+- ✅ PVC management commands (`pvc pods` and `pvc unbound`) for storage troubleshooting
+- ✅ Debug command with ephemeral containers and smart image selection
+- ✅ Internal domains listing with `get internal-domains` (shows all Kubernetes FQDNs)
+- ✅ Port-forward with root privilege check and port availability validation
+- ✅ Resource usage monitoring with `top` command (pods and nodes)
 
 **Next Up:**
 - 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)

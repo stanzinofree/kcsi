@@ -163,6 +163,16 @@
     opacity: 1;
 }
 
+/* Override code styling for roadmap - use lighter style on light backgrounds */
+code {
+    background: #e9ecef;
+    color: #495057;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
 /* Footer styles moved to common.css */
 
 @media (max-width: 768px) {

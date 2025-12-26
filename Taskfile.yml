@@ -1,8 +1,11 @@
 version: '3'
 
 vars:
-  APP_NAME: kcsi
-  VERSION: 0.5.2
+  VERSION_FILE: pkg/version/version.yaml
+  APP_NAME:
+    sh: grep '^name:' {{.VERSION_FILE}} | awk '{print $2}'
+  VERSION:
+    sh: grep '^version:' {{.VERSION_FILE}} | awk '{print $2}'
   BUILD_DIR: bin
   LDFLAGS: -s -w
 

@@ -93,6 +93,48 @@
                         <div class="command-example">$ kcsi get secrets -n kube-system</div>
                         <span class="tag tag-get">GET</span>
                     </div>
+
+                    <div class="command-card" data-tags="get internal-domains idomains fqdn dns services pods">
+                        <div class="command-syntax">kcsi get internal-domains</div>
+                        <div class="command-description">List all internal Kubernetes FQDNs (services and pods)</div>
+                        <div class="command-example">$ kcsi get internal-domains --all-namespaces</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get internal-domains idomains namespace fqdn">
+                        <div class="command-syntax">kcsi get idomains -n &lt;ns&gt;</div>
+                        <div class="command-description">List internal FQDNs in specific namespace</div>
+                        <div class="command-example">$ kcsi get idom -n production</div>
+                        <span class="tag tag-get">GET</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc pods volumes storage persistentvolumeclaim">
+                        <div class="command-syntax">kcsi get pvc pods</div>
+                        <div class="command-description">Show PVCs with their associated pods</div>
+                        <div class="command-example">$ kcsi get pvc pods --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc pods namespace storage">
+                        <div class="command-syntax">kcsi get pvc pods -n &lt;ns&gt;</div>
+                        <div class="command-description">Show PVCs and pods in specific namespace</div>
+                        <div class="command-example">$ kcsi get pvc pods -n production</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc unbound pending lost storage issues">
+                        <div class="command-syntax">kcsi get pvc unbound</div>
+                        <div class="command-description">Show unbound PVCs (Pending, Lost status)</div>
+                        <div class="command-example">$ kcsi get pvc unbound --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc unbound namespace storage troubleshoot">
+                        <div class="command-syntax">kcsi get pvc unbound -n &lt;ns&gt;</div>
+                        <div class="command-description">Show unbound PVCs in specific namespace</div>
+                        <div class="command-example">$ kcsi get pvc unbound -n default</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
                 </div>
             </div>
 
@@ -251,6 +293,83 @@
                         <div class="command-example">$ kcsi execute -n default app -c sidecar -- env</div>
                         <span class="tag tag-exec">EXEC</span>
                     </div>
+
+                    <div class="command-card" data-tags="port-forward forward port tunnel proxy local">
+                        <div class="command-syntax">kcsi port-forward -n &lt;ns&gt; &lt;pod&gt; &lt;local&gt;:&lt;remote&gt;</div>
+                        <div class="command-description">Forward local port to pod (validates privileges and availability)</div>
+                        <div class="command-example">$ kcsi port-forward -n prod api 8080:80</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="debug ephemeral container troubleshoot netshoot tools">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Attach debug container with tools (auto-detects connectivity)</div>
+                        <div class="command-example">$ kcsi debug prod api-server</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="debug image custom specific netshoot alpine">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt; -i &lt;image&gt;</div>
+                        <div class="command-description">Attach debug container with specific image</div>
+                        <div class="command-example">$ kcsi debug prod api -i nicolaka/netshoot</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="debug container target multi sidecar">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt; -c &lt;container&gt;</div>
+                        <div class="command-description">Debug specific container in multi-container pod</div>
+                        <div class="command-example">$ kcsi debug prod app -c sidecar</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+                </div>
+
+            <!-- Resource Usage & Debugging -->
+            <div class="category-section">
+                <div class="category-title">
+                    📊 Resource Usage & Debugging
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="top pods cpu memory usage metrics resources">
+                        <div class="command-syntax">kcsi top pods</div>
+                        <div class="command-description">Show CPU and memory usage for all pods</div>
+                        <div class="command-example">$ kcsi top pods --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top pods namespace specific usage">
+                        <div class="command-syntax">kcsi top pods -n &lt;ns&gt;</div>
+                        <div class="command-description">Show resource usage for pods in namespace</div>
+                        <div class="command-example">$ kcsi top pods -n production</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top nodes cpu memory usage cluster">
+                        <div class="command-syntax">kcsi top nodes</div>
+                        <div class="command-description">Show CPU and memory usage for all nodes</div>
+                        <div class="command-example">$ kcsi top nodes</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top node specific name usage">
+                        <div class="command-syntax">kcsi top nodes &lt;node&gt;</div>
+                        <div class="command-description">Show resource usage for specific node</div>
+                        <div class="command-example">$ kcsi top nodes worker-1</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="dig dns debug resolve query nslookup">
+                        <div class="command-syntax">kcsi dig &lt;ns&gt; &lt;pod&gt; &lt;domain&gt;</div>
+                        <div class="command-description">DNS debugging inside pod (auto-fallback: dig → nslookup → host)</div>
+                        <div class="command-example">$ kcsi dig prod api kubernetes.default.svc</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="dig container dns specific multi">
+                        <div class="command-syntax">kcsi dig &lt;ns&gt; &lt;pod&gt; &lt;domain&gt; -c &lt;ctr&gt;</div>
+                        <div class="command-description">DNS debugging in specific container</div>
+                        <div class="command-example">$ kcsi dig prod app dns.google -c sidecar</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
                 </div>
             </div>
 
@@ -317,7 +436,7 @@
         </div>
 
         <footer>
-            <p>kcsi - Kubectl Smart Interactive</p>
+            <p>kcsi - Kubectl Cli Super Intuitive</p>
             <p style="margin-top: 10px;">
                 <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
                 <a href="guide.html">Quick Guide</a> •
