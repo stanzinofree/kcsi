@@ -85,31 +85,35 @@ func runDebug(cmd *cobra.Command, args []string) error {
 	// Show image size info
 	if strings.Contains(image, "netshoot") {
 		fmt.Println("⏳ Note: netshoot is ~400MB, first pull may take 1-2 minutes...")
-		fmt.Println("   Tip: Use -i busybox or -i alpine for faster startup")
+		fmt.Println("   Tip: Use -f for fast mode or -i busybox for faster startup")
 	}
 	fmt.Println()
 
-	// Use --copy-to to create a copy of the pod with a debug container
-	// This works even if the pod doesn't support ephemeral containers
-	debugPodName := podName + "-debug"
-	
-	kubectlArgs := []string{"debug", podName, "-n", namespace, 
-		"-it", 
-		"--copy-to=" + debugPodName,
+	// Try ephemeral container first (lightweight), fall back to copy if needed
+	kubectlArgs := []string{"debug", "-it", podName, "-n", namespace, 
 		"--image=" + image,
-		"--share-processes",
-		"--container=debugger"}
+		"--target=" + getPrimaryContainer(namespace, podName, container)}
 
-	// Add target container if specified
-	if container != "" {
-		kubectlArgs = append(kubectlArgs, "--target="+container)
-	}
-
-	fmt.Printf("📋 Debug pod name: %s (will be auto-deleted on exit)\n", debugPodName)
-	fmt.Println("🚀 Starting interactive shell (pulling image if needed)...")
+	fmt.Println("🚀 Attaching ephemeral debug container...")
+	fmt.Println("   (The pod will NOT be modified, debug container is temporary)")
 	fmt.Println()
 
 	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
+}
+
+// getPrimaryContainer returns the target container name (user-specified or first container)
+func getPrimaryContainer(namespace, podName, userContainer string) string {
+	if userContainer != "" {
+		return userContainer
+	}
+	
+	// Get first container from pod
+	containers, err := kubernetes.GetContainers(namespace, podName)
+	if err != nil || len(containers) == 0 {
+		return ""
+	}
+	
+	return containers[0]
 }
 
 // selectDebugImage checks internet connectivity and returns appropriate debug image
