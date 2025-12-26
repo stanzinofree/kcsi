@@ -251,6 +251,62 @@
                         <div class="command-example">$ kcsi execute -n default app -c sidecar -- env</div>
                         <span class="tag tag-exec">EXEC</span>
                     </div>
+
+                    <div class="command-card" data-tags="port-forward forward port tunnel proxy local">
+                        <div class="command-syntax">kcsi port-forward -n &lt;ns&gt; &lt;pod&gt; &lt;local&gt;:&lt;remote&gt;</div>
+                        <div class="command-description">Forward local port to pod (validates privileges and availability)</div>
+                        <div class="command-example">$ kcsi port-forward -n prod api 8080:80</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+                </div>
+
+            <!-- Resource Usage & Debugging -->
+            <div class="category-section">
+                <div class="category-title">
+                    📊 Resource Usage & Debugging
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="top pods cpu memory usage metrics resources">
+                        <div class="command-syntax">kcsi top pods</div>
+                        <div class="command-description">Show CPU and memory usage for all pods</div>
+                        <div class="command-example">$ kcsi top pods --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top pods namespace specific usage">
+                        <div class="command-syntax">kcsi top pods -n &lt;ns&gt;</div>
+                        <div class="command-description">Show resource usage for pods in namespace</div>
+                        <div class="command-example">$ kcsi top pods -n production</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top nodes cpu memory usage cluster">
+                        <div class="command-syntax">kcsi top nodes</div>
+                        <div class="command-description">Show CPU and memory usage for all nodes</div>
+                        <div class="command-example">$ kcsi top nodes</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="top node specific name usage">
+                        <div class="command-syntax">kcsi top nodes &lt;node&gt;</div>
+                        <div class="command-description">Show resource usage for specific node</div>
+                        <div class="command-example">$ kcsi top nodes worker-1</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="dig dns debug resolve query nslookup">
+                        <div class="command-syntax">kcsi dig &lt;ns&gt; &lt;pod&gt; &lt;domain&gt;</div>
+                        <div class="command-description">DNS debugging inside pod (namespace-first syntax)</div>
+                        <div class="command-example">$ kcsi dig prod api kubernetes.default.svc</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="dig container dns specific multi">
+                        <div class="command-syntax">kcsi dig &lt;ns&gt; &lt;pod&gt; &lt;domain&gt; -c &lt;ctr&gt;</div>
+                        <div class="command-description">DNS debugging in specific container</div>
+                        <div class="command-example">$ kcsi dig prod app dns.google -c sidecar</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
                 </div>
             </div>
 
