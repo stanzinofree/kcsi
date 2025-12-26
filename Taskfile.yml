@@ -196,3 +196,97 @@ tasks:
       - task: check
       - task: build:all
       - echo "Release builds ready in {{.BUILD_DIR}}/"
+
+  # PR Workflow Tasks
+  pr:
+    desc: "Create and push a new PR (usage: task pr BRANCH=fix/name TITLE='PR Title' DESC='Description')"
+    cmds:
+      - |
+        if [ -z "{{.BRANCH}}" ] || [ -z "{{.TITLE}}" ]; then
+          echo "Error: BRANCH and TITLE are required"
+          echo "Usage: task pr BRANCH=fix/name TITLE='PR Title' DESC='Description'"
+          exit 1
+        fi
+      - git checkout main
+      - git pull origin main
+      - git checkout -b {{.BRANCH}}
+      - git add .
+      - git commit -m "{{.TITLE}}"
+      - git push origin {{.BRANCH}}
+      - gh pr create --title "{{.TITLE}}" --body "{{.DESC}}" --base main
+
+  pr:push:
+    desc: Push updates to current PR branch
+    cmds:
+      - git add .
+      - |
+        read -p "Commit message: " msg
+        git commit -m "$msg"
+      - git push
+
+  pr:update:
+    desc: "Update existing PR with changes (usage: task pr:update MESSAGE='commit message')"
+    cmds:
+      - git add .
+      - git commit -m "{{.MESSAGE}}"
+      - git push
+
+  # Release Management Tasks
+  tag:
+    desc: "Create and push a git tag (usage: task tag VERSION=0.5.4 MESSAGE='Release notes')"
+    cmds:
+      - |
+        if [ -z "{{.VERSION}}" ]; then
+          echo "Error: VERSION is required"
+          echo "Usage: task tag VERSION=0.5.4 MESSAGE='Release notes'"
+          exit 1
+        fi
+      - git checkout main
+      - git pull origin main
+      - git tag -a v{{.VERSION}} -m "{{.MESSAGE}}"
+      - git push origin v{{.VERSION}}
+      - echo "Tag v{{.VERSION}} created and pushed"
+
+  release:github:
+    desc: "Create GitHub release with binaries (usage: task release:github VERSION=0.5.4)"
+    deps:
+      - build:all
+    cmds:
+      - |
+        if [ -z "{{.VERSION}}" ]; then
+          echo "Error: VERSION is required"
+          echo "Usage: task release:github VERSION=0.5.4"
+          exit 1
+        fi
+      - |
+        gh release create v{{.VERSION}} \
+          --title "v{{.VERSION}}" \
+          --notes-file CHANGELOG.md \
+          {{.BUILD_DIR}}/{{.APP_NAME}}-darwin-amd64 \
+          {{.BUILD_DIR}}/{{.APP_NAME}}-darwin-arm64 \
+          {{.BUILD_DIR}}/{{.APP_NAME}}-linux-amd64 \
+          {{.BUILD_DIR}}/{{.APP_NAME}}-linux-arm64 \
+          {{.BUILD_DIR}}/{{.APP_NAME}}-linux-arm
+      - echo "Release v{{.VERSION}} created on GitHub"
+
+  # Git Workflow Shortcuts
+  sync:
+    desc: Sync main branch with remote
+    cmds:
+      - git checkout main
+      - git pull origin main
+      - echo "Main branch synced"
+
+  branch:
+    desc: "Create new branch from main (usage: task branch NAME=fix/my-feature)"
+    cmds:
+      - |
+        if [ -z "{{.NAME}}" ]; then
+          echo "Error: NAME is required"
+          echo "Usage: task branch NAME=fix/my-feature"
+          exit 1
+        fi
+      - git checkout main
+      - git pull origin main
+      - git checkout -b {{.NAME}}
+      - echo "Branch {{.NAME}} created"
