@@ -139,6 +139,11 @@ Currently implemented:
 **Interactive & Execution Commands:**
 - `kcsi attach` - Attach to a running pod with automatic shell detection
 - `kcsi execute` - Execute custom commands in pods
+- `kcsi debug [namespace] [pod]` - Attach ephemeral debug container to pod
+  - Automatic internet connectivity check
+  - Smart image selection (netshoot → alpine → busybox)
+  - Full networking and debugging toolkit
+  - Namespace and pod autocompletion
 - `kcsi port-forward` - Forward local ports to pods with validation
   - Root privilege check for ports < 1024
   - Port availability check before forwarding
@@ -545,14 +550,14 @@ kcsi about
 
 For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-**Current Status:** 5 phases completed (38 features delivered), 2 phases planned (9 features upcoming)
+**Current Status:** 5 phases completed (39 features delivered), 2 phases planned (8 features upcoming)
 
 **Recently Completed:**
+- ✅ Debug command with ephemeral containers and smart image selection
 - ✅ Internal domains listing with `get internal-domains` (shows all Kubernetes FQDNs)
 - ✅ Port-forward with root privilege check and port availability validation
 - ✅ Resource usage monitoring with `top` command (pods and nodes)
-- ✅ DNS debugging with `dig` command inside pods
-- ✅ Phase 5: Diagnostics & Output Control (events, error checking, output formats)
+- ✅ DNS debugging with `dig` command inside pods with automatic fallback
 
 **Next Up:**
 - 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)
