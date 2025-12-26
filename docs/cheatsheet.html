@@ -107,6 +107,34 @@
                         <div class="command-example">$ kcsi get idom -n production</div>
                         <span class="tag tag-get">GET</span>
                     </div>
+
+                    <div class="command-card" data-tags="get pvc pods volumes storage persistentvolumeclaim">
+                        <div class="command-syntax">kcsi get pvc pods</div>
+                        <div class="command-description">Show PVCs with their associated pods</div>
+                        <div class="command-example">$ kcsi get pvc pods --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc pods namespace storage">
+                        <div class="command-syntax">kcsi get pvc pods -n &lt;ns&gt;</div>
+                        <div class="command-description">Show PVCs and pods in specific namespace</div>
+                        <div class="command-example">$ kcsi get pvc pods -n production</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc unbound pending lost storage issues">
+                        <div class="command-syntax">kcsi get pvc unbound</div>
+                        <div class="command-description">Show unbound PVCs (Pending, Lost status)</div>
+                        <div class="command-example">$ kcsi get pvc unbound --all-namespaces</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
+
+                    <div class="command-card" data-tags="get pvc unbound namespace storage troubleshoot">
+                        <div class="command-syntax">kcsi get pvc unbound -n &lt;ns&gt;</div>
+                        <div class="command-description">Show unbound PVCs in specific namespace</div>
+                        <div class="command-example">$ kcsi get pvc unbound -n default</div>
+                        <span class="tag tag-query">QUERY</span>
+                    </div>
                 </div>
             </div>
 
@@ -408,7 +436,7 @@
         </div>
 
         <footer>
-            <p>kcsi - Kubectl Smart Interactive</p>
+            <p>kcsi - Kubectl Cli Super Intuitive</p>
             <p style="margin-top: 10px;">
                 <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
                 <a href="guide.html">Quick Guide</a> •

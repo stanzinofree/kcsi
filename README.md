@@ -1,4 +1,4 @@
-# kcsi - Kubectl Smart Interactive Wrapper
+# kcsi - Kubectl Cli Super Intuitive
 
 [![Version](https://img.shields.io/badge/version-0.5.3-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
@@ -112,6 +112,12 @@ Currently implemented:
   - Shows services: `service.namespace.svc.cluster.local`
   - Shows pods: `pod-ip.namespace.pod.cluster.local`
   - Displays resource type, name, namespace, FQDN, IP, and additional info
+- `kcsi get pvc pods` - Show PVCs with their associated pods
+  - Display which pods are using which PVCs
+  - Supports `-n` for namespace, `--all-namespaces` for cluster-wide view
+- `kcsi get pvc unbound` - Show unbound PVCs (Pending, Lost, etc.)
+  - Quickly identify storage issues
+  - Supports `-n` for namespace, `--all-namespaces` for cluster-wide view
 - All get commands support `-o` for output formats: wide, yaml, json, etc.
 
 **Describe Commands:**
@@ -550,14 +556,14 @@ kcsi about
 
 For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-**Current Status:** 5 phases completed (39 features delivered), 2 phases planned (8 features upcoming)
+**Current Status:** 5 phases completed (41 features delivered), 2 phases planned (6 features upcoming)
 
 **Recently Completed:**
+- ✅ PVC management commands (`pvc pods` and `pvc unbound`) for storage troubleshooting
 - ✅ Debug command with ephemeral containers and smart image selection
 - ✅ Internal domains listing with `get internal-domains` (shows all Kubernetes FQDNs)
 - ✅ Port-forward with root privilege check and port availability validation
 - ✅ Resource usage monitoring with `top` command (pods and nodes)
-- ✅ DNS debugging with `dig` command inside pods with automatic fallback
 
 **Next Up:**
 - 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)

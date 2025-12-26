@@ -3,7 +3,7 @@
 # ============================================================================
 # This is the single source of truth for version information.
 # Update only this file when releasing a new version.
-# 
+#
 # Used by:
 #   - build.sh (build script)
 #   - Taskfile.yml (task automation)
@@ -12,7 +12,7 @@
 
 version: 0.5.3
 name: kcsi
-fullName: Kubectl Smart Interactive
+fullName: Kubectl Cli Super Intuitive
 description: A kubectl wrapper with intelligent autocompletion
 author: Alessandro Middei
 contact: alessandro.middei@gmail.com
