@@ -605,15 +605,13 @@ task run -- get pods -n default
 
 | Command | Description |
 |---------|-------------|
-| `task` | Show all available tasks |
+| **Build Tasks** | |
 | `task build` | Build for current platform |
 | `task build:all` | Build for all platforms |
 | `task build:darwin` | Build for macOS (Intel + ARM) |
 | `task build:linux` | Build for Linux (amd64, arm64, arm) |
-| `task build:windows` | Build for Windows (amd64, arm64) |
-| `task build:linux-arm64` | Build for specific platform |
-| `task build:windows-amd64` | Build for Windows x86_64 |
 | `task clean` | Clean build artifacts |
+| **Development Tasks** | |
 | `task install` | Build and install to /usr/local/bin |
 | `task uninstall` | Uninstall from /usr/local/bin |
 | `task run -- <args>` | Build and run with arguments |
@@ -621,13 +619,80 @@ task run -- get pods -n default
 | `task fmt` | Format code |
 | `task vet` | Run go vet |
 | `task check` | Run fmt, vet, and test |
-| `task completion:all` | Generate all completion scripts |
 | `task dev` | Development mode (build + install) |
-| `task release` | Prepare release build |
+| **PR Workflow Tasks** | |
+| `task pr BRANCH=fix/name TITLE='...' DESC='...'` | Create and push new PR |
+| `task pr:push` | Push updates to current PR (interactive) |
+| `task pr:update MESSAGE='...'` | Update PR with commit message |
+| `task branch NAME=fix/name` | Create new branch from main |
+| `task sync` | Sync main branch with remote |
+| **Release Tasks** | |
+| `task tag VERSION=0.5.4 MESSAGE='...'` | Create and push git tag |
+| `task release` | Prepare release build (all platforms) |
+| `task release:github VERSION=0.5.4` | Create GitHub release with binaries |
+| **Other Tasks** | |
+| `task completion:all` | Generate all completion scripts |
 
 ## Contributing
 
-This is currently a personal project in early development. Feedback and suggestions are welcome!
+Contributions are welcome! Here's how to propose changes via Pull Requests:
+
+### Making a Pull Request
+
+1. **Create a branch** from updated main:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b fix/your-feature-name
+   ```
+
+2. **Make your changes** and commit:
+   ```bash
+   git add .
+   git commit -m "fix: description of your changes"
+   ```
+
+3. **Push your branch**:
+   ```bash
+   git push origin fix/your-feature-name
+   ```
+
+4. **Create the Pull Request**:
+   ```bash
+   gh pr create --title "Your PR Title" --body "Detailed description" --base main
+   ```
+
+### Using Task for PR Workflow
+
+We provide convenient Task commands for the PR workflow:
+
+```bash
+# Create and push a PR
+task pr BRANCH=fix/my-feature TITLE="Fix something" DESC="Detailed description"
+
+# Push updates to existing PR
+task pr-push
+
+# After PR is merged, create a tag and release
+task tag VERSION=0.5.4 MESSAGE="Release notes"
+task release VERSION=0.5.4
+```
+
+See [Available Task Commands](#available-task-commands) for the full list.
+
+### Commit Message Convention
+
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `chore:` Maintenance tasks
+- `test:` Test changes
+
+### Repository Rules
+
+- All PRs require passing CI/CD checks (tests, CodeQL, SonarCloud)
+- Direct pushes to `main` are blocked
+- PRs must be reviewed and merged via GitHub interface
 
 ## License
 
