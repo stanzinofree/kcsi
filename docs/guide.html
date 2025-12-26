@@ -14,7 +14,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #212529;
+            color: #fff;
             background: #4a5a9a;
             min-height: 100vh;
             padding: 20px;
@@ -241,8 +241,8 @@
             <section id="intro">
                 <h2>📖 What is kcsi?</h2>
                 <p>
-                    <strong>kcsi</strong> is a powerful kubectl wrapper that supercharges your Kubernetes workflow with 
-                    intelligent autocompletion. No more typing long resource names or memorizing complex commands—just 
+                    <strong>kcsi</strong> is a powerful kubectl wrapper that supercharges your Kubernetes workflow with
+                    intelligent autocompletion. No more typing long resource names or memorizing complex commands—just
                     press <span class="highlight">TAB</span> and let kcsi do the work!
                 </p>
             </section>
@@ -279,14 +279,14 @@
 
             <section id="installation">
                 <h2>📥 Installation</h2>
-                
+
                 <div class="install-section">
                     <h3>Quick Install (Recommended)</h3>
                     <div class="code-block">curl -sL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash</div>
                 </div>
 
                 <h3>Manual Installation</h3>
-                
+
                 <div class="step-container">
                     <div class="step-number">1</div>
                     <div>
@@ -320,7 +320,7 @@
 
             <section id="quickstart">
                 <h2>🚀 Quick Start Guide</h2>
-                
+
                 <h3>Basic Commands</h3>
                 <table>
                     <tr>
@@ -384,7 +384,7 @@
 
             <section id="examples">
                 <h2>💡 Practical Examples</h2>
-                
+
                 <h3>Example 1: Debugging a Crashing Pod</h3>
                 <div class="code-block">kcsi check errors</div>
                 <p>Find all pods with issues</p>
@@ -406,14 +406,14 @@
                 <p>Follow last 100 lines from specific container</p>
 
                 <div class="tip">
-                    <strong>💡 Pro Tip:</strong> Use <code>-o yaml</code> or <code>-o json</code> flags with any get command 
+                    <strong>💡 Pro Tip:</strong> Use <code>-o yaml</code> or <code>-o json</code> flags with any get command
                     to export configurations for backup or migration!
                 </div>
             </section>
 
             <section id="advanced">
                 <h2>🎓 Advanced Features</h2>
-                
+
                 <h3>Safety Mechanisms</h3>
                 <p>All delete operations require confirmation by default:</p>
                 <div class="code-block">kcsi delete pod -n production my-pod</div>
@@ -471,8 +471,8 @@
         <footer>
             <p>Made with ❤️ by Alessandro Middei</p>
             <p style="margin-top: 10px;">
-                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
-                <a href="https://github.com/stanzinofree/kcsi/issues">Report Issues</a> • 
+                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> •
+                <a href="https://github.com/stanzinofree/kcsi/issues">Report Issues</a> •
                 <a href="https://github.com/stanzinofree/kcsi/blob/main/LICENSE">MIT License</a>
             </p>
             <p style="margin-top: 20px; opacity: 0.7;">kcsi v0.5.2 - Kubectl Smart Interactive</p>
