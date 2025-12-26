@@ -45,6 +45,7 @@ func init() {
 	rootCmd.AddCommand(debugCmd)
 	debugCmd.Flags().StringP("image", "i", "", "Debug image to use (default: auto-detect based on connectivity)")
 	debugCmd.Flags().StringP("container", "c", "", "Target container name (for multi-container pods)")
+	debugCmd.Flags().BoolP("fast", "f", false, "Use lightweight busybox image for faster startup")
 	debugCmd.RegisterFlagCompletionFunc("container", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if len(args) >= 2 {
 			namespace := args[0]
@@ -66,14 +67,26 @@ func runDebug(cmd *cobra.Command, args []string) error {
 	// Get user-specified image or auto-detect
 	image, _ := cmd.Flags().GetString("image")
 	container, _ := cmd.Flags().GetString("container")
+	fast, _ := cmd.Flags().GetBool("fast")
 
-	if image == "" {
+	// If fast mode, use busybox
+	if fast && image == "" {
+		image = "busybox:latest"
+		fmt.Println("⚡ Fast mode: using busybox (lightweight, limited tools)")
+		fmt.Println()
+	} else if image == "" {
 		fmt.Println("🔍 Checking internet connectivity from cluster...")
 		image = selectDebugImage(namespace)
 	}
 
 	fmt.Printf("🐛 Creating debug session for pod '%s' in namespace '%s'\n", podName, namespace)
 	fmt.Printf("📦 Using debug image: %s\n", image)
+	
+	// Show image size info
+	if strings.Contains(image, "netshoot") {
+		fmt.Println("⏳ Note: netshoot is ~400MB, first pull may take 1-2 minutes...")
+		fmt.Println("   Tip: Use -i busybox or -i alpine for faster startup")
+	}
 	fmt.Println()
 
 	// Use --copy-to to create a copy of the pod with a debug container
@@ -93,7 +106,7 @@ func runDebug(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Printf("📋 Debug pod name: %s (will be auto-deleted on exit)\n", debugPodName)
-	fmt.Println("🚀 Starting interactive shell...")
+	fmt.Println("🚀 Starting interactive shell (pulling image if needed)...")
 	fmt.Println()
 
 	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
