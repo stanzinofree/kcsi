@@ -272,6 +272,27 @@
                         <div class="command-example">$ kcsi port-forward -n prod api 8080:80</div>
                         <span class="tag tag-exec">EXEC</span>
                     </div>
+
+                    <div class="command-card" data-tags="debug ephemeral container troubleshoot netshoot tools">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt;</div>
+                        <div class="command-description">Attach debug container with tools (auto-detects connectivity)</div>
+                        <div class="command-example">$ kcsi debug prod api-server</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="debug image custom specific netshoot alpine">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt; -i &lt;image&gt;</div>
+                        <div class="command-description">Attach debug container with specific image</div>
+                        <div class="command-example">$ kcsi debug prod api -i nicolaka/netshoot</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
+
+                    <div class="command-card" data-tags="debug container target multi sidecar">
+                        <div class="command-syntax">kcsi debug &lt;ns&gt; &lt;pod&gt; -c &lt;container&gt;</div>
+                        <div class="command-description">Debug specific container in multi-container pod</div>
+                        <div class="command-example">$ kcsi debug prod app -c sidecar</div>
+                        <span class="tag tag-exec">EXEC</span>
+                    </div>
                 </div>
 
             <!-- Resource Usage & Debugging -->
