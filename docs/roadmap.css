@@ -87,7 +87,7 @@
 }
 
 .badge-completed {
-    background: #28a745;
+    background: #1e7e34;
     color: white;
 }
 
@@ -144,7 +144,7 @@
 }
 
 .task-checkbox.done {
-    background: #28a745;
+    background: #1e7e34;
     color: white;
 }
 
