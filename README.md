@@ -1,6 +1,6 @@
 # kcsi - Kubectl Smart Interactive Wrapper
 
-[![Version](https://img.shields.io/badge/version-0.5.2-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
+[![Version](https://img.shields.io/badge/version-0.5.3-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
@@ -96,7 +96,7 @@ kcsi events -w
 
 ## Current Status
 
-**Version:** 0.5.2 - Enhanced Documentation
+**Version:** 0.5.3 - Resource Monitoring & DNS Debugging
 
 Currently implemented:
 
@@ -131,6 +131,20 @@ Currently implemented:
 - `kcsi events -w` - Watch events in real-time
 - `kcsi check errors` - Find all pods with issues (not Running/Completed)
 - Helpful diagnostics suggestions for troubleshooting
+
+**Interactive & Execution Commands:**
+- `kcsi attach` - Attach to a running pod with automatic shell detection
+- `kcsi execute` - Execute custom commands in pods
+- `kcsi port-forward` - Forward local ports to pods with validation
+  - Root privilege check for ports < 1024
+  - Port availability check before forwarding
+
+**Resource Usage & Debugging:**
+- `kcsi top pods` - Display CPU and memory usage for pods
+- `kcsi top nodes` - Display CPU and memory usage for nodes
+- `kcsi dig [namespace] [pod] [domain]` - DNS debugging inside pods
+  - Namespace-first autocompletion
+  - Container selection with `-c` flag
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
@@ -525,12 +539,14 @@ kcsi about
 
 For a detailed roadmap with progress tracking and visual indicators, see **[🗺️ Full Roadmap](https://stanzinofree.github.io/kcsi/roadmap.html)**.
 
-**Current Status:** 5 phases completed (29 features delivered), 2 phases planned (12 features upcoming)
+**Current Status:** 5 phases completed (37 features delivered), 2 phases planned (10 features upcoming)
 
 **Recently Completed:**
+- ✅ Port-forward with root privilege check and port availability validation
+- ✅ Resource usage monitoring with `top` command (pods and nodes)
+- ✅ DNS debugging with `dig` command inside pods
 - ✅ Phase 5: Diagnostics & Output Control (events, error checking, output formats)
 - ✅ Phase 4: Delete Operations with safety confirmations
-- ✅ Phase 3: Extended Resource Support (services, deployments, nodes, configmaps, secrets)
 
 **Next Up:**
 - 🔄 Phase 6: Additional Commands (exec, port-forward, apply, edit, rollout, top)
