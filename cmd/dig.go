@@ -55,13 +55,13 @@ func init() {
 func runDig(cmd *cobra.Command, args []string) error {
 	namespace := args[0]
 	podName := args[1]
-	
+
 	// Domain to query (optional)
 	domain := ""
 	if len(args) >= 3 {
 		domain = args[2]
 	}
-	
+
 	// Additional arguments
 	additionalArgs := ""
 	if len(args) > 3 {
@@ -72,10 +72,10 @@ func runDig(cmd *cobra.Command, args []string) error {
 
 	// Check if container flag is set
 	container, _ := cmd.Flags().GetString("container")
-	
+
 	// Try dig, nslookup, host in order with fallback
 	dnsCommand := buildDNSCommandWithFallback(domain, additionalArgs)
-	
+
 	kubectlArgs := []string{"exec", "-n", namespace, "-it", podName}
 	if container != "" {
 		kubectlArgs = append(kubectlArgs, "-c", container)
@@ -91,13 +91,13 @@ func buildDNSCommandWithFallback(domain, additionalArgs string) string {
 	digCmd := "dig"
 	nslookupCmd := "nslookup"
 	hostCmd := "host"
-	
+
 	if domain != "" {
 		digCmd = fmt.Sprintf("dig %s%s", domain, additionalArgs)
 		nslookupCmd = fmt.Sprintf("nslookup %s", domain)
 		hostCmd = fmt.Sprintf("host %s", domain)
 	}
-	
+
 	// Create fallback chain with informative messages
 	fallbackCommand := fmt.Sprintf(
 		`if command -v dig >/dev/null 2>&1; then
@@ -131,6 +131,6 @@ else
 fi`,
 		digCmd, nslookupCmd, hostCmd,
 	)
-	
+
 	return fallbackCommand
 }

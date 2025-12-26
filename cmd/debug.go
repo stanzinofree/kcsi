@@ -81,7 +81,7 @@ func runDebug(cmd *cobra.Command, args []string) error {
 
 	fmt.Printf("🐛 Creating debug session for pod '%s' in namespace '%s'\n", podName, namespace)
 	fmt.Printf("📦 Using debug image: %s\n", image)
-	
+
 	// Show image size info
 	if strings.Contains(image, "netshoot") {
 		fmt.Println("⏳ Note: netshoot is ~400MB, first pull may take 1-2 minutes...")
@@ -90,7 +90,7 @@ func runDebug(cmd *cobra.Command, args []string) error {
 	fmt.Println()
 
 	// Try ephemeral container first (lightweight), fall back to copy if needed
-	kubectlArgs := []string{"debug", "-it", podName, "-n", namespace, 
+	kubectlArgs := []string{"debug", "-it", podName, "-n", namespace,
 		"--image=" + image,
 		"--target=" + getPrimaryContainer(namespace, podName, container)}
 
@@ -106,13 +106,13 @@ func getPrimaryContainer(namespace, podName, userContainer string) string {
 	if userContainer != "" {
 		return userContainer
 	}
-	
+
 	// Get first container from pod
 	containers, err := kubernetes.GetContainers(namespace, podName)
 	if err != nil || len(containers) == 0 {
 		return ""
 	}
-	
+
 	return containers[0]
 }
 
@@ -120,9 +120,9 @@ func getPrimaryContainer(namespace, podName, userContainer string) string {
 func selectDebugImage(namespace string) string {
 	// Try to check internet connectivity by testing if we can resolve DNS
 	// We'll run a quick test pod or check existing pods' connectivity
-	
+
 	fmt.Println("  Testing internet connectivity...")
-	
+
 	// Try to get a node and check if it can pull images
 	nodesOutput, err := kubernetes.ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[0].metadata.name}")
 	if err != nil {
@@ -131,20 +131,20 @@ func selectDebugImage(namespace string) string {
 	}
 
 	nodeName := strings.TrimSpace(nodesOutput)
-	
+
 	// Check if common debug images are already present by looking at existing pods
-	imagesOutput, err := kubernetes.ExecuteKubectl("get", "pods", "--all-namespaces", 
+	imagesOutput, err := kubernetes.ExecuteKubectl("get", "pods", "--all-namespaces",
 		"-o", "jsonpath={.items[*].spec.containers[*].image}")
-	
+
 	if err == nil {
 		images := strings.ToLower(imagesOutput)
-		
+
 		// If netshoot is already used in the cluster, it's likely available
 		if strings.Contains(images, "nicolaka/netshoot") {
 			fmt.Println("  ✅ Found netshoot image in cluster (full debugging toolkit)")
 			return "nicolaka/netshoot:latest"
 		}
-		
+
 		// Check for alpine
 		if strings.Contains(images, "alpine") {
 			fmt.Println("  ✅ Found alpine image in cluster (lightweight with package manager)")
@@ -155,10 +155,10 @@ func selectDebugImage(namespace string) string {
 	// Try to check internet by testing if we can reach a public registry
 	// Create a temporary test using kubectl run with --rm
 	fmt.Println("  Testing public registry access...")
-	testOutput, err := kubernetes.ExecuteKubectl("run", "kcsi-connectivity-test", 
-		"--image=busybox:latest", "--rm", "-i", "--restart=Never", 
+	testOutput, err := kubernetes.ExecuteKubectl("run", "kcsi-connectivity-test",
+		"--image=busybox:latest", "--rm", "-i", "--restart=Never",
 		"--command", "--", "echo", "connected")
-	
+
 	if err == nil && strings.Contains(testOutput, "connected") {
 		fmt.Println("  ✅ Internet connectivity confirmed (using full debug toolkit)")
 		// Clean up test pod if it exists
@@ -173,6 +173,6 @@ func selectDebugImage(namespace string) string {
 	fmt.Println("  Tip: If you need more tools, specify an image with -i flag:")
 	fmt.Println("       kcsi debug <ns> <pod> -i nicolaka/netshoot")
 	fmt.Println()
-	
+
 	return "busybox:latest"
 }

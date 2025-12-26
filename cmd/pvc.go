@@ -125,7 +125,7 @@ func runPVCPods(cmd *cobra.Command, args []string) error {
 				pods = []string{"-"}
 			}
 
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n", 
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n",
 				ns, name, status, capacity, storageClass, strings.Join(pods, ", "))
 		}
 	}
@@ -167,7 +167,7 @@ func runPVCUnbound(cmd *cobra.Command, args []string) error {
 
 	lines := strings.Split(strings.TrimSpace(output), "\n")
 	unboundCount := 0
-	
+
 	for i, line := range lines {
 		if i == 0 || line == "" {
 			continue
@@ -186,8 +186,8 @@ func runPVCUnbound(cmd *cobra.Command, args []string) error {
 				if len(fields) > 6 {
 					age = fields[6]
 				}
-				
-				fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n", 
+
+				fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n",
 					ns, name, status, capacity, storageClass, age)
 			}
 		}
