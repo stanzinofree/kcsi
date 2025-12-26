@@ -4,16 +4,34 @@
 
 set -e
 
-VERSION="0.5.0"
-APP_NAME="kcsi"
+# Read version and app name from version.yaml
+VERSION_FILE="pkg/version/version.yaml"
+
+if [[ ! -f "$VERSION_FILE" ]]; then
+    echo "Error: $VERSION_FILE not found!" >&2
+    exit 1
+fi
+
+# Parse VERSION and APP_NAME from YAML using grep and awk
+VERSION=$(grep '^version:' "$VERSION_FILE" | awk '{print $2}')
+APP_NAME=$(grep '^name:' "$VERSION_FILE" | awk '{print $2}')
+
+if [[ -z "$VERSION" ]] || [[ -z "$APP_NAME" ]]; then
+    echo "Error: Could not parse version or name from $VERSION_FILE" >&2
+    exit 1
+fi
+
 BUILD_DIR="bin"
 
 # Colors for output
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}Building ${APP_NAME} v${VERSION}${NC}"
+echo -e "${YELLOW}Version source: ${VERSION_FILE}${NC}"
+echo ""
 
 # Clean previous builds
 rm -rf ${BUILD_DIR}
