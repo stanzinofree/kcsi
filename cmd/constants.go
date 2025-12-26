@@ -1,13 +1,11 @@
 package cmd
 
-// Common flag descriptions used across multiple commands
 const (
-	// FlagDescNamespace is the description for namespace flags
-	FlagDescNamespace = "Kubernetes namespace"
+	flagAllNamespaces = "--all-namespaces"
+	imageBusybox      = "busybox:latest"
 
-	// FlagDescOutput is the description for output format flags
-	FlagDescOutput = "Output format (e.g., wide, yaml, json)"
-
-	// FlagDescSkipConfirm is the description for force/skip confirmation flags
+	// Flag descriptions
+	FlagDescNamespace   = "Kubernetes namespace"
 	FlagDescSkipConfirm = "Skip confirmation prompt"
+	FlagDescOutput      = "Output format (json, yaml, wide, etc.)"
 )

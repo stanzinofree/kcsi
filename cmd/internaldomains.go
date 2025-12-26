@@ -33,45 +33,69 @@ func init() {
 	})
 }
 
-func runInternalDomains(cmd *cobra.Command, args []string) error {
+func runInternalDomains(cmd *cobra.Command, _ []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 
-	// Get services
+	servicesOutput, err := fetchServicesForDomains(namespace)
+	if err != nil {
+		return err
+	}
+
+	podsOutput, err := fetchPodsForDomains(namespace)
+	if err != nil {
+		return err
+	}
+
+	displayInternalDomains(servicesOutput, podsOutput)
+	return nil
+}
+
+func fetchServicesForDomains(namespace string) (string, error) {
 	servicesArgs := []string{"get", "services", "-o", "custom-columns=TYPE:metadata.labels,NAME:metadata.name,NAMESPACE:metadata.namespace,CLUSTER-IP:spec.clusterIP,PORTS:spec.ports[*].port"}
 	if namespace != "" {
 		servicesArgs = append(servicesArgs, "-n", namespace)
 	} else {
-		servicesArgs = append(servicesArgs, "--all-namespaces")
+		servicesArgs = append(servicesArgs, flagAllNamespaces)
 	}
 
-	servicesOutput, err := kubernetes.ExecuteKubectl(servicesArgs...)
+	output, err := kubernetes.ExecuteKubectl(servicesArgs...)
 	if err != nil {
-		return fmt.Errorf("failed to get services: %v", err)
+		return "", fmt.Errorf("failed to get services: %v", err)
 	}
+	return output, nil
+}
 
-	// Get pods
+func fetchPodsForDomains(namespace string) (string, error) {
 	podsArgs := []string{"get", "pods", "-o", "custom-columns=TYPE:metadata.labels,NAME:metadata.name,NAMESPACE:metadata.namespace,IP:status.podIP,STATUS:status.phase"}
 	if namespace != "" {
 		podsArgs = append(podsArgs, "-n", namespace)
 	} else {
-		podsArgs = append(podsArgs, "--all-namespaces")
+		podsArgs = append(podsArgs, flagAllNamespaces)
 	}
 
-	podsOutput, err := kubernetes.ExecuteKubectl(podsArgs...)
+	output, err := kubernetes.ExecuteKubectl(podsArgs...)
 	if err != nil {
-		return fmt.Errorf("failed to get pods: %v", err)
+		return "", fmt.Errorf("failed to get pods: %v", err)
 	}
+	return output, nil
+}
 
-	// Display results
+func displayInternalDomains(servicesOutput, podsOutput string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
 	fmt.Fprintln(w, "TYPE\tNAME\tNAMESPACE\tFQDN\tIP\tINFO")
 	fmt.Fprintln(w, "----\t----\t---------\t----\t--\t----")
 
-	// Process services
-	serviceLines := strings.Split(strings.TrimSpace(servicesOutput), "\n")
-	for i, line := range serviceLines {
+	processServices(w, servicesOutput)
+	processPods(w, podsOutput)
+
+	w.Flush()
+}
+
+func processServices(w *tabwriter.Writer, output string) {
+	lines := strings.Split(strings.TrimSpace(output), "\n")
+	for i, line := range lines {
 		if i == 0 || line == "" {
-			continue // Skip header and empty lines
+			continue
 		}
 		fields := strings.Fields(line)
 		if len(fields) >= 4 {
@@ -87,12 +111,13 @@ func runInternalDomains(cmd *cobra.Command, args []string) error {
 			fmt.Fprintf(w, "SERVICE\t%s\t%s\t%s\t%s\t%s\n", name, ns, fqdn, clusterIP, ports)
 		}
 	}
+}
 
-	// Process pods
-	podLines := strings.Split(strings.TrimSpace(podsOutput), "\n")
-	for i, line := range podLines {
+func processPods(w *tabwriter.Writer, output string) {
+	lines := strings.Split(strings.TrimSpace(output), "\n")
+	for i, line := range lines {
 		if i == 0 || line == "" {
-			continue // Skip header and empty lines
+			continue
 		}
 		fields := strings.Fields(line)
 		if len(fields) >= 4 {
@@ -104,13 +129,9 @@ func runInternalDomains(cmd *cobra.Command, args []string) error {
 				status = fields[4]
 			}
 
-			// Pod FQDN format: pod-ip-with-dashes.namespace.pod.cluster.local
 			podIPDashes := strings.ReplaceAll(podIP, ".", "-")
 			fqdn := fmt.Sprintf("%s.%s.pod.cluster.local", podIPDashes, ns)
 			fmt.Fprintf(w, "POD\t%s\t%s\t%s\t%s\t%s\n", name, ns, fqdn, podIP, status)
 		}
 	}
-
-	w.Flush()
-	return nil
 }

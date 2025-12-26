@@ -571,6 +571,20 @@ For a detailed roadmap with progress tracking and visual indicators, see **[🗺
 
 ## Development
 
+### Git Hooks Setup
+
+This project uses git hooks to ensure code quality. Install the hooks to automatically format Go code before commits:
+
+```bash
+# Install git hooks (run this once after cloning)
+./scripts/install-git-hooks.sh
+```
+
+**What it does:**
+- Automatically runs `gofmt` on all staged `.go` files before each commit
+- Ensures consistent code formatting across the project
+- Prevents formatting issues in CI/CD pipeline
+
 ### Project Structure
 
 ```
