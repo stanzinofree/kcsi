@@ -175,6 +175,16 @@ code {
     font-size: 0.9em;
 }
 
+/* Planned features section titles - improve contrast */
+.phase.pending h3 {
+    color: #212529;
+    font-weight: 600;
+    background: linear-gradient(135deg, #4a5a9a 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 /* Footer styles moved to common.css */
 
 @media (max-width: 768px) {

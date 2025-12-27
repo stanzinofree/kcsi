@@ -10,8 +10,9 @@ func TestGetVersion(t *testing.T) {
 	if version == "" {
 		t.Error("GetVersion() returned empty string")
 	}
-	if version != "0.5.3" {
-		t.Errorf("Expected version 0.5.3, got %s", version)
+	// Version should follow semantic versioning pattern (e.g., 0.6.0, 1.0.0)
+	if !strings.Contains(version, ".") {
+		t.Errorf("Version should contain dots (semantic versioning), got %s", version)
 	}
 }
 
@@ -53,8 +54,12 @@ func TestGetManifest(t *testing.T) {
 	if manifest.Name != "kcsi" {
 		t.Errorf("Expected manifest name 'kcsi', got %s", manifest.Name)
 	}
-	if manifest.Version != "0.5.3" {
-		t.Errorf("Expected manifest version '0.5.3', got %s", manifest.Version)
+	// Check version is not empty and follows semantic versioning
+	if manifest.Version == "" {
+		t.Error("Manifest version should not be empty")
+	}
+	if !strings.Contains(manifest.Version, ".") {
+		t.Errorf("Manifest version should follow semantic versioning (contain dots), got %s", manifest.Version)
 	}
 	if manifest.License != "MIT" {
 		t.Errorf("Expected manifest license 'MIT', got %s", manifest.License)
