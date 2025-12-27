@@ -1,6 +1,6 @@
 # kcsi - Kubectl Cli Super Intuitive
 
-[![Version](https://img.shields.io/badge/version-0.5.3-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
 [![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
@@ -96,7 +96,7 @@ kcsi events -w
 
 ## Current Status
 
-**Version:** 0.5.3 - Resource Monitoring & DNS Debugging
+**Version:** 0.6.0 - Advanced Operations & Roadmap Reorganization
 
 Currently implemented:
 
@@ -173,6 +173,25 @@ Currently implemented:
   - Useful for scripting and quick checks
   - Less intrusive than showing all secrets
 - ⚠️ **Security Note**: See [docs/SECURITY_SECRETS.md](docs/SECURITY_SECRETS.md) for security considerations
+
+**Advanced Operations:**
+- `kcsi rollout restart <type> <name> -n <namespace>` - Trigger rollout restart
+- `kcsi rollout status <type> <name> -n <namespace>` - Check rollout status
+- `kcsi rollout history <type> <name> -n <namespace>` - View rollout history
+- `kcsi rollout undo <type> <name> -n <namespace>` - Rollback to previous revision
+  - `--to-revision` flag to rollback to specific revision
+  - Supports: deployment, daemonset, statefulset
+- `kcsi apply -f <file>` - Apply Kubernetes manifests
+  - `-f <file>` for single file
+  - `-f <dir> --recursive` for directory
+  - `-k <dir>` for kustomize
+  - `--dry-run`, `--server-dry-run`, `--validate`, `--force` flags
+- `kcsi edit <type> <name> -n <namespace>` - Edit resource with automatic backup
+  - Automatic backup to `~/.kcsi/backups/` with timestamp
+  - `--backup-dir` for custom backup location
+  - `--no-backup` to skip backup
+  - `--editor` for custom editor
+  - Restore instructions on failure
 
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
@@ -568,6 +587,85 @@ kcsi get secrets show my-secret -n production -k api-key
 
 # Use with namespace autocompletion
 kcsi get secrets decoded <TAB>  # After specifying -n flag, shows secrets in namespace
+```
+
+### Rollout management
+
+```bash
+# Restart a deployment to trigger a new rollout
+kcsi rollout restart deployment my-app -n production
+
+# Check rollout status
+kcsi rollout status deployment my-app -n production
+
+# View rollout history with revisions
+kcsi rollout history deployment my-app -n production
+
+# Rollback to previous revision
+kcsi rollout undo deployment my-app -n production
+
+# Rollback to specific revision
+kcsi rollout undo deployment my-app -n production --to-revision=3
+
+# Works with deployments, daemonsets, and statefulsets
+kcsi rollout restart daemonset my-daemon -n kube-system
+kcsi rollout status statefulset my-statefulset -n database
+```
+
+### Apply configurations
+
+```bash
+# Apply from a single file
+kcsi apply -f deployment.yaml -n production
+
+# Apply from a directory recursively
+kcsi apply -f ./k8s-manifests --recursive -n production
+
+# Apply from kustomize directory
+kcsi apply -k ./overlays/production
+
+# Dry-run to preview changes (client-side)
+kcsi apply -f deployment.yaml -n production --dry-run
+
+# Server-side dry-run (validates against API server)
+kcsi apply -f deployment.yaml -n production --server-dry-run
+
+# Force apply (delete and recreate if necessary)
+kcsi apply -f deployment.yaml -n production --force
+
+# Features:
+# - File extension validation (.yaml, .yml, .json)
+# - Directory validation with recursive flag requirement
+# - Multiple output formats with -o flag
+```
+
+### Edit resources with automatic backup
+
+```bash
+# Edit a deployment with automatic backup
+kcsi edit deployment my-app -n production
+
+# Features:
+# ✅ Backup saved to: /home/user/.kcsi/backups/deployment-my-app-production-20251227-093000.yaml
+# 📝 Opening editor for deployment/my-app in namespace production...
+# ✅ Resource updated successfully
+# 💾 Previous state backed up at: /home/user/.kcsi/backups/deployment-my-app-production-20251227-093000.yaml
+
+# Custom backup directory
+kcsi edit deployment my-app -n production --backup-dir=/tmp/k8s-backups
+
+# Skip backup (not recommended)
+kcsi edit deployment my-app -n production --no-backup
+
+# Use custom editor
+kcsi edit deployment my-app -n production --editor=nano
+
+# Or set KUBE_EDITOR environment variable
+export KUBE_EDITOR=vim
+kcsi edit deployment my-app -n production
+
+# Backup filename format: <type>-<name>-<namespace>-<timestamp>.yaml
+# If edit fails, you'll see: ⚠️ Edit failed. You can restore from backup: /path/to/backup.yaml
 
 # Security considerations:
 # - Secrets are displayed in plain text
