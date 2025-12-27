@@ -1,28 +1,25 @@
-# kcsi - Kubectl Cli Super Intuitive
+<p align="center">
+  <img src="logo.png" alt="kcsi Logo" width="200">
+</p>
 
-[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)](https://github.com/stanzinofree/kcsi/releases)
-[![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8.svg)](https://golang.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#installation)
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg)](https://stanzinofree.github.io/kcsi/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+<h1 align="center">kcsi - Kubectl Cli Super Intuitive</h1>
 
-### CI/CD & Quality
+<p align="center">
+  <a href="https://github.com/stanzinofree/kcsi/releases"><img src="https://img.shields.io/badge/version-0.6.0-blue.svg" alt="Version"></a>
+  <a href="https://golang.org/"><img src="https://img.shields.io/badge/go-1.23+-00ADD8.svg" alt="Go Version"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
+  <a href="#installation"><img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg" alt="Platform"></a>
+  <a href="https://stanzinofree.github.io/kcsi/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg" alt="Documentation"></a>
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+</p>
 
-[![Build and Test](https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-
-### Security & Code Quality
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=bugs)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-
-### Dependency Management
-
-[![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?logo=dependabot)](https://github.com/stanzinofree/kcsi/network/updates)
+<p align="center">
+  <a href="https://github.com/stanzinofree/kcsi/actions/workflows/build.yml"><img src="https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg" alt="Build and Test"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi"><img src="https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status" alt="Quality Gate Status"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi"><img src="https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating" alt="Security Rating"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi"><img src="https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=sqale_rating" alt="Maintainability Rating"></a>
+  <a href="https://github.com/stanzinofree/kcsi/network/updates"><img src="https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?logo=dependabot" alt="Dependabot Status"></a>
+</p>
 
 <p align="center">
   <i>A kubectl wrapper with intelligent autocompletion for namespaces, pods, and other Kubernetes resources.</i>
