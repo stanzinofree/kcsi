@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-12-27
+
+### Added - Phase 6: Advanced Operations & Roadmap Reorganization
+
+#### New Commands
+- **Rollout Management** - Complete rollout lifecycle management:
+  - `kcsi rollout restart <type> <name>` - Trigger a rollout restart for deployments, daemonsets, statefulsets
+  - `kcsi rollout status <type> <name>` - Check rollout status
+  - `kcsi rollout history <type> <name>` - View rollout revision history
+  - `kcsi rollout undo <type> <name>` - Rollback to previous revision
+  - `--to-revision` flag for undo command to rollback to specific revision
+  - Full autocompletion for resource types and names
+
+- **Apply Configuration** - Apply Kubernetes manifests with validation:
+  - `kcsi apply -f <file>` - Apply from file
+  - `kcsi apply -f <dir> --recursive` - Apply from directory recursively
+  - `kcsi apply -k <dir>` - Apply from kustomize directory
+  - `--dry-run` and `--server-dry-run` flags for testing
+  - `--validate` flag for pre-apply validation
+  - `--force` flag for force apply
+  - File extension validation with helpful warnings
+  - Directory detection with recursive flag requirement
+
+- **Edit with Automatic Backup** - Safe resource editing:
+  - `kcsi edit <type> <name>` - Edit resource with automatic backup
+  - Automatic backup to `~/.kcsi/backups/` with timestamp
+  - `--backup-dir` flag for custom backup location
+  - `--no-backup` flag to skip backup
+  - `--editor` flag for custom editor (also supports `KUBE_EDITOR` env var)
+  - Restore instructions displayed on edit failure
+  - Backup filename includes resource type, name, namespace, and timestamp
+
+#### Infrastructure
+- Added `GetDaemonSets()` function to kubernetes client
+- Added `GetStatefulSets()` function to kubernetes client
+- Created `ErrNamespaceRequired` constant for consistent error messaging
+
+#### Documentation
+- **Roadmap Reorganization** - Restructured from phase-based to feature-based:
+  - ✅ Core Features (9 items) - Essential kubectl operations
+  - 🔧 Interactive & Debugging (6 items) - Troubleshooting tools  
+  - 🚀 Advanced Features (7 items) - Power user capabilities
+  - ⚙️ Quality & Developer Experience (7 items) - Code quality & UX
+  - 📋 Planned Features organized by category:
+    - ⚡ Performance (caching, parallel queries, fuzzy matching)
+    - 🛠️ Utilities (context switching, backups, namespace defaults)
+    - 🎨 Formatting & Visualization (pretty print, graphs, tables)
+    - 🌐 Cluster Operations (cluster dump, health check, custom aliases)
+
+### Changed
+- Version bumped to 0.6.0
+- Updated roadmap.html with new feature-based organization
+- Enhanced CSS with improved section title contrast
+
+### Fixed - Code Quality & Testing
+
+#### SonarCloud Issues Resolved
+- **Cognitive Complexity** in `cmd/apply.go`:
+  - Reduced from 29 to ~8 (maximum allowed: 15)
+  - Extracted 7 helper functions for better maintainability:
+    - `addSourceArgs()` - handles kustomize vs filename logic
+    - `addKustomizeArgs()` - processes kustomize directories
+    - `addFilenameArgs()` - processes file/directory paths
+    - `validateFilePath()` - validates file existence
+    - `addDirectoryArgs()` - handles directory with recursive flag
+    - `addFileArgs()` - handles single file with extension validation
+    - `addApplyFlags()` - adds all optional flags
+
+- **String Duplication** in `cmd/rollout.go`:
+  - Created `ErrNamespaceRequired` constant in `cmd/constants.go`
+  - Replaced 4 duplicate occurrences of "namespace is required (use -n flag)"
+
+#### Testing Improvements
+- **Dynamic Version Tests** - Tests no longer hardcoded to specific version:
+  - Removed hardcoded version checks (previously "0.5.3")
+  - Tests now validate semantic versioning pattern (contains dots)
+  - Future-proof: tests pass regardless of current version number
+  - Better maintainability for version bumps
+
+#### Documentation Accessibility
+- Fixed CSS contrast issue in roadmap planned features section
+- Section titles now use solid color (#212529) instead of gradient with transparent fill
+- Improved WCAG AA compliance
+
+### Technical Details
+- Rollout commands support deployment, daemonset, and statefulset resource types
+- Apply command validates file paths and extensions before execution
+- Edit command creates timestamped backups in format: `<type>-<name>-<namespace>-<timestamp>.<format>`
+- All new commands maintain consistent flag patterns and autocompletion
+- Code refactoring maintains 100% backward compatibility
+
 ## [0.5.3] - 2025-12-25
 
 ### Added - Interactive Pod Commands & Container Support
