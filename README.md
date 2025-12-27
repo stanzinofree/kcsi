@@ -163,6 +163,17 @@ Currently implemented:
   - Automatic fallback: dig → nslookup → host
   - Helpful installation instructions if no DNS tools found
 
+**Secrets Management (Read-Only):**
+- `kcsi get secrets decoded <name> -n <namespace>` - View all secret keys with decoded values
+  - Automatically decodes base64-encoded secrets
+  - Displays all keys and values in a table format
+  - Security warning before displaying sensitive data
+- `kcsi get secrets show <name> -n <namespace> -k <key>` - Display specific secret key value
+  - Show only the value of a specific key
+  - Useful for scripting and quick checks
+  - Less intrusive than showing all secrets
+- ⚠️ **Security Note**: See [docs/SECURITY_SECRETS.md](docs/SECURITY_SECRETS.md) for security considerations
+
 **Other Commands:**
 - `kcsi logs` - Get pod logs with full kubectl flags support (-f, --tail, -p, -c)
 - Container autocompletion for multi-container pods
@@ -529,6 +540,39 @@ sudo kcsi port-forward -n production nginx-pod 80:8080
 # - Checks if running as root for privileged ports (< 1024)
 # - Checks if local port is already in use
 # - Interactive session (Ctrl+C to stop)
+```
+
+### View and decode secrets
+
+```bash
+# View all keys and values of a secret (decoded from base64)
+kcsi get secrets decoded my-secret -n production
+
+# Output example:
+# ⚠️  Warning: Secret values will be displayed in plain text
+#    Make sure your terminal is not being shared or recorded
+#
+# Secret: my-secret (namespace: production)
+#
+# KEY               VALUE
+# ---               -----
+# database-url      postgresql://user:pass@host:5432/db
+# api-key           sk-1234567890abcdef
+# password          MyS3cr3tP@ss
+
+# Show only a specific key from a secret
+kcsi get secrets show my-secret -n production -k api-key
+# Output:
+# ⚠️  Displaying secret in plain text
+# sk-1234567890abcdef
+
+# Use with namespace autocompletion
+kcsi get secrets decoded <TAB>  # After specifying -n flag, shows secrets in namespace
+
+# Security considerations:
+# - Secrets are displayed in plain text
+# - Use only in private, secure terminals
+# - See docs/SECURITY_SECRETS.md for full security guide
 ```
 
 ### Show version and project information
