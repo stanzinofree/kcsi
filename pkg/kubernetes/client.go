@@ -180,3 +180,39 @@ func GetSecrets(namespace string) ([]string, error) {
 	secrets := strings.Fields(strings.TrimSpace(output))
 	return secrets, nil
 }
+
+// GetDaemonSets returns a list of daemonsets in the specified namespace
+func GetDaemonSets(namespace string) ([]string, error) {
+	args := []string{"get", "daemonsets", "-o", jsonPathMetadataName}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, flagAllNamespaces)
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	daemonsets := strings.Fields(strings.TrimSpace(output))
+	return daemonsets, nil
+}
+
+// GetStatefulSets returns a list of statefulsets in the specified namespace
+func GetStatefulSets(namespace string) ([]string, error) {
+	args := []string{"get", "statefulsets", "-o", jsonPathMetadataName}
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	} else {
+		args = append(args, flagAllNamespaces)
+	}
+
+	output, err := ExecuteKubectl(args...)
+	if err != nil {
+		return nil, err
+	}
+
+	statefulsets := strings.Fields(strings.TrimSpace(output))
+	return statefulsets, nil
+}
