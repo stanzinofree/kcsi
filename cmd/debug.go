@@ -118,61 +118,98 @@ func getPrimaryContainer(namespace, podName, userContainer string) string {
 
 // selectDebugImage checks internet connectivity and returns appropriate debug image
 func selectDebugImage(_ string) string {
-	// Try to check internet connectivity by testing if we can resolve DNS
-	// We'll run a quick test pod or check existing pods' connectivity
-
 	fmt.Println("  Testing internet connectivity...")
 
-	// Try to get a node and check if it can pull images
-	nodesOutput, err := kubernetes.ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[0].metadata.name}")
+	nodeName, err := getFirstNodeName()
 	if err != nil {
-		fmt.Println("  ⚠️  Could not check nodes, using safe fallback image")
+		printMessage("warning", "Could not check nodes, using safe fallback image")
 		return imageBusybox
 	}
 
-	nodeName := strings.TrimSpace(nodesOutput)
+	if image := checkExistingClusterImages(); image != "" {
+		return image
+	}
 
-	// Check if common debug images are already present by looking at existing pods
+	if testInternetConnectivity() {
+		printMessage("success", "Internet connectivity confirmed (using full debug toolkit)")
+		return "nicolaka/netshoot:latest"
+	}
+
+	return fallbackToBusybox(nodeName)
+}
+
+func getFirstNodeName() (string, error) {
+	output, err := kubernetes.ExecuteKubectl("get", "nodes", "-o", "jsonpath={.items[0].metadata.name}")
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(output), nil
+}
+
+func checkExistingClusterImages() string {
 	imagesOutput, err := kubernetes.ExecuteKubectl("get", "pods", flagAllNamespaces,
 		"-o", "jsonpath={.items[*].spec.containers[*].image}")
+	if err != nil {
+		return ""
+	}
 
-	if err == nil {
-		images := strings.ToLower(imagesOutput)
+	images := strings.ToLower(imagesOutput)
 
-		// If netshoot is already used in the cluster, it's likely available
-		if strings.Contains(images, "nicolaka/netshoot") {
-			fmt.Println("  ✅ Found netshoot image in cluster (full debugging toolkit)")
-			return "nicolaka/netshoot:latest"
-		}
+	imageChecks := []struct {
+		name        string
+		image       string
+		description string
+	}{
+		{"nicolaka/netshoot", "nicolaka/netshoot:latest", "Found netshoot image in cluster (full debugging toolkit)"},
+		{"alpine", "alpine:latest", "Found alpine image in cluster (lightweight with package manager)"},
+	}
 
-		// Check for alpine
-		if strings.Contains(images, "alpine") {
-			fmt.Println("  ✅ Found alpine image in cluster (lightweight with package manager)")
-			return "alpine:latest"
+	for _, check := range imageChecks {
+		if strings.Contains(images, check.name) {
+			printMessage("success", check.description)
+			return check.image
 		}
 	}
 
-	// Try to check internet by testing if we can reach a public registry
-	// Create a temporary test using kubectl run with --rm
+	return ""
+}
+
+func testInternetConnectivity() bool {
 	fmt.Println("  Testing public registry access...")
 	testOutput, err := kubernetes.ExecuteKubectl("run", "kcsi-connectivity-test",
 		"--image="+imageBusybox, "--rm", "-i", "--restart=Never",
 		"--command", "--", "echo", "connected")
 
 	if err == nil && strings.Contains(testOutput, "connected") {
-		fmt.Println("  ✅ Internet connectivity confirmed (using full debug toolkit)")
-		// Clean up test pod if it exists
 		kubernetes.ExecuteKubectl("delete", "pod", "kcsi-connectivity-test", "--ignore-not-found=true")
-		return "nicolaka/netshoot:latest"
+		return true
 	}
+	return false
+}
 
-	// Fallback: use busybox (minimal but widely cached)
+func fallbackToBusybox(nodeName string) string {
 	fmt.Printf("  ⚠️  Limited connectivity detected on node '%s'\n", nodeName)
-	fmt.Println("  📦 Using busybox (minimal tools, widely cached)")
+	printMessage("info", "Using busybox (minimal tools, widely cached)")
 	fmt.Println()
-	fmt.Println("  Tip: If you need more tools, specify an image with -i flag:")
-	fmt.Println("       kcsi debug <ns> <pod> -i nicolaka/netshoot")
+	printTip("If you need more tools, specify an image with -i flag:", "kcsi debug <ns> <pod> -i nicolaka/netshoot")
 	fmt.Println()
-
 	return imageBusybox
+}
+
+func printMessage(msgType, message string) {
+	icons := map[string]string{
+		"success": "✅",
+		"warning": "⚠️",
+		"info":    "📦",
+	}
+	icon := icons[msgType]
+	if icon == "" {
+		icon = "ℹ️"
+	}
+	fmt.Printf("  %s %s\n", icon, message)
+}
+
+func printTip(message, example string) {
+	fmt.Printf("  Tip: %s\n", message)
+	fmt.Printf("       %s\n", example)
 }
