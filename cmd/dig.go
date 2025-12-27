@@ -87,30 +87,28 @@ func runDig(cmd *cobra.Command, args []string) error {
 
 // buildDNSCommandWithFallback creates a command that tries dig, then nslookup, then host
 func buildDNSCommandWithFallback(domain, additionalArgs string) string {
-	// Build commands for each tool
-	digCmd := "dig"
-	nslookupCmd := "nslookup"
-	hostCmd := "host"
+	dnsTools := buildDNSToolCommands(domain, additionalArgs)
+	return createFallbackScript(dnsTools)
+}
 
-	if domain != "" {
-		digCmd = fmt.Sprintf("dig %s%s", domain, additionalArgs)
-		nslookupCmd = fmt.Sprintf("nslookup %s", domain)
-		hostCmd = fmt.Sprintf("host %s", domain)
+func buildDNSToolCommands(domain, additionalArgs string) map[string]string {
+	tools := map[string]string{
+		"dig":      "dig",
+		"nslookup": "nslookup",
+		"host":     "host",
 	}
 
-	// Create fallback chain with informative messages
-	fallbackCommand := fmt.Sprintf(
-		`if command -v dig >/dev/null 2>&1; then
-  %s
-elif command -v nslookup >/dev/null 2>&1; then
-  echo "Note: 'dig' not found, using 'nslookup' instead"
-  echo ""
-  %s
-elif command -v host >/dev/null 2>&1; then
-  echo "Note: 'dig' and 'nslookup' not found, using 'host' instead"
-  echo ""
-  %s
-else
+	if domain != "" {
+		tools["dig"] = fmt.Sprintf("dig %s%s", domain, additionalArgs)
+		tools["nslookup"] = fmt.Sprintf("nslookup %s", domain)
+		tools["host"] = fmt.Sprintf("host %s", domain)
+	}
+
+	return tools
+}
+
+func createFallbackScript(dnsTools map[string]string) string {
+	const errorMessage = `
   echo ""
   echo "╔═══════════════════════════════════════════════════════════════════════════╗"
   echo "║ ERROR: No DNS debugging tools found in this container                    ║"
@@ -127,10 +125,21 @@ else
   echo "Alternatively, use 'kubectl debug' to attach a debug container with tools:"
   echo "  kubectl debug -it <pod> --image=nicolaka/netshoot -n <namespace>"
   echo ""
-  exit 0
-fi`,
-		digCmd, nslookupCmd, hostCmd,
-	)
+  exit 0`
 
-	return fallbackCommand
+	return fmt.Sprintf(
+		`if command -v dig >/dev/null 2>&1; then
+  %s
+elif command -v nslookup >/dev/null 2>&1; then
+  echo "Note: 'dig' not found, using 'nslookup' instead"
+  echo ""
+  %s
+elif command -v host >/dev/null 2>&1; then
+  echo "Note: 'dig' and 'nslookup' not found, using 'host' instead"
+  echo ""
+  %s
+else%s
+fi`,
+		dnsTools["dig"], dnsTools["nslookup"], dnsTools["host"], errorMessage,
+	)
 }
