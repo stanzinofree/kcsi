@@ -36,7 +36,7 @@ var secretsShowCmd = &cobra.Command{
 	RunE:              runSecretsShow,
 }
 
-func secretNameCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+func secretNameCompletion(cmd *cobra.Command, args []string, _ string) ([]string, cobra.ShellCompDirective) {
 	if len(args) == 0 {
 		namespace, _ := cmd.Flags().GetString("namespace")
 		if namespace == "" {
