@@ -112,7 +112,7 @@ func resourceNameCompletion(cmd *cobra.Command, args []string, _ string) ([]stri
 func runRolloutRestart(cmd *cobra.Command, args []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	if namespace == "" {
-		return fmt.Errorf("namespace is required (use -n flag)")
+		return fmt.Errorf(ErrNamespaceRequired)
 	}
 
 	resourceType := args[0]
@@ -130,7 +130,7 @@ func runRolloutRestart(cmd *cobra.Command, args []string) error {
 func runRolloutStatus(cmd *cobra.Command, args []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	if namespace == "" {
-		return fmt.Errorf("namespace is required (use -n flag)")
+		return fmt.Errorf(ErrNamespaceRequired)
 	}
 
 	resourceType := args[0]
@@ -148,7 +148,7 @@ func runRolloutStatus(cmd *cobra.Command, args []string) error {
 func runRolloutHistory(cmd *cobra.Command, args []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	if namespace == "" {
-		return fmt.Errorf("namespace is required (use -n flag)")
+		return fmt.Errorf(ErrNamespaceRequired)
 	}
 
 	resourceType := args[0]
@@ -166,7 +166,7 @@ func runRolloutHistory(cmd *cobra.Command, args []string) error {
 func runRolloutUndo(cmd *cobra.Command, args []string) error {
 	namespace, _ := cmd.Flags().GetString("namespace")
 	if namespace == "" {
-		return fmt.Errorf("namespace is required (use -n flag)")
+		return fmt.Errorf(ErrNamespaceRequired)
 	}
 
 	resourceType := args[0]

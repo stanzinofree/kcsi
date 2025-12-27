@@ -53,72 +53,15 @@ func runApply(cmd *cobra.Command, _ []string) error {
 	recursive, _ := cmd.Flags().GetBool("recursive")
 	kustomize, _ := cmd.Flags().GetStringSlice("kustomize")
 
-	// Build kubectl apply arguments
 	args := []string{"apply"}
 
 	// Handle filename or kustomize
-	if len(kustomize) > 0 {
-		for _, k := range kustomize {
-			args = append(args, "-k", k)
-		}
-	} else if filename != "" {
-		// Check if filename exists
-		if _, err := os.Stat(filename); err != nil {
-			if os.IsNotExist(err) {
-				return fmt.Errorf("file or directory '%s' does not exist", filename)
-			}
-			return fmt.Errorf("error checking file '%s': %v", filename, err)
-		}
-
-		// Check if it's a directory and recursive flag is needed
-		fileInfo, err := os.Stat(filename)
-		if err != nil {
-			return fmt.Errorf("error checking file info: %v", err)
-		}
-
-		if fileInfo.IsDir() {
-			if !recursive {
-				return fmt.Errorf("'%s' is a directory, use --recursive flag to process it", filename)
-			}
-			args = append(args, "-f", filename, "--recursive")
-		} else {
-			// Validate file extension for common Kubernetes manifests
-			ext := filepath.Ext(filename)
-			if ext != ".yaml" && ext != ".yml" && ext != ".json" {
-				fmt.Printf("⚠️  Warning: file '%s' does not have a typical Kubernetes manifest extension (.yaml, .yml, .json)\n", filename)
-			}
-			args = append(args, "-f", filename)
-		}
-	} else {
-		return fmt.Errorf("must specify either --filename (-f) or --kustomize (-k)")
+	if err := addSourceArgs(&args, kustomize, filename, recursive); err != nil {
+		return err
 	}
 
-	// Add namespace if specified
-	if namespace != "" {
-		args = append(args, "-n", namespace)
-	}
-
-	// Add dry-run flags
-	if serverDryRun {
-		args = append(args, "--dry-run=server")
-	} else if dryRun {
-		args = append(args, "--dry-run=client")
-	}
-
-	// Add validation flag
-	if !validate {
-		args = append(args, "--validate=false")
-	}
-
-	// Add force flag
-	if force {
-		args = append(args, "--force")
-	}
-
-	// Add output format
-	if output != "" {
-		args = append(args, "-o", output)
-	}
+	// Add optional flags
+	addApplyFlags(&args, namespace, serverDryRun, dryRun, validate, force, output)
 
 	// Execute kubectl apply
 	result, err := kubernetes.ExecuteKubectl(args...)
@@ -128,4 +71,84 @@ func runApply(cmd *cobra.Command, _ []string) error {
 
 	fmt.Print(result)
 	return nil
+}
+
+func addSourceArgs(args *[]string, kustomize []string, filename string, recursive bool) error {
+	if len(kustomize) > 0 {
+		return addKustomizeArgs(args, kustomize)
+	}
+	if filename != "" {
+		return addFilenameArgs(args, filename, recursive)
+	}
+	return fmt.Errorf("must specify either --filename (-f) or --kustomize (-k)")
+}
+
+func addKustomizeArgs(args *[]string, kustomize []string) error {
+	for _, k := range kustomize {
+		*args = append(*args, "-k", k)
+	}
+	return nil
+}
+
+func addFilenameArgs(args *[]string, filename string, recursive bool) error {
+	if err := validateFilePath(filename); err != nil {
+		return err
+	}
+
+	fileInfo, err := os.Stat(filename)
+	if err != nil {
+		return fmt.Errorf("error checking file info: %v", err)
+	}
+
+	if fileInfo.IsDir() {
+		return addDirectoryArgs(args, filename, recursive)
+	}
+	return addFileArgs(args, filename)
+}
+
+func validateFilePath(filename string) error {
+	if _, err := os.Stat(filename); err != nil {
+		if os.IsNotExist(err) {
+			return fmt.Errorf("file or directory '%s' does not exist", filename)
+		}
+		return fmt.Errorf("error checking file '%s': %v", filename, err)
+	}
+	return nil
+}
+
+func addDirectoryArgs(args *[]string, filename string, recursive bool) error {
+	if !recursive {
+		return fmt.Errorf("'%s' is a directory, use --recursive flag to process it", filename)
+	}
+	*args = append(*args, "-f", filename, "--recursive")
+	return nil
+}
+
+func addFileArgs(args *[]string, filename string) error {
+	ext := filepath.Ext(filename)
+	if ext != ".yaml" && ext != ".yml" && ext != ".json" {
+		fmt.Printf("⚠️  Warning: file '%s' does not have a typical Kubernetes manifest extension (.yaml, .yml, .json)\n", filename)
+	}
+	*args = append(*args, "-f", filename)
+	return nil
+}
+
+func addApplyFlags(args *[]string, namespace string, serverDryRun, dryRun, validate, force bool, output string) {
+	if namespace != "" {
+		*args = append(*args, "-n", namespace)
+	}
+	if serverDryRun {
+		*args = append(*args, "--dry-run=server")
+	} else if dryRun {
+		*args = append(*args, "--dry-run=client")
+	}
+	if !validate {
+		*args = append(*args, "--validate=false")
+	}
+	if force {
+		*args = append(*args, "--force")
+	}
+	if output != "" {
+		*args = append(*args, "-o", output)
+	}
 }
