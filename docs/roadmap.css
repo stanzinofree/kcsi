@@ -177,7 +177,7 @@ code {
 
 /* Planned features section titles - improve contrast */
 .phase.pending h3 {
-    color: #212529;
+    color: #212529 !important;
     font-weight: 600;
 }
 
