@@ -1,0 +1,106 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: 'stable'
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Get version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Build binaries for all platforms
+      run: |
+        mkdir -p bin
+        
+        # Build for all platforms
+        platforms=(
+          "darwin/amd64"
+          "darwin/arm64"
+          "linux/amd64"
+          "linux/arm64"
+          "linux/arm"
+          "windows/amd64"
+          "windows/arm64"
+        )
+        
+        for platform in "${platforms[@]}"; do
+          platform_split=(${platform//\// })
+          GOOS=${platform_split[0]}
+          GOARCH=${platform_split[1]}
+          
+          output_name="bin/kcsi-${GOOS}-${GOARCH}"
+          
+          if [[ $GOOS == "windows" ]]; then
+            output_name+='.exe'
+          fi
+          
+          echo "Building for ${GOOS}/${GOARCH}..."
+          env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="-s -w" .
+        done
+        
+        # List built binaries
+        ls -lh bin/
+
+    - name: Generate release notes
+      id: release_notes
+      run: |
+        # Extract release notes from CHANGELOG.md for this version
+        if [ -f CHANGELOG.md ]; then
+          # Try to extract notes for this version
+          awk '/## \['"${{ steps.get_version.outputs.VERSION }}"'\]/{flag=1;next}/## \[/{flag=0}flag' CHANGELOG.md > release_notes.txt
+          
+          # If empty, use a default message
+          if [ ! -s release_notes.txt ]; then
+            echo "Release ${{ steps.get_version.outputs.VERSION }}" > release_notes.txt
+            echo "" >> release_notes.txt
+            echo "See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details." >> release_notes.txt
+          fi
+        else
+          echo "Release ${{ steps.get_version.outputs.VERSION }}" > release_notes.txt
+        fi
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
+      with:
+        name: Release v${{ steps.get_version.outputs.VERSION }}
+        body_path: release_notes.txt
+        draft: false
+        prerelease: false
+        files: |
+          bin/kcsi-darwin-amd64
+          bin/kcsi-darwin-arm64
+          bin/kcsi-linux-amd64
+          bin/kcsi-linux-arm64
+          bin/kcsi-linux-arm
+          bin/kcsi-windows-amd64.exe
+          bin/kcsi-windows-arm64.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
