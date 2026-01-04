@@ -37,7 +37,6 @@
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#usage">Usage</a> •
-  
   <a href="https://stanzinofree.github.io/kcsi/cheatsheet.html">📖 Cheatsheet</a> •
   <a href="https://stanzinofree.github.io/kcsi/roadmap.html">🗺️ Roadmap</a>
 </p>
