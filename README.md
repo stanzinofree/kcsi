@@ -1,16 +1,23 @@
 <p align="center">
-  <img src="logo.png" alt="kcsi Logo" width="200">
+  <img src="logo.png" alt="KCSI logo" width="140" />
 </p>
 
-<h1 align="center">kcsi - Kubectl Cli Super Intuitive</h1>
+<h1 align="center">KCSI — kubectl for humans 🐹</h1>
 
 <p align="center">
+  <b>Fast day-2 Kubernetes ops when you don’t live in Kubernetes all day.</b><br/>
+  Autocomplete, guided selection, and guardrails — so you stop memorizing commands and start shipping fixes.
+</p>
+
+<p align="center">
+  <a href="https://stanzinofree.github.io/kcsi/"><img alt="Docs" src="https://img.shields.io/badge/docs-online-brightgreen"></a>
   <a href="https://github.com/stanzinofree/kcsi/releases"><img src="https://img.shields.io/badge/version-0.6.0-blue.svg" alt="Version"></a>
   <a href="https://golang.org/"><img src="https://img.shields.io/badge/go-1.23+-00ADD8.svg" alt="Go Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
   <a href="#installation"><img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg" alt="Platform"></a>
   <a href="https://stanzinofree.github.io/kcsi/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg" alt="Documentation"></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  <a href="https://buymeacoffee.com/smilzao"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/buy%20me%20a%20coffee-support-yellow"></a>
 </p>
 
 <p align="center">
@@ -22,7 +29,7 @@
 </p>
 
 <p align="center">
-  <i>A kubectl wrapper with intelligent autocompletion for namespaces, pods, and other Kubernetes resources.</i>
+  <i>Your Kapibara buddy in the terminal: calm, practical, always ready to troubleshoot.</i>
 </p>
 
 <p align="center">
@@ -30,6 +37,7 @@
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#usage">Usage</a> •
+  
   <a href="https://stanzinofree.github.io/kcsi/cheatsheet.html">📖 Cheatsheet</a> •
   <a href="https://stanzinofree.github.io/kcsi/roadmap.html">🗺️ Roadmap</a>
 </p>
@@ -56,6 +64,15 @@ source <(kcsi completion bash)
 # Start using kcsi!
 kcsi get pods -n <TAB>  # Press TAB to see all namespaces
 ```
+
+## Support KCSI ☕️
+
+If KCSI saves you time (or prevents an “oops” in production), you can support the project:
+
+- Buy Me a Coffee: https://buymeacoffee.com/smilzao
+- GitHub Sponsors: https://github.com/sponsors/stanzinofree
+
+Want to roll KCSI out in your team? I also offer workshops and customization packs (aliases, guardrails, presets).
 
 ## Cheatsheet
 
