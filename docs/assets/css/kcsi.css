@@ -410,3 +410,427 @@ pre code {
         padding: var(--space-xl) 0;
     }
 }
+
+/* ============================================================================
+   SUPPORT PAGE STYLES
+   ============================================================================ */
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--kcsi-text-secondary);
+    font-weight: 400;
+    margin-top: -0.5rem;
+}
+
+.value-prop {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 4px solid var(--kcsi-primary);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+}
+
+.value-prop .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.benefit-card {
+    background: var(--kcsi-bg-surface);
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.benefit-card:hover {
+    border-color: var(--kcsi-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 90, 154, 0.15);
+}
+
+.benefit-card h3 {
+    color: var(--kcsi-primary);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: var(--kcsi-text-secondary);
+}
+
+/* SUPPORT TIERS */
+.support-tiers {
+    margin: 3rem 0;
+}
+
+.tier-card {
+    background: var(--kcsi-bg-surface);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+.tier-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.tier-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: var(--kcsi-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tier-header {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tier-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.tier-price {
+    color: var(--kcsi-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.tier-body p {
+    color: var(--kcsi-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.tier-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.tier-benefits li {
+    padding: 0.5rem 0;
+    color: var(--kcsi-text-primary);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+/* TIER VARIANTS */
+.tier-coffee {
+    border-color: #ffdd00;
+}
+
+.tier-coffee:hover {
+    border-color: #ffee55;
+}
+
+.tier-sponsor {
+    border-color: var(--kcsi-primary);
+    border-width: 3px;
+}
+
+.tier-teams {
+    border-color: var(--kcsi-primary-light);
+}
+
+/* TRANSPARENCY SECTION */
+.transparency {
+    margin: 3rem 0;
+}
+
+.transparency ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.transparency li {
+    margin: 0.75rem 0;
+}
+
+/* SPONSORS SECTION */
+.sponsors-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+/* FAQ */
+.faq {
+    margin: 3rem 0;
+}
+
+.faq details {
+    background: var(--kcsi-bg-surface);
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    transition: all var(--transition-fast);
+}
+
+.faq details:hover {
+    border-color: var(--kcsi-primary);
+}
+
+.faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--kcsi-primary);
+    list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq summary::before {
+    content: "▶ ";
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform var(--transition-fast);
+}
+
+.faq details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.faq summary:hover {
+    color: var(--kcsi-primary-dark);
+}
+
+.faq p {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+    color: var(--kcsi-text-secondary);
+}
+
+/* FINAL CTA */
+.final-cta {
+    background: linear-gradient(135deg, var(--kcsi-primary) 0%, var(--kcsi-primary-light) 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.final-cta h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+/* SUPPORT CTA BLOCK (reusable component) */
+.support-cta-block {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-top: 3px solid var(--kcsi-primary);
+    padding: 2rem;
+    margin: 3rem 0;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.support-cta-block h3 {
+    color: var(--kcsi-primary);
+    margin: 0 0 1rem 0;
+}
+
+.support-cta-block p {
+    margin: 0.5rem 0;
+    color: var(--kcsi-text-secondary);
+}
+
+.support-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.support-note {
+    font-size: 0.85rem;
+    color: var(--kcsi-text-muted);
+    margin-top: 1rem;
+}
+
+/* AUDIENCE SECTION (homepage) */
+.audience-section {
+    margin: 3rem 0;
+}
+
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.audience-card {
+    background: var(--kcsi-bg-surface);
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.audience-card:hover {
+    border-color: var(--kcsi-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 90, 154, 0.15);
+}
+
+.audience-card h3 {
+    color: var(--kcsi-primary);
+    margin: 0 0 0.75rem 0;
+}
+
+.audience-card p {
+    margin: 0;
+    color: var(--kcsi-text-secondary);
+}
+
+/* SOCIAL PROOF */
+.social-proof {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 2rem;
+    color: var(--kcsi-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat span {
+    color: var(--kcsi-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* STICKY SUPPORT BANNER (optional) */
+.support-banner {
+    background: linear-gradient(90deg, #4a5a9a 0%, #667eea 100%);
+    color: white;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.support-banner a {
+    color: #ffdd00;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.support-banner a:hover {
+    text-decoration: underline;
+}
+
+/* NAVIGATION SUPPORT LINK */
+.nav-support {
+    color: #ffdd00 !important;
+    font-weight: 600;
+}
+
+/* TEAMS PAGE STYLES */
+.package-price {
+    color: var(--kcsi-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.team-contact {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+}
+
+.hero-meta {
+    margin-top: 1.5rem;
+    color: var(--kcsi-text-secondary);
+}
+
+.back-link {
+    display: inline-block;
+    margin: 2rem 0;
+    color: var(--kcsi-primary);
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--kcsi-primary-dark);
+}
+
+/* RESPONSIVE ADJUSTMENTS FOR SUPPORT PAGE */
+@media (max-width: 768px) {
+    .benefit-grid,
+    .audience-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .support-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .tier-badge {
+        right: 10px;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
