@@ -1,0 +1,412 @@
+/**
+ * KCSI Brand System - Global Stylesheet
+ * Version: 1.0
+ * 
+ * Terminal-native but premium aesthetic for kubectl for humans
+ * See STYLE_GUIDE.md for complete documentation
+ */
+
+/* ============================================================================
+   FONTS
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================================================================
+   CSS VARIABLES - Brand System
+   ============================================================================ */
+
+:root {
+    /* Primary Colors */
+    --kcsi-primary: #4a5a9a;
+    --kcsi-primary-dark: #3a4a7a;
+    --kcsi-primary-light: #667eea;
+    
+    /* Surface & Background */
+    --kcsi-bg-body: #f5f7fa;
+    --kcsi-bg-surface: #ffffff;
+    --kcsi-bg-elevated: #ffffff;
+    --kcsi-bg-code: #2d2d2d;
+    
+    /* Text Colors */
+    --kcsi-text-primary: #212529;
+    --kcsi-text-secondary: #495057;
+    --kcsi-text-muted: #6c757d;
+    --kcsi-text-inverse: #ffffff;
+    --kcsi-text-code: #50fa7b;
+    
+    /* Semantic Colors */
+    --kcsi-success: #28a745;
+    --kcsi-info: #17a2b8;
+    --kcsi-warning: #ffc107;
+    --kcsi-danger: #dc3545;
+    
+    /* Gradients */
+    --kcsi-gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --kcsi-gradient-footer: linear-gradient(135deg, #a8b5d1 0%, #c3dfe0 50%, #b4d4d3 100%);
+    
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
+    
+    /* Typography */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-code: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+    
+    /* Layout */
+    --content-max-width: 1200px;
+    --content-wide-width: 1400px;
+    --content-narrow-width: 720px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================================================
+   RESET & BASE STYLES
+   ============================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--kcsi-text-primary);
+    background: var(--kcsi-bg-body);
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   ============================================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    color: var(--kcsi-text-primary);
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.875rem;
+    line-height: 1.3;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+p {
+    margin-bottom: var(--space-sm);
+}
+
+small {
+    font-size: 0.875rem;
+    color: var(--kcsi-text-muted);
+}
+
+/* ============================================================================
+   LINKS
+   ============================================================================ */
+
+a {
+    color: var(--kcsi-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--kcsi-primary-light);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--kcsi-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: none;
+    font-family: var(--font-body);
+}
+
+.btn-primary {
+    background: var(--kcsi-primary);
+    color: var(--kcsi-text-inverse);
+}
+
+.btn-primary:hover {
+    background: var(--kcsi-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 90, 154, 0.3);
+    color: var(--kcsi-text-inverse);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--kcsi-primary);
+    border: 2px solid var(--kcsi-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--kcsi-primary);
+    color: var(--kcsi-text-inverse);
+}
+
+.btn-support {
+    background: #ffdd00;
+    color: #000000;
+    font-weight: 700;
+}
+
+.btn-support:hover {
+    background: #ffee55;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 221, 0, 0.4);
+}
+
+/* ============================================================================
+   CODE BLOCKS
+   ============================================================================ */
+
+code {
+    font-family: var(--font-code);
+    background: var(--kcsi-bg-code);
+    color: var(--kcsi-text-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--kcsi-bg-code);
+    padding: var(--space-md);
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: var(--space-sm) 0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: #f8f8f2;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* ============================================================================
+   CALLOUT BOXES
+   ============================================================================ */
+
+.callout {
+    padding: var(--space-sm) var(--space-md);
+    border-left: 4px solid;
+    border-radius: 4px;
+    margin: var(--space-sm) 0;
+}
+
+.callout-tip {
+    background: #e8f5e9;
+    border-color: var(--kcsi-success);
+}
+
+.callout-note {
+    background: #e7f3ff;
+    border-color: var(--kcsi-info);
+}
+
+.callout-warning {
+    background: #fff8e1;
+    border-color: var(--kcsi-warning);
+}
+
+.callout-danger {
+    background: #ffebee;
+    border-color: var(--kcsi-danger);
+}
+
+.callout-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================================================
+   LAYOUT COMPONENTS
+   ============================================================================ */
+
+.container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+.container-wide {
+    max-width: var(--content-wide-width);
+}
+
+.container-narrow {
+    max-width: var(--content-narrow-width);
+}
+
+.section {
+    padding: var(--space-2xl) 0;
+}
+
+.card {
+    background: var(--kcsi-bg-surface);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* ============================================================================
+   SUPPORT SECTION
+   ============================================================================ */
+
+.support-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-top: 3px solid var(--kcsi-primary);
+    padding: var(--space-xl) var(--space-md);
+    margin-top: var(--space-3xl);
+    text-align: center;
+    border-radius: 8px;
+}
+
+.support-section h3 {
+    color: var(--kcsi-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.support-section p {
+    color: var(--kcsi-text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-md);
+}
+
+.support-links {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+}
+
+.support-note {
+    font-size: 0.875rem;
+    color: var(--kcsi-text-muted);
+    font-style: italic;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--kcsi-text-muted);
+}
+
+.mt-xs { margin-top: var(--space-xs); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.mb-xl { margin-bottom: var(--space-xl); }
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    :root {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+    
+    .btn {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+    }
+    
+    .support-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .container {
+        padding: 0 var(--space-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: var(--space-xl) 0;
+    }
+}

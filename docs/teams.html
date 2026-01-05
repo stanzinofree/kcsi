@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCSI for Teams</title>
+    <meta name="description" content="Onboarding workshops and custom command packs for teams using KCSI">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="assets/css/kcsi.css">
+    <style>
+        .hero-small {
+            background: var(--kcsi-gradient-hero);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero-small h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-small p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .package-card {
+            background: white;
+            border: 2px solid var(--kcsi-primary-light);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .package-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .package-title {
+            font-size: 1.5em;
+            color: var(--kcsi-primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .package-description {
+            color: var(--kcsi-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .package-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .package-features li {
+            padding: 8px 0;
+            color: var(--kcsi-text-primary);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .package-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--kcsi-success);
+            font-weight: bold;
+        }
+
+        .contact-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            color: var(--kcsi-primary);
+            margin-bottom: 20px;
+        }
+
+        .contact-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-small">
+        <h1>👥 KCSI for Teams</h1>
+        <p>Onboarding workshops, custom command packs, and guardrail configurations for engineering teams</p>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+                <h2 style="text-align: center; margin-bottom: 30px;">What We Offer</h2>
+                
+                <div class="packages">
+                    <div class="package-card">
+                        <div class="package-icon">🎓</div>
+                        <div class="package-title">60-Minute Onboarding Workshop</div>
+                        <div class="package-description">
+                            Get your team productive with KCSI in under an hour. Interactive session covering installation, 
+                            core workflows, and best practices for day-2 Kubernetes operations.
+                        </div>
+                        <ul class="package-features">
+                            <li>Live demo of cascading TAB autocomplete</li>
+                            <li>Common workflows walkthrough</li>
+                            <li>Safety guardrails and confirmation prompts</li>
+                            <li>Q&A session tailored to your environment</li>
+                        </ul>
+                    </div>
+
+                    <div class="package-card">
+                        <div class="package-icon">⚙️</div>
+                        <div class="package-title">Custom Command & Alias Pack</div>
+                        <div class="package-description">
+                            Pre-configured aliases, shell completions, and team-specific shortcuts that match your 
+                            infrastructure naming conventions and common operations.
+                        </div>
+                        <ul class="package-features">
+                            <li>Tailored to your namespace structure</li>
+                            <li>Custom aliases for frequent operations</li>
+                            <li>Bash/Zsh/Fish completion scripts</li>
+                            <li>Documentation for team distribution</li>
+                        </ul>
+                    </div>
+
+                    <div class="package-card">
+                        <div class="package-icon">🛡️</div>
+                        <div class="package-title">Guardrail & Preset Suggestions</div>
+                        <div class="package-description">
+                            Safety configurations and recommended presets to prevent common operational mistakes 
+                            in production environments.
+                        </div>
+                        <ul class="package-features">
+                            <li>Production namespace protection patterns</li>
+                            <li>Confirmation prompt recommendations</li>
+                            <li>Read-only mode configurations</li>
+                            <li>Audit trail suggestions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="callout callout-note" style="margin: 40px 0;">
+                    <div class="callout-title">🌟 For Annual Sponsors</div>
+                    <p>
+                        Annual GitHub Sponsors receive <strong>priority feature requests</strong> and <strong>triage support</strong>. 
+                        Your team's needs influence the roadmap directly.
+                    </p>
+                </div>
+
+                <div class="contact-section">
+                    <h3>Get in Touch</h3>
+                    <p style="color: var(--kcsi-text-secondary); max-width: 600px; margin: 0 auto 25px;">
+                        Interested in KCSI for your team? Reach out through any of these channels:
+                    </p>
+                    <div class="contact-options">
+                        <a href="https://github.com/stanzinofree/kcsi/discussions" class="btn btn-primary" target="_blank" rel="noopener">
+                            GitHub Discussions
+                        </a>
+                        <a href="https://github.com/stanzinofree/kcsi/issues/new" class="btn btn-secondary" target="_blank" rel="noopener">
+                            Open an Issue
+                        </a>
+                        <a href="https://github.com/sponsors/stanzinofree" class="btn btn-secondary" target="_blank" rel="noopener">
+                            GitHub Sponsors
+                        </a>
+                    </div>
+                    <p style="margin-top: 25px; font-size: 0.9em; color: var(--kcsi-text-muted);">
+                        Response time: typically within 48 hours
+                    </p>
+                </div>
+
+                <div style="margin: 50px 0; padding: 30px; background: #fff8e1; border-left: 4px solid #ffc107; border-radius: 4px;">
+                    <h4 style="color: var(--kcsi-text-primary); margin-bottom: 10px;">💡 OSS-Friendly Pricing</h4>
+                    <p style="color: var(--kcsi-text-secondary); margin: 0;">
+                        KCSI is and will remain open source. Team packages are priced to sustain development 
+                        while staying accessible to small teams and startups. Custom quotes available—just ask.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <h3 style="margin-bottom: 15px; font-size: 1.2em;">KCSI - kubectl for humans</h3>
+            <p style="opacity: 0.9; margin-bottom: 20px;">
+                Cascading TAB autocomplete + guardrails for Kubernetes day-2 operations
+            </p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <a href="https://github.com/stanzinofree/kcsi" style="margin: 0 10px;">GitHub</a>
+            <a href="https://github.com/stanzinofree/kcsi/issues" style="margin: 0 10px;">Report Issue</a>
+            <a href="https://github.com/stanzinofree/kcsi/blob/main/LICENSE" style="margin: 0 10px;">MIT License</a>
+        </div>
+
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; margin-top: 20px;">
+            <p style="margin-bottom: 10px; font-size: 0.95em;">
+                Created by <strong>Alessandro Middei</strong>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
