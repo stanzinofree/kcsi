@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="logo.png" alt="KCSI Logo" width="200"/>
+<img src="logo.png" alt="KCSI Logo" width="140" />
 
 # KCSI
 
-**kubectl for humans** – Interactive Kubernetes CLI with cascading autocomplete and guided workflows
+**kubectl for humans** – Stop memorizing flags, start shipping faster
 
-*Your friendly Kapibara buddy for Day-2 Kubernetes operations*
+*Your friendly Kapibara buddy making Kubernetes feel less scary*
 
-[![Documentation](https://img.shields.io/badge/docs-stanzinofree.github.io-blue?style=for-the-badge)](https://stanzinofree.github.io/kcsi/)
-[![Cheatsheet](https://img.shields.io/badge/cheatsheet-quick%20reference-green?style=for-the-badge)](https://stanzinofree.github.io/kcsi/cheatsheet/)
+[![Documentation](https://img.shields.io/badge/docs-read%20here-blue?style=for-the-badge)](https://stanzinofree.github.io/kcsi/)
+[![Cheatsheet](https://img.shields.io/badge/cheatsheet-quick%20ref-green?style=for-the-badge)](https://stanzinofree.github.io/kcsi/cheatsheet/)
 [![Roadmap](https://img.shields.io/badge/roadmap-what's%20next-purple?style=for-the-badge)](https://stanzinofree.github.io/kcsi/roadmap/)
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/smilzao)
+[![Buy Me A Coffee](https://img.shields.io/badge/☕_Buy_Me_A_Coffee-support-yellow?style=for-the-badge)](https://buymeacoffee.com/smilzao)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/stanzinofree/kcsi)](https://goreportcard.com/report/github.com/stanzinofree/kcsi)
 [![License](https://img.shields.io/github/license/stanzinofree/kcsi)](LICENSE)
@@ -28,36 +28,92 @@
 
 You know Kubernetes. You just don't remember the exact command syntax every time.
 
-**KCSI eliminates context switching.** Instead of opening browser tabs or typing `kubectl --help` for the 47th time, you get:
+**KCSI eliminates the context switching.** Instead of opening browser tabs or typing `kubectl --help` for the 47th time, you get:
 
-- **Cascading TAB autocomplete** – select namespace → resource type → pod → container in one flow
-- **Guardrails on destructive actions** – confirmation prompts before delete/drain/rollout restart
-- **Day-2 ops shortcuts** – check events, debug pods, inspect PVCs, rollout status – without memorizing flags
-- **kubectl muscle memory** – no paradigm shift, no TUI, just faster kubectl
-- **Single cross-platform binary** – install once, works everywhere (macOS, Linux, Windows)
+- **Cascading TAB autocomplete** – namespace → resource type → pod → container in one smooth flow
+- **Guardrails on destructive ops** – confirmation prompts before delete/drain/rollout restart
+- **Day-2 workflows built-in** – check events, debug pods, inspect PVCs, rollout status – no flags to memorize
+- **Your kubectl muscle memory works** – same verbs, same mental model, just faster
+- **Single cross-platform binary** – drop it anywhere (macOS, Linux, Windows) and go
 
-Perfect for DevOps engineers and sysadmins who touch Kubernetes intermittently but need to move fast when they do.
+Perfect for sysadmins, DevOps engineers, and anyone who touches Kubernetes intermittently but needs to move fast when they do.
+
+---
+
+## Installation
+
+### Quick install (macOS/Linux)
+
+```bash
+curl -sSL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
+```
+
+### Platform binaries
+
+**macOS** (Intel/Apple Silicon)
+```bash
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-amd64 -o kcsi
+chmod +x kcsi && sudo mv kcsi /usr/local/bin/
+```
+
+**Linux** (x64)
+```bash
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-linux-amd64 -o kcsi
+chmod +x kcsi && sudo mv kcsi /usr/local/bin/
+```
+
+**Windows**
+
+Download the `.exe` from [GitHub Releases](https://github.com/stanzinofree/kcsi/releases) and add to PATH.
+
+### Build from source
+
+```bash
+git clone https://github.com/stanzinofree/kcsi.git
+cd kcsi
+go build -o kcsi
+sudo mv kcsi /usr/local/bin/
+```
+
+### Enable completion
+
+**Bash**
+```bash
+echo 'source <(kcsi completion bash)' >> ~/.bashrc
+```
+
+**Zsh**
+```bash
+echo 'source <(kcsi completion zsh)' >> ~/.zshrc
+```
+
+**Fish**
+```bash
+kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+```
+
+**PowerShell (Windows)**
+```powershell
+# Add to your PowerShell profile ($PROFILE)
+kcsi completion powershell | Out-String | Invoke-Expression
+```
 
 ---
 
 ## Quick Start (30 seconds)
 
 ```bash
-# Install (macOS/Linux)
-curl -sSL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
-
-# Or with Homebrew
-brew install stanzinofree/tap/kcsi
-
-# Check installation
+# Verify installation
 kcsi version
 
-# Try it
+# Stream logs – just press TAB to select namespace/pod/container
 kcsi logs
 # → TAB to select namespace
 # → TAB to select pod
 # → TAB to select container
 # → logs stream instantly
+
+# No flags. No typing resource names. Just flow.
 ```
 
 That's it. You're ready.
@@ -65,9 +121,6 @@ That's it. You're ready.
 ---
 
 ## The 10 commands you'll actually use
-
-<details>
-<summary><strong>Click to expand the essentials</strong></summary>
 
 ```bash
 # 1. Stream logs (with TAB autocomplete for namespace/pod/container)
@@ -101,21 +154,17 @@ kcsi rollout restart
 kcsi debug
 ```
 
-</details>
-
 **Every command supports TAB completion.** Start typing, press TAB, select from the list. No flags to remember.
 
 ---
 
 ## Features
 
-What makes KCSI different:
-
-- **Cascading TAB selection** – namespace → resource → pod → container. One smooth flow, no typing resource names.
-- **Guardrails for safety** – Destructive operations (delete, drain, rollout restart) require explicit confirmation. No accidental production disasters.
-- **Day-2 ops workflows built-in** – `kcsi events` for recent cluster activity, `kcsi check errors` to surface failing pods, `kcsi get pvc pods` for storage troubleshooting, `kcsi rollout status` for deployments, `kcsi dig` for DNS debugging.
-- **Works with your kubectl muscle memory** – Same verbs (`get`, `describe`, `logs`, `attach`), same mental model. No learning curve for a new TUI or abstraction layer.
-- **Cross-platform single binary** – Written in Go. Drop the binary anywhere (macOS, Linux, Windows). No dependencies, no runtime, no containers.
+- **Cascading TAB selection** – namespace → resource → pod → container. One smooth flow, no typing.
+- **Guardrails for safety** – Destructive ops require explicit confirmation. No accidental production disasters.
+- **Day-2 ops workflows** – `kcsi events` for cluster activity, `kcsi check errors` to surface failing pods, `kcsi get pvc pods` for storage troubleshooting, `kcsi dig` for DNS debugging.
+- **kubectl muscle memory compatible** – Same verbs (`get`, `describe`, `logs`, `attach`), same mental model. Zero learning curve.
+- **Cross-platform single binary** – Written in Go. No dependencies, no runtime, no containers.
 
 ---
 
@@ -149,123 +198,7 @@ KCSI is free and open source. If it saves you time, consider supporting:
 
 ---
 
-## Installation options (advanced)
-
-<details>
-<summary><strong>macOS</strong></summary>
-
-```bash
-# Homebrew
-brew install stanzinofree/tap/kcsi
-
-# Or download binary from GitHub releases
-curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-amd64 -o kcsi
-chmod +x kcsi
-sudo mv kcsi /usr/local/bin/
-```
-
-</details>
-
-<details>
-<summary><strong>Linux</strong></summary>
-
-```bash
-# Install script
-curl -sSL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
-
-# Or manual download
-curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-linux-amd64 -o kcsi
-chmod +x kcsi
-sudo mv kcsi /usr/local/bin/
-```
-
-</details>
-
-<details>
-<summary><strong>Windows</strong></summary>
-
-Download the latest `.exe` from [GitHub Releases](https://github.com/stanzinofree/kcsi/releases) and add to PATH.
-
-</details>
-
-<details>
-<summary><strong>Build from source</strong></summary>
-
-```bash
-git clone https://github.com/stanzinofree/kcsi.git
-cd kcsi
-go build -o kcsi
-sudo mv kcsi /usr/local/bin/
-```
-
-</details>
-
----
-
-## Setup Autocompletion
-
-<details>
-<summary><strong>Bash</strong></summary>
-
-```bash
-# Load in current session
-source <(kcsi completion bash)
-
-# Load for all sessions (Linux)
-kcsi completion bash > /etc/bash_completion.d/kcsi
-
-# Load for all sessions (macOS with Homebrew)
-kcsi completion bash > $(brew --prefix)/etc/bash_completion.d/kcsi
-```
-
-</details>
-
-<details>
-<summary><strong>Zsh</strong></summary>
-
-```bash
-# Enable completion if not already enabled
-echo "autoload -U compinit; compinit" >> ~/.zshrc
-
-# Generate completion script
-kcsi completion zsh > "${fpath[1]}/_kcsi"
-
-# Restart your shell
-```
-
-</details>
-
-<details>
-<summary><strong>Fish</strong></summary>
-
-```bash
-# Load in current session
-kcsi completion fish | source
-
-# Load for all sessions
-kcsi completion fish > ~/.config/fish/completions/kcsi.fish
-```
-
-</details>
-
-<details>
-<summary><strong>PowerShell (Windows)</strong></summary>
-
-```powershell
-# Generate completion script
-kcsi completion powershell | Out-String | Invoke-Expression
-
-# Load for all sessions - add to your PowerShell profile
-# Find your profile location with: $PROFILE
-# Then add this line to the profile:
-kcsi completion powershell | Out-String | Invoke-Expression
-```
-
-</details>
-
----
-
-## Usage Examples
+## Advanced
 
 <details>
 <summary><strong>Get pods with namespace autocompletion</strong></summary>
