@@ -179,39 +179,7 @@ KCSI is free and open source. If it saves you time, consider supporting:
 ## Advanced
 
 <details>
-<summary><strong>Persistent shell completion</strong></summary>
-
-**Bash (Linux)**
-```bash
-kcsi completion bash > /etc/bash_completion.d/kcsi
-```
-
-**Bash (macOS with bash-completion)**
-```bash
-kcsi completion bash > /usr/local/etc/bash_completion.d/kcsi
-```
-
-**Zsh**
-```bash
-echo "autoload -U compinit; compinit" >> ~/.zshrc
-kcsi completion zsh > "${fpath[1]}/_kcsi"
-```
-
-**Fish**
-```bash
-kcsi completion fish > ~/.config/fish/completions/kcsi.fish
-```
-
-**PowerShell**
-```powershell
-# Add to your PowerShell profile (path in $PROFILE)
-kcsi completion powershell | Out-String | Invoke-Expression
-```
-
-</details>
-
-<details>
-<summary><strong>Usage examples (logs / get / describe / events)</strong></summary>
+<summary><strong>Logs & exec</strong></summary>
 
 **Get pods with namespace autocomplete**
 ```bash
@@ -243,7 +211,7 @@ kcsi check errors
 </details>
 
 <details>
-<summary><strong>Safety examples (delete / force)</strong></summary>
+<summary><strong>Safe delete & confirmations</strong></summary>
 
 **Delete resources with confirmation**
 ```bash
@@ -283,7 +251,7 @@ kcsi port-forward -n default my-pod 8080:80
 </details>
 
 <details>
-<summary><strong>Secrets & rollout management</strong></summary>
+<summary><strong>Secrets & rollout</strong></summary>
 
 **View and decode secrets**
 ```bash
@@ -300,6 +268,11 @@ kcsi rollout history deployment my-app -n production
 kcsi rollout undo deployment my-app -n production
 kcsi rollout undo deployment my-app -n production --to-revision=3
 ```
+
+</details>
+
+<details>
+<summary><strong>Apply & edit</strong></summary>
 
 **Apply configurations**
 ```bash
