@@ -4,7 +4,7 @@
 
 # KCSI
 
-**kubectl for humans** – Stop memorizing flags, start shipping faster
+**kubectl for humans** – Cascading TAB + guardrails for day-2 ops.
 
 *Your friendly Kapibara buddy making Kubernetes feel less scary*
 
@@ -16,7 +16,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/stanzinofree/kcsi)](https://goreportcard.com/report/github.com/stanzinofree/kcsi)
 [![License](https://img.shields.io/github/license/stanzinofree/kcsi)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/stanzinofree/kcsi)](https://github.com/stanzinofree/kcsi/releases)
-[![Build and Test](https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
+[![Build and Test](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
 
@@ -46,6 +46,11 @@ Perfect for sysadmins, DevOps engineers, and anyone who touches Kubernetes inter
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
+```
+
+Verify:
+```bash
+kcsi version
 ```
 
 ### Platform binaries
@@ -78,11 +83,25 @@ sudo mv kcsi /usr/local/bin/
 ### Enable completion
 
 **Bash**
+
+Try once (current shell):
+```bash
+source <(kcsi completion bash)
+```
+
+Persist:
 ```bash
 echo 'source <(kcsi completion bash)' >> ~/.bashrc
 ```
 
 **Zsh**
+
+Try once (current shell):
+```bash
+source <(kcsi completion zsh)
+```
+
+Persist:
 ```bash
 echo 'source <(kcsi completion zsh)' >> ~/.zshrc
 ```
