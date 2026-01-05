@@ -55,9 +55,15 @@ kcsi version
 
 ### Platform binaries
 
-**macOS** (Intel/Apple Silicon)
+**macOS Intel**
 ```bash
 curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-amd64 -o kcsi
+chmod +x kcsi && sudo mv kcsi /usr/local/bin/
+```
+
+**macOS Apple Silicon**
+```bash
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-arm64 -o kcsi
 chmod +x kcsi && sudo mv kcsi /usr/local/bin/
 ```
 
@@ -107,7 +113,7 @@ echo 'source <(kcsi completion zsh)' >> ~/.zshrc
 ```
 
 **Fish**
-```bash
+```fish
 kcsi completion fish > ~/.config/fish/completions/kcsi.fish
 ```
 
@@ -183,7 +189,7 @@ kcsi debug             # Debug a pod (ephemeral container)
 
 ---
 
-## Support KCSI
+## Support KCSI ☕️
 
 KCSI is free and open source. If it saves you time, consider supporting:
 
