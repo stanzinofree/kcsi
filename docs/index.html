@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kcsi - Kubectl Cli Super Intuitive Documentation</title>
+    <title>KCSI - kubectl for humans</title>
+    <meta name="description" content="Cascading TAB autocomplete + guardrails for day-2 Kubernetes ops">
     <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="assets/css/kcsi.css">
     <style>
         .hero {
             text-align: center;
             padding: 80px 40px;
-            background: #4a5a9a;
+            background: var(--kcsi-gradient-hero);
             color: white;
         }
 
         .hero h1 {
             font-size: 4em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .hero p {
+        .hero-tagline {
             font-size: 1.5em;
-            opacity: 1;
-            margin-bottom: 40px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.95;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: white;
-            color: #4a5a9a;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: 10px;
+        .hero-description {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            color: #4a5a9a;
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .features {
@@ -58,7 +58,7 @@
             padding: 30px;
             border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .feature-card:hover {
@@ -73,12 +73,13 @@
 
         .feature-title {
             font-size: 1.5em;
-            color: #4a5a9a;
+            color: var(--kcsi-primary);
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .feature-description {
-            color: #495057;
+            color: var(--kcsi-text-secondary);
             line-height: 1.6;
         }
 
@@ -90,7 +91,7 @@
 
         .doc-links h2 {
             font-size: 2.5em;
-            color: #212529;
+            color: var(--kcsi-text-primary);
             margin-bottom: 40px;
         }
 
@@ -98,7 +99,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -107,13 +108,13 @@
             padding: 30px;
             border-radius: 15px;
             text-decoration: none;
-            color: #212529;
+            color: var(--kcsi-text-primary);
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
 
         .doc-card:hover {
-            border-color: #667eea;
+            border-color: var(--kcsi-primary-light);
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
         }
@@ -127,20 +128,24 @@
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #4a5a9a;
+            color: var(--kcsi-primary);
         }
 
         .doc-desc {
-            color: #495057;
+            color: var(--kcsi-text-secondary);
             font-size: 0.95em;
         }
     </style>
 </head>
 <body>
     <div class="hero">
-        <img src="logo.png" alt="kcsi Logo" style="width: 200px; margin-bottom: 20px;">
-        <h1>kcsi</h1>
-        <p>Kubectl Cli Super Intuitive - Your Kubernetes CLI Companion</p>
+        <img src="logo.png" alt="KCSI Logo" style="width: 200px; margin-bottom: 20px;">
+        <h1>KCSI</h1>
+        <p class="hero-tagline">kubectl for humans — Cascading TAB + guardrails for day-2 ops</p>
+        <p class="hero-description">
+            For sysadmins and DevOps engineers who touch Kubernetes intermittently but need to move fast. 
+            Stop memorizing commands. Start shipping.
+        </p>
         
         <!-- Demo -->
         <div style="margin: 30px auto; max-width: 900px; text-align: center;">
@@ -151,9 +156,10 @@
             </a>
         </div>
         
-        <div>
-            <a href="https://github.com/stanzinofree/kcsi" class="cta-button">View on GitHub</a>
-            <a href="cheatsheet.html" class="cta-button">Get Started</a>
+        <div class="cta-buttons">
+            <a href="cheatsheet.html" class="btn btn-primary" style="color: white;">Get Started</a>
+            <a href="https://github.com/stanzinofree/kcsi" class="btn btn-secondary" style="color: white; border-color: white;">View on GitHub</a>
+            <a href="https://buymeacoffee.com/smilzao" class="btn btn-support" target="_blank" rel="noopener">☕ Support KCSI</a>
         </div>
     </div>
 
@@ -162,26 +168,26 @@
             <div class="feature-icon">⚡</div>
             <div class="feature-title">Smart Autocompletion</div>
             <div class="feature-description">
-                Intelligent tab completion for namespaces, pods, services, and all Kubernetes resources. 
-                Works seamlessly with your existing kubectl commands.
+                Intelligent TAB completion for namespaces, pods, services, and all Kubernetes resources. 
+                Works seamlessly with your existing kubectl workflow.
             </div>
         </div>
 
         <div class="feature-card">
             <div class="feature-icon">🎯</div>
-            <div class="feature-title">Interactive Selection</div>
+            <div class="feature-title">Cascading Selection</div>
             <div class="feature-description">
-                Cascading autocompletion guides you through command construction. 
-                Select namespace, then resource, then container - all with TAB.
+                Namespace → resource → pod → container. One smooth TAB flow. 
+                No typing resource names, no memorizing flags.
             </div>
         </div>
 
         <div class="feature-card">
             <div class="feature-icon">🔒</div>
-            <div class="feature-title">Safety First</div>
+            <div class="feature-title">Safety Guardrails</div>
             <div class="feature-description">
-                Delete operations require confirmation by default. 
-                Protect your production environments from accidental deletions.
+                Confirmation prompts on destructive operations (delete, drain, rollout restart). 
+                Protect production from accidental "oops" commands.
             </div>
         </div>
 
@@ -189,8 +195,8 @@
             <div class="feature-icon">🔍</div>
             <div class="feature-title">Built-in Diagnostics</div>
             <div class="feature-description">
-                Find problematic pods instantly with <code>kcsi check errors</code>. 
-                Watch cluster events in real-time.
+                Find failing pods with <code>kcsi check errors</code>. 
+                Watch cluster events in real-time. Debug without leaving your terminal.
             </div>
         </div>
 
@@ -198,17 +204,17 @@
             <div class="feature-icon">🌍</div>
             <div class="feature-title">Cross-Platform</div>
             <div class="feature-description">
-                Works on macOS, Linux, and Windows. 
-                Single binary, no dependencies.
+                macOS, Linux, Windows. Intel, ARM, Apple Silicon. 
+                Single binary, no dependencies, no runtime.
             </div>
         </div>
 
         <div class="feature-card">
             <div class="feature-icon">⚙️</div>
-            <div class="feature-title">Lightweight</div>
+            <div class="feature-title">Lightweight & Fast</div>
             <div class="feature-description">
-                Built with Go, ~4MB binary. 
-                Fast startup, minimal resource usage.
+                Built with Go. ~4MB binary, instant startup. 
+                Respects your kubeconfig, zero telemetry by default.
             </div>
         </div>
     </div>
@@ -228,13 +234,13 @@
                 <div class="doc-desc">Development timeline and future plans</div>
             </a>
 
-            <a href="https://github.com/stanzinofree/kcsi/blob/main/README.md" class="doc-card">
-                <div class="doc-icon">📄</div>
-                <div class="doc-title">README</div>
-                <div class="doc-desc">Installation and usage guide</div>
+            <a href="teams.html" class="doc-card">
+                <div class="doc-icon">👥</div>
+                <div class="doc-title">For Teams</div>
+                <div class="doc-desc">Onboarding workshops and custom packs</div>
             </a>
 
-            <a href="https://github.com/stanzinofree/kcsi/releases" class="doc-card">
+            <a href="https://github.com/stanzinofree/kcsi/releases" class="doc-card" target="_blank">
                 <div class="doc-icon">📦</div>
                 <div class="doc-title">Releases</div>
                 <div class="doc-desc">Download pre-built binaries</div>
@@ -242,11 +248,31 @@
         </div>
     </div>
 
+    <!-- Support Section -->
+    <div class="support-section">
+        <h3>☕ Support KCSI</h3>
+        <p>
+            KCSI is free and open source. If it saves you time or prevents an "oops" in production, 
+            consider supporting the project.
+        </p>
+        <div class="support-links">
+            <a href="https://buymeacoffee.com/smilzao" class="btn btn-support" target="_blank" rel="noopener">
+                Buy Me a Coffee
+            </a>
+            <a href="https://github.com/sponsors/stanzinofree" class="btn btn-secondary" target="_blank" rel="noopener">
+                GitHub Sponsors
+            </a>
+        </div>
+        <p class="support-note">
+            No telemetry by default • Open source • Audit the code yourself
+        </p>
+    </div>
+
     <footer>
         <div style="margin-bottom: 20px;">
-            <h3 style="margin-bottom: 15px; font-size: 1.2em;">kcsi - Kubectl Cli Super Intuitive</h3>
+            <h3 style="margin-bottom: 15px; font-size: 1.2em;">KCSI - kubectl for humans</h3>
             <p style="opacity: 0.9; margin-bottom: 20px;">
-                A kubectl wrapper with intelligent autocompletion for Kubernetes resources
+                Cascading TAB autocomplete + guardrails for Kubernetes day-2 operations
             </p>
         </div>
         

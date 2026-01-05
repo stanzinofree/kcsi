@@ -9,8 +9,8 @@
 *Your friendly Kapibara buddy making Kubernetes feel less scary*
 
 [![Documentation](https://img.shields.io/badge/docs-read%20here-blue?style=for-the-badge)](https://stanzinofree.github.io/kcsi/)
-[![Cheatsheet](https://img.shields.io/badge/cheatsheet-quick%20ref-green?style=for-the-badge)](https://stanzinofree.github.io/kcsi/cheatsheet/)
-[![Roadmap](https://img.shields.io/badge/roadmap-what's%20next-purple?style=for-the-badge)](https://stanzinofree.github.io/kcsi/roadmap/)
+[![Cheatsheet](https://img.shields.io/badge/cheatsheet-quick%20ref-green?style=for-the-badge)](https://stanzinofree.github.io/kcsi/cheatsheet.html)
+[![Roadmap](https://img.shields.io/badge/roadmap-what's%20next-purple?style=for-the-badge)](https://stanzinofree.github.io/kcsi/roadmap.html)
 [![Buy Me A Coffee](https://img.shields.io/badge/☕_Buy_Me_A_Coffee-support-yellow?style=for-the-badge)](https://buymeacoffee.com/smilzao)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/stanzinofree/kcsi)](https://goreportcard.com/report/github.com/stanzinofree/kcsi)
@@ -192,8 +192,8 @@ kcsi debug             # Debug a pod (ephemeral container)
 ## Documentation
 
 - **Full docs**: [https://stanzinofree.github.io/kcsi/](https://stanzinofree.github.io/kcsi/)
-- **Cheatsheet**: [https://stanzinofree.github.io/kcsi/cheatsheet/](https://stanzinofree.github.io/kcsi/cheatsheet/)
-- **Roadmap**: [https://stanzinofree.github.io/kcsi/roadmap/](https://stanzinofree.github.io/kcsi/roadmap/)
+- **Cheatsheet**: [https://stanzinofree.github.io/kcsi/cheatsheet.html](https://stanzinofree.github.io/kcsi/cheatsheet.html)
+- **Roadmap**: [https://stanzinofree.github.io/kcsi/roadmap.html](https://stanzinofree.github.io/kcsi/roadmap.html)
 
 ---
 
