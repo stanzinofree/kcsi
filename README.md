@@ -106,12 +106,8 @@ kcsi completion powershell | Out-String | Invoke-Expression
 # Verify installation
 kcsi version
 
-# Stream logs – just press TAB to select namespace/pod/container
+# Stream logs – press TAB to select namespace/pod/container
 kcsi logs
-# → TAB to select namespace
-# → TAB to select pod
-# → TAB to select container
-# → logs stream instantly
 
 # No flags. No typing resource names. Just flow.
 ```
@@ -123,38 +119,19 @@ That's it. You're ready.
 ## The 10 commands you'll actually use
 
 ```bash
-# 1. Stream logs (with TAB autocomplete for namespace/pod/container)
-kcsi logs
-
-# 2. Exec into a pod
-kcsi attach
-
-# 3. Describe a resource
-kcsi describe
-
-# 4. Check recent events in a namespace
-kcsi events
-
-# 5. Port-forward to a service or pod
-kcsi port-forward
-
-# 6. Get resource status (pods, deployments, services, etc.)
-kcsi get
-
-# 7. Delete a resource (with confirmation prompt)
-kcsi delete
-
-# 8. Check rollout status
-kcsi rollout status
-
-# 9. Restart a deployment
-kcsi rollout restart
-
-# 10. Debug a pod (ephemeral container)
-kcsi debug
+kcsi logs              # Stream logs
+kcsi attach            # Exec into a pod
+kcsi describe          # Describe a resource
+kcsi events            # Check recent events
+kcsi port-forward      # Port-forward to a service or pod
+kcsi get               # Get resource status
+kcsi delete            # Delete a resource (with confirmation)
+kcsi rollout status    # Check rollout status
+kcsi rollout restart   # Restart a deployment
+kcsi debug             # Debug a pod (ephemeral container)
 ```
 
-**Every command supports TAB completion.** Start typing, press TAB, select from the list. No flags to remember.
+**Every command supports TAB completion.** Start typing, press TAB, select from the list.
 
 ---
 
@@ -173,7 +150,7 @@ kcsi debug
 - **Confirmation prompts** on destructive actions (delete, drain, rollout restart)
 - **Read-only by default** for most commands (logs, describe, get, events)
 - **Respects your kubeconfig** – uses the same context and credentials as `kubectl`
-- **No telemetry** – KCSI does not phone home or collect usage data
+- **No telemetry by default** – KCSI does not include analytics or tracking. Review the source if you need strict compliance guarantees.
 - **Open source** – audit the code yourself
 - **Security warnings** when displaying decoded secrets – see [docs/SECURITY_SECRETS.md](docs/SECURITY_SECRETS.md)
 
@@ -187,118 +164,117 @@ kcsi debug
 
 ---
 
-## Support KCSI ☕️
+## Support KCSI
 
 KCSI is free and open source. If it saves you time, consider supporting:
 
 - **[Buy Me a Coffee](https://buymeacoffee.com/smilzao)** – one-time support
 - **[GitHub Sponsors](https://github.com/sponsors/stanzinofree)** – recurring sponsorship
 
-**Workshops and customization packs available for teams.** Reach out via GitHub or sponsors page.
+**For teams:**  
+60-minute onboarding workshop + custom command/alias pack + guardrail/preset suggestions available. Annual sponsors can prioritize feature requests and triage. Reach out via GitHub or sponsors page.
 
 ---
 
 ## Advanced
 
 <details>
-<summary><strong>Get pods with namespace autocompletion</strong></summary>
+<summary><strong>Persistent shell completion</strong></summary>
 
+**Bash (Linux)**
 ```bash
-# Type this and press TAB after -n to see all available namespaces
-kcsi get pods -n <TAB>
+kcsi completion bash > /etc/bash_completion.d/kcsi
+```
 
-# Example
+**Bash (macOS with bash-completion)**
+```bash
+kcsi completion bash > /usr/local/etc/bash_completion.d/kcsi
+```
+
+**Zsh**
+```bash
+echo "autoload -U compinit; compinit" >> ~/.zshrc
+kcsi completion zsh > "${fpath[1]}/_kcsi"
+```
+
+**Fish**
+```bash
+kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+```
+
+**PowerShell**
+```powershell
+# Add to your PowerShell profile (path in $PROFILE)
+kcsi completion powershell | Out-String | Invoke-Expression
+```
+
+</details>
+
+<details>
+<summary><strong>Usage examples (logs / get / describe / events)</strong></summary>
+
+**Get pods with namespace autocomplete**
+```bash
+kcsi get pods -n <TAB>
 kcsi get pods -n kube-system
 ```
 
-</details>
-
-<details>
-<summary><strong>Stream logs with cascading autocompletion</strong></summary>
-
+**Stream logs with cascading autocomplete**
 ```bash
-# Basic usage with namespace and pod autocompletion
-kcsi logs -n <TAB>  # Shows namespaces
-kcsi logs -n kube-system <TAB>  # Shows pods in kube-system
-
-# Follow logs
+kcsi logs -n <TAB>
+kcsi logs -n kube-system <TAB>
 kcsi logs -f -n kube-system my-pod
-
-# Get last 100 lines
 kcsi logs --tail 100 -n kube-system my-pod
+kcsi logs -n kube-system my-pod -c <TAB>
+```
 
-# Get logs from specific container (if pod has multiple containers)
-kcsi logs -n kube-system my-pod -c <TAB>  # Shows containers in the pod
+**Monitor cluster events**
+```bash
+kcsi events
+kcsi events -n production
+kcsi events -w
+```
+
+**Check for pod errors**
+```bash
+kcsi check errors
 ```
 
 </details>
 
 <details>
-<summary><strong>Delete resources safely</strong></summary>
+<summary><strong>Safety examples (delete / force)</strong></summary>
 
+**Delete resources with confirmation**
 ```bash
-# Delete pod with confirmation prompt
-kcsi delete pod -n <TAB>  # Shows namespaces
-kcsi delete pod -n default <TAB>  # Shows pods in namespace
+kcsi delete pod -n <TAB>
+kcsi delete pod -n default <TAB>
 kcsi delete pod -n default my-pod
 # Output: Are you sure you want to delete pod 'my-pod' in namespace 'default'? [y/N]:
+```
 
-# Delete with --force to skip confirmation (use with caution!)
+**Force delete (skip confirmation)**
+```bash
 kcsi delete pod -n default my-pod --force
 ```
 
 </details>
 
 <details>
-<summary><strong>Monitor cluster events</strong></summary>
+<summary><strong>Debug & port-forward</strong></summary>
 
+**Debug pods with ephemeral containers**
 ```bash
-# Get recent events across all namespaces (sorted by timestamp)
-kcsi events
-
-# Get events in a specific namespace
-kcsi events -n production
-
-# Watch events in real-time
-kcsi events -w
-```
-
-</details>
-
-<details>
-<summary><strong>Check for pod errors</strong></summary>
-
-```bash
-# Find all pods with issues (CrashLoopBackOff, Error, Pending, etc.)
-kcsi check errors
-
-# Output includes helpful diagnostics suggestions
-```
-
-</details>
-
-<details>
-<summary><strong>Debug pods with ephemeral containers</strong></summary>
-
-```bash
-# Attach ephemeral debug container to pod
 kcsi debug -n production my-pod
-
 # Features:
 # - Automatic internet connectivity check
 # - Smart image selection (netshoot → alpine → busybox)
 # - Full networking and debugging toolkit
 ```
 
-</details>
-
-<details>
-<summary><strong>Port forwarding</strong></summary>
-
+**Port forwarding**
 ```bash
-# Forward local port 8080 to pod port 80
 kcsi port-forward -n default my-pod 8080:80
-
 # Features:
 # - Root privilege check for ports < 1024
 # - Port availability check before forwarding
@@ -307,68 +283,35 @@ kcsi port-forward -n default my-pod 8080:80
 </details>
 
 <details>
-<summary><strong>View and decode secrets</strong></summary>
+<summary><strong>Secrets & rollout management</strong></summary>
 
+**View and decode secrets**
 ```bash
-# View all keys and values of a secret (decoded from base64)
 kcsi get secrets decoded my-secret -n production
-
-# Show only a specific key from a secret
 kcsi get secrets show my-secret -n production -k api-key
-
-# ⚠️ Security Note: See docs/SECURITY_SECRETS.md for security considerations
+# ⚠️ Security Note: See docs/SECURITY_SECRETS.md
 ```
 
-</details>
-
-<details>
-<summary><strong>Rollout management</strong></summary>
-
+**Rollout management**
 ```bash
-# Restart a deployment to trigger a new rollout
 kcsi rollout restart deployment my-app -n production
-
-# Check rollout status
 kcsi rollout status deployment my-app -n production
-
-# View rollout history
 kcsi rollout history deployment my-app -n production
-
-# Rollback to previous revision
 kcsi rollout undo deployment my-app -n production
-
-# Rollback to specific revision
 kcsi rollout undo deployment my-app -n production --to-revision=3
 ```
 
-</details>
-
-<details>
-<summary><strong>Apply configurations</strong></summary>
-
+**Apply configurations**
 ```bash
-# Apply from a single file
 kcsi apply -f deployment.yaml -n production
-
-# Apply from a directory recursively
 kcsi apply -f ./k8s-manifests --recursive -n production
-
-# Apply from kustomize directory
 kcsi apply -k ./overlays/production
-
-# Dry-run to preview changes
 kcsi apply -f deployment.yaml -n production --dry-run
 ```
 
-</details>
-
-<details>
-<summary><strong>Edit resources with automatic backup</strong></summary>
-
+**Edit resources with automatic backup**
 ```bash
-# Edit a deployment with automatic backup
 kcsi edit deployment my-app -n production
-
 # Features:
 # - Automatic backup to ~/.kcsi/backups/
 # - Custom backup directory: --backup-dir
