@@ -84,11 +84,31 @@ main() {
     # Create temporary file
     TMP_FILE=$(mktemp)
     
-    # Download binary
+    # Download binary with fallback to amd64 if arch-specific binary doesn't exist
+    DOWNLOAD_SUCCESS=false
+    
     if command_exists curl; then
-        curl -fsSL "$DOWNLOAD_URL" -o "$TMP_FILE" || error "Download failed"
+        if curl -fsSL "$DOWNLOAD_URL" -o "$TMP_FILE" 2>/dev/null; then
+            DOWNLOAD_SUCCESS=true
+        elif [ "$ARCH" != "amd64" ]; then
+            warn "${ARCH} binary not found, falling back to amd64"
+            DOWNLOAD_URL=$(get_download_url "$OS" "amd64")
+            info "Downloading from: ${DOWNLOAD_URL}"
+            curl -fsSL "$DOWNLOAD_URL" -o "$TMP_FILE" && DOWNLOAD_SUCCESS=true
+        fi
     else
-        wget -q "$DOWNLOAD_URL" -O "$TMP_FILE" || error "Download failed"
+        if wget -q "$DOWNLOAD_URL" -O "$TMP_FILE" 2>/dev/null; then
+            DOWNLOAD_SUCCESS=true
+        elif [ "$ARCH" != "amd64" ]; then
+            warn "${ARCH} binary not found, falling back to amd64"
+            DOWNLOAD_URL=$(get_download_url "$OS" "amd64")
+            info "Downloading from: ${DOWNLOAD_URL}"
+            wget -q "$DOWNLOAD_URL" -O "$TMP_FILE" && DOWNLOAD_SUCCESS=true
+        fi
+    fi
+    
+    if [ "$DOWNLOAD_SUCCESS" = false ]; then
+        error "Download failed - binary not available for your platform"
     fi
     
     # Make executable
