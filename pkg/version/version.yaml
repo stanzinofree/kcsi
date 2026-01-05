@@ -10,7 +10,7 @@
 #   - pkg/version/version.go (runtime version info)
 # ============================================================================
 
-version: 0.6.0
+version: 0.6.2
 name: kcsi
 fullName: Kubectl Cli Super Intuitive
 description: A kubectl wrapper with intelligent autocompletion
@@ -39,5 +39,5 @@ contributors:
 
 # Release information
 releases:
-  latest: 0.6.0
-  stable: 0.6.0
+  latest: 0.6.2
+  stable: 0.6.2
