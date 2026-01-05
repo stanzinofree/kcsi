@@ -1,455 +1,400 @@
-<div align="center">
+<p align="center">
+  <img src="logo.png" alt="KCSI Logo" width="140" />
+</p>
+<h1 align="center">KCSI — kubectl for humans 🐹</h1>
+<p align="center">
+  <b>Fast day-2 Kubernetes ops when you don’t live in Kubernetes all day.</b><br/>
+  Cascading autocomplete, guided selection, and guardrails — so you stop memorizing commands and start shipping fixes.
+</p>
+<p align="center">
+  <a href="https://stanzinofree.github.io/kcsi/"><img alt="Docs" src="https://img.shields.io/badge/docs-online-brightgreen"></a>
+  <a href="https://stanzinofree.github.io/kcsi/cheatsheet/"><img alt="Cheatsheet" src="https://img.shields.io/badge/cheatsheet-interactive-blue"></a>
+  <a href="https://stanzinofree.github.io/kcsi/roadmap/"><img alt="Roadmap" src="https://img.shields.io/badge/roadmap-public-orange"></a>
+  <a href="https://buymeacoffee.com/smilzao"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/buy%20me%20a%20coffee-support-yellow"></a>
+</p>
+<p align="center">
+  <a href="https://goreportcard.com/report/github.com/stanzinofree/kcsi"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/stanzinofree/kcsi"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/stanzinofree/kcsi"></a>
+  <a href="https://github.com/stanzinofree/kcsi/releases"><img alt="Release" src="https://img.shields.io/github/v/release/stanzinofree/kcsi"></a>
+  <a href="https://github.com/stanzinofree/kcsi/actions"><img alt="Build and Test" src="https://github.com/stanzinofree/kcsi/actions/workflows/build.yml/badge.svg"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi"><img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi"><img alt="Security Rating" src="https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating"></a>
+</p>
+<p align="center">
+  <i>Your Kapibara buddy in the terminal: calm, practical, always ready to troubleshoot.</i>
+</p>
+------
 
-<img src="logo.png" alt="KCSI Logo" width="140" />
+## **Table of contents**
 
-# KCSI
+- [Why KCSI?](#why-kcsi)![Attachment.tiff](Attachment.tiff)
+- [Installation](#installation)![Attachment.tiff](Attachment.tiff)
+- [Quick Start (30 seconds)](#quick-start-30-seconds)![Attachment.tiff](Attachment.tiff)
+- [The 10 commands you’ll actually use](#the-10-commands-youll-actually-use)![Attachment.tiff](Attachment.tiff)
+- [Features](#features)![Attachment.tiff](Attachment.tiff)
+- [Safety & Security notes](#safety--security-notes)![Attachment.tiff](Attachment.tiff)
+- [Documentation](#documentation)![Attachment.tiff](Attachment.tiff)
+- [Support KCSI ☕️](#support-kcsi-️)![Attachment.tiff](Attachment.tiff)
+- [Advanced](#advanced)![Attachment.tiff](Attachment.tiff)
+- [Contributing](#contributing)![Attachment.tiff](Attachment.tiff)
+- [License](#license)![Attachment.tiff](Attachment.tiff)
 
-**kubectl for humans** – Stop memorizing flags, start shipping faster
+------
 
-*Your friendly Kapibara buddy making Kubernetes feel less scary*
+## **Why KCSI?**
 
-[![Documentation](https://img.shields.io/badge/docs-read%20here-blue?style=for-the-badge)](https://stanzinofree.github.io/kcsi/)
-[![Cheatsheet](https://img.shields.io/badge/cheatsheet-quick%20ref-green?style=for-the-badge)](https://stanzinofree.github.io/kcsi/cheatsheet/)
-[![Roadmap](https://img.shields.io/badge/roadmap-what's%20next-purple?style=for-the-badge)](https://stanzinofree.github.io/kcsi/roadmap/)
-[![Buy Me A Coffee](https://img.shields.io/badge/☕_Buy_Me_A_Coffee-support-yellow?style=for-the-badge)](https://buymeacoffee.com/smilzao)
+You know Kubernetes. You just don’t remember the exact command syntax every time.
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/stanzinofree/kcsi)](https://goreportcard.com/report/github.com/stanzinofree/kcsi)
-[![License](https://img.shields.io/github/license/stanzinofree/kcsi)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/stanzinofree/kcsi)](https://github.com/stanzinofree/kcsi/releases)
-[![Build and Test](https://github.com/stanzinofree/kcsi/workflows/Build%20and%20Test/badge.svg)](https://github.com/stanzinofree/kcsi/actions/workflows/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=stanzinofree_kcsi&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=stanzinofree_kcsi)
+KCSI reduces context switching when you operate clusters intermittently. Instead of opening docs, copy/pasting commands, then manually fixing namespaces/pods/containers, you get:
+- Cascading TAB autocomplete: namespace → resource → pod → container
+- Guardrails on destructive actions: confirmation prompts before “oops” commands
+- Day-2 ops shortcuts: events, debug pods, inspect PVCs, rollout status, error checks
+- kubectl muscle memory: same verbs, same mental model — just faster
+- Cross-platform single binary: macOS, Linux, Windows
 
-</div>
+Perfect for sysadmins/DevOps/system engineers who touch Kubernetes intermittently but need to move fast when they do.
 
----
+------
 
-## Why KCSI?
+## **Installation**
 
-You know Kubernetes. You just don't remember the exact command syntax every time.
+### **Option A — Install script (recommended)**
 
-**KCSI eliminates the context switching.** Instead of opening browser tabs or typing `kubectl --help` for the 47th time, you get:
-
-- **Cascading TAB autocomplete** – namespace → resource type → pod → container in one smooth flow
-- **Guardrails on destructive ops** – confirmation prompts before delete/drain/rollout restart
-- **Day-2 workflows built-in** – check events, debug pods, inspect PVCs, rollout status – no flags to memorize
-- **Your kubectl muscle memory works** – same verbs, same mental model, just faster
-- **Single cross-platform binary** – drop it anywhere (macOS, Linux, Windows) and go
-
-Perfect for sysadmins, DevOps engineers, and anyone who touches Kubernetes intermittently but needs to move fast when they do.
-
----
-
-## Installation
-
-### Quick install (macOS/Linux)
+macOS / Linux:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/stanzinofree/kcsi/main/install.sh | bash
 ```
 
-### Platform binaries
+### **Option B — Download a prebuilt binary (GitHub Releases)**
 
-**macOS** (Intel/Apple Silicon)
+Download the latest binary for your OS/ARCH from:
+https://github.com/stanzinofree/kcsi/releases
+
+Example (macOS / Linux):
+
 ```bash
-curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-amd64 -o kcsi
-chmod +x kcsi && sudo mv kcsi /usr/local/bin/
+chmod +x kcsi
+sudo mv kcsi /usr/local/bin/kcsi
+kcsi version
 ```
 
-**Linux** (x64)
-```bash
-curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-linux-amd64 -o kcsi
-chmod +x kcsi && sudo mv kcsi /usr/local/bin/
-```
+Windows:
+- Download the latest kcsi-windows-*.exe from Releases
+- Put it in a folder inside PATH (or add that folder to PATH)
 
-**Windows**
-
-Download the `.exe` from [GitHub Releases](https://github.com/stanzinofree/kcsi/releases) and add to PATH.
-
-### Build from source
+### **Option C — Build from source**
 
 ```bash
 git clone https://github.com/stanzinofree/kcsi.git
 cd kcsi
 go build -o kcsi
-sudo mv kcsi /usr/local/bin/
+./kcsi version
 ```
 
-### Enable completion
+### **Enable shell completion (recommended)**
 
-**Bash**
+bash:
+
 ```bash
-echo 'source <(kcsi completion bash)' >> ~/.bashrc
+source <(kcsi completion bash)
 ```
 
-**Zsh**
+zsh:
+
 ```bash
-echo 'source <(kcsi completion zsh)' >> ~/.zshrc
+source <(kcsi completion zsh)
 ```
 
-**Fish**
-```bash
-kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+fish:
+
+```fish
+kcsi completion fish | source
 ```
 
-**PowerShell (Windows)**
+PowerShell:
+
 ```powershell
-# Add to your PowerShell profile ($PROFILE)
 kcsi completion powershell | Out-String | Invoke-Expression
 ```
 
----
+------
 
-## Quick Start (30 seconds)
+## **Quick Start (30 seconds)**
 
 ```bash
-# Verify installation
+# **Check installation**
 kcsi version
-
-# Stream logs – just press TAB to select namespace/pod/container
+# **Try it (TAB drives the flow)**
 kcsi logs
-# → TAB to select namespace
-# → TAB to select pod
-# → TAB to select container
-# → logs stream instantly
-
-# No flags. No typing resource names. Just flow.
+# **→ TAB to select namespace**
+# **→ TAB to select pod**
+# **→ TAB to select container (if needed)**
 ```
 
-That's it. You're ready.
+That’s it. You’re ready.
 
----
+------
 
-## The 10 commands you'll actually use
+## **The 10 commands you’ll actually use**
 
 ```bash
-# 1. Stream logs (with TAB autocomplete for namespace/pod/container)
+# **1) Stream logs (TAB completes namespace/pod/container)**
 kcsi logs
-
-# 2. Exec into a pod
+# **2) Exec / interactive access**
 kcsi attach
-
-# 3. Describe a resource
+# **3) Describe resources**
 kcsi describe
-
-# 4. Check recent events in a namespace
+# **4) Cluster activity (events)**
 kcsi events
-
-# 5. Port-forward to a service or pod
+# **5) Port-forward**
 kcsi port-forward
-
-# 6. Get resource status (pods, deployments, services, etc.)
+# **6) Get resources**
 kcsi get
-
-# 7. Delete a resource (with confirmation prompt)
+# **7) Delete resources (with confirmation)**
 kcsi delete
-
-# 8. Check rollout status
+# **8) Rollout status**
 kcsi rollout status
-
-# 9. Restart a deployment
+# **9) Rollout restart**
 kcsi rollout restart
-
-# 10. Debug a pod (ephemeral container)
+# **10) Debug pod (ephemeral container)**
 kcsi debug
 ```
 
-**Every command supports TAB completion.** Start typing, press TAB, select from the list. No flags to remember.
+Every command supports TAB completion: start typing, press TAB, select from the list. No flags to remember.
 
----
+------
 
-## Features
+## **Features**
 
-- **Cascading TAB selection** – namespace → resource → pod → container. One smooth flow, no typing.
-- **Guardrails for safety** – Destructive ops require explicit confirmation. No accidental production disasters.
-- **Day-2 ops workflows** – `kcsi events` for cluster activity, `kcsi check errors` to surface failing pods, `kcsi get pvc pods` for storage troubleshooting, `kcsi dig` for DNS debugging.
-- **kubectl muscle memory compatible** – Same verbs (`get`, `describe`, `logs`, `attach`), same mental model. Zero learning curve.
-- **Cross-platform single binary** – Written in Go. No dependencies, no runtime, no containers.
+What makes KCSI different:
+- Cascading TAB selection: namespace → resource → pod → container (one smooth flow)
+- Guardrails for safety: destructive ops require explicit confirmation (unless you force it)
+- Day-2 ops workflows built-in: events, rollout, debug, check errors, pvc helpers, dns tools
+- Works with kubectl muscle memory: familiar verbs and mental model (no paradigm shift)
+- Cross-platform single binary: Go-based, no runtime, no containers
 
----
+------
 
-## Safety & Security notes
+## **Safety & Security notes**
 
-- **Confirmation prompts** on destructive actions (delete, drain, rollout restart)
-- **Read-only by default** for most commands (logs, describe, get, events)
-- **Respects your kubeconfig** – uses the same context and credentials as `kubectl`
-- **No telemetry** – KCSI does not phone home or collect usage data
-- **Open source** – audit the code yourself
-- **Security warnings** when displaying decoded secrets – see [docs/SECURITY_SECRETS.md](docs/SECURITY_SECRETS.md)
+- Confirmation prompts on destructive actions (delete, drain, rollout restart)
+- Read-only by default for most commands (logs, describe, get, events)
+- Uses your kubeconfig context and credentials (same access model as kubectl)
+- No telemetry: KCSI does not implement data collection or phone-home logic
+- Secrets helpers may print sensitive values in plain text — be mindful of screen sharing and shell history
 
----
+Secret handling notes:
+docs/SECURITY_SECRETS.md
 
-## Documentation
+------
 
-- **Full docs**: [https://stanzinofree.github.io/kcsi/](https://stanzinofree.github.io/kcsi/)
-- **Cheatsheet**: [https://stanzinofree.github.io/kcsi/cheatsheet/](https://stanzinofree.github.io/kcsi/cheatsheet/)
-- **Roadmap**: [https://stanzinofree.github.io/kcsi/roadmap/](https://stanzinofree.github.io/kcsi/roadmap/)
+## **Documentation**
 
----
+- Full docs: https://stanzinofree.github.io/kcsi/
+- Cheatsheet: https://stanzinofree.github.io/kcsi/cheatsheet/
+- Roadmap: https://stanzinofree.github.io/kcsi/roadmap/
 
-## Support KCSI ☕️
+------
 
-KCSI is free and open source. If it saves you time, consider supporting:
+## **Support KCSI ☕️**
 
-- **[Buy Me a Coffee](https://buymeacoffee.com/smilzao)** – one-time support
-- **[GitHub Sponsors](https://github.com/sponsors/stanzinofree)** – recurring sponsorship
+If KCSI saves you time (or prevents an “oops” in production), you can support the project:
+- Buy Me a Coffee (one-time): https://buymeacoffee.com/smilzao
+- GitHub Sponsors (recurring): https://github.com/sponsors/stanzinofree
 
-**Workshops and customization packs available for teams.** Reach out via GitHub or sponsors page.
+Workshops and customization packs are available for teams (aliases, guardrails, presets).
 
----
+------
 
-## Advanced
+
+
+
+
+## **Advanced**
 
 <details>
-<summary><strong>Get pods with namespace autocompletion</strong></summary>
+<summary><b>Advanced installation options</b></summary>
+
+
+macOS / Linux (manual download examples):
 
 ```bash
-# Type this and press TAB after -n to see all available namespaces
-kcsi get pods -n <TAB>
+# **macOS (Intel)**
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-amd64 -o kcsi
+# **macOS (Apple Silicon)**
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-darwin-arm64 -o kcsi
+# **Linux (amd64)**
+curl -L https://github.com/stanzinofree/kcsi/releases/latest/download/kcsi-linux-amd64 -o kcsi
+chmod +x kcsi
+sudo mv kcsi /usr/local/bin/kcsi
+kcsi version
+```
 
-# Example
+</details>
+<details>
+<summary><b>Setup autocompletion (persistent)</b></summary>
+
+Bash (Linux):
+
+```bash
+kcsi completion bash > /etc/bash_completion.d/kcsi
+```
+
+Bash (macOS with bash-completion installed):
+
+```bash
+kcsi completion bash > /usr/local/etc/bash_completion.d/kcsi
+# **path may vary depending on your brew prefix**
+
+```
+
+Zsh:
+
+```bash
+echo “autoload -U compinit; compinit” >> ~/.zshrc
+kcsi completion zsh > “${fpath[1]}/_kcsi”
+```
+
+Fish:
+
+```fish
+kcsi completion fish > ~/.config/fish/completions/kcsi.fish
+```
+
+PowerShell:
+
+```powershell
+# **Add to your PowerShell profile (path in $PROFILE)**
+kcsi completion powershell | Out-String | Invoke-Expression
+```
+
+</details>
+<details>
+<summary><b>Usage examples</b></summary>
+
+Get pods with namespace autocomplete:
+
+```bash
+kcsi get pods -n 
 kcsi get pods -n kube-system
 ```
 
-</details>
-
-<details>
-<summary><strong>Stream logs with cascading autocompletion</strong></summary>
+Stream logs with cascading autocomplete:
 
 ```bash
-# Basic usage with namespace and pod autocompletion
-kcsi logs -n <TAB>  # Shows namespaces
-kcsi logs -n kube-system <TAB>  # Shows pods in kube-system
-
-# Follow logs
+kcsi logs -n 
+kcsi logs -n kube-system 
 kcsi logs -f -n kube-system my-pod
-
-# Get last 100 lines
-kcsi logs --tail 100 -n kube-system my-pod
-
-# Get logs from specific container (if pod has multiple containers)
-kcsi logs -n kube-system my-pod -c <TAB>  # Shows containers in the pod
+kcsi logs –tail 100 -n kube-system my-pod
+kcsi logs -n kube-system my-pod -c 
 ```
 
-</details>
-
-<details>
-<summary><strong>Delete resources safely</strong></summary>
+Delete resources safely:
 
 ```bash
-# Delete pod with confirmation prompt
-kcsi delete pod -n <TAB>  # Shows namespaces
-kcsi delete pod -n default <TAB>  # Shows pods in namespace
+kcsi delete pod -n 
+kcsi delete pod -n default 
 kcsi delete pod -n default my-pod
-# Output: Are you sure you want to delete pod 'my-pod' in namespace 'default'? [y/N]:
-
-# Delete with --force to skip confirmation (use with caution!)
-kcsi delete pod -n default my-pod --force
+# **confirmation prompt**
+kcsi delete pod -n default my-pod –force
 ```
 
-</details>
-
-<details>
-<summary><strong>Monitor cluster events</strong></summary>
+Monitor cluster events:
 
 ```bash
-# Get recent events across all namespaces (sorted by timestamp)
 kcsi events
-
-# Get events in a specific namespace
 kcsi events -n production
-
-# Watch events in real-time
 kcsi events -w
 ```
 
-</details>
-
-<details>
-<summary><strong>Check for pod errors</strong></summary>
+Check for pod errors:
 
 ```bash
-# Find all pods with issues (CrashLoopBackOff, Error, Pending, etc.)
 kcsi check errors
-
-# Output includes helpful diagnostics suggestions
 ```
 
-</details>
-
-<details>
-<summary><strong>Debug pods with ephemeral containers</strong></summary>
+Debug pods with ephemeral containers:
 
 ```bash
-# Attach ephemeral debug container to pod
 kcsi debug -n production my-pod
-
-# Features:
-# - Automatic internet connectivity check
-# - Smart image selection (netshoot → alpine → busybox)
-# - Full networking and debugging toolkit
 ```
 
-</details>
-
-<details>
-<summary><strong>Port forwarding</strong></summary>
+Port forwarding:
 
 ```bash
-# Forward local port 8080 to pod port 80
 kcsi port-forward -n default my-pod 8080:80
-
-# Features:
-# - Root privilege check for ports < 1024
-# - Port availability check before forwarding
 ```
 
-</details>
-
-<details>
-<summary><strong>View and decode secrets</strong></summary>
+View and decode secrets:
 
 ```bash
-# View all keys and values of a secret (decoded from base64)
 kcsi get secrets decoded my-secret -n production
-
-# Show only a specific key from a secret
 kcsi get secrets show my-secret -n production -k api-key
-
-# ⚠️ Security Note: See docs/SECURITY_SECRETS.md for security considerations
 ```
 
-</details>
-
-<details>
-<summary><strong>Rollout management</strong></summary>
+Rollout management:
 
 ```bash
-# Restart a deployment to trigger a new rollout
 kcsi rollout restart deployment my-app -n production
-
-# Check rollout status
 kcsi rollout status deployment my-app -n production
-
-# View rollout history
 kcsi rollout history deployment my-app -n production
-
-# Rollback to previous revision
 kcsi rollout undo deployment my-app -n production
-
-# Rollback to specific revision
-kcsi rollout undo deployment my-app -n production --to-revision=3
+kcsi rollout undo deployment my-app -n production –to-revision=3
 ```
 
-</details>
-
-<details>
-<summary><strong>Apply configurations</strong></summary>
+Apply configurations:
 
 ```bash
-# Apply from a single file
 kcsi apply -f deployment.yaml -n production
-
-# Apply from a directory recursively
-kcsi apply -f ./k8s-manifests --recursive -n production
-
-# Apply from kustomize directory
+kcsi apply -f ./k8s-manifests –recursive -n production
 kcsi apply -k ./overlays/production
-
-# Dry-run to preview changes
-kcsi apply -f deployment.yaml -n production --dry-run
+kcsi apply -f deployment.yaml -n production –dry-run
 ```
 
-</details>
-
-<details>
-<summary><strong>Edit resources with automatic backup</strong></summary>
+Edit resources with automatic backup:
 
 ```bash
-# Edit a deployment with automatic backup
 kcsi edit deployment my-app -n production
-
-# Features:
-# - Automatic backup to ~/.kcsi/backups/
-# - Custom backup directory: --backup-dir
-# - Skip backup: --no-backup
-# - Custom editor: --editor or KUBE_EDITOR env var
 ```
 
 </details>
 
----
+------
 
-## Contributing
+## **Contributing**
 
-Contributions are welcome! Here's how to propose changes via Pull Requests:
+Contributions are welcome! Small, focused PRs are best.
 
-### Making a Pull Request
+Suggested conventions:
+- feat: new features
+- fix: bug fixes
+- docs: documentation changes
+- chore: maintenance tasks
+- test: tests
 
-1. **Create a branch** from updated main:
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b fix/your-feature-name
-   ```
-
-2. **Make your changes** and commit:
-   ```bash
-   git add .
-   git commit -m "fix: description of your changes"
-   ```
-
-3. **Push your branch**:
-   ```bash
-   git push origin fix/your-feature-name
-   ```
-
-4. **Create the Pull Request**:
-   ```bash
-   gh pr create --title "Your PR Title" --body "Detailed description" --base main
-   ```
-
-### Using Task for PR Workflow
-
-We provide convenient Task commands for the PR workflow:
+Basic workflow:
 
 ```bash
-# Create and push a PR
-task pr BRANCH=fix/my-feature TITLE="Fix something" DESC="Detailed description"
-
-# Push updates to existing PR
-task pr:push
-
-# After PR is merged, create a tag and release
-task tag VERSION=0.6.0 MESSAGE="Release notes"
+git checkout main
+git pull origin main
+git checkout -b fix/your-feature-name
+git add .
+git commit -m “fix: description of your changes”
+git push origin fix/your-feature-name
 ```
 
-### Commit Message Convention
+Create a PR via GitHub CLI (optional):
 
-- `feat:` New features
-- `fix:` Bug fixes
-- `docs:` Documentation changes
-- `chore:` Maintenance tasks
-- `test:` Test changes
+```bash
+gh pr create –title “Your PR Title” –body “Detailed description” –base main
+```
+------
 
-### Repository Rules
+## **License**
 
-- All PRs require passing CI/CD checks (tests, CodeQL, SonarCloud)
-- Direct pushes to `main` are blocked
-- PRs must be reviewed and merged via GitHub interface
+MIT — see LICENSE
 
-For detailed development information, see the full documentation at [https://stanzinofree.github.io/kcsi/](https://stanzinofree.github.io/kcsi/).
+------
 
----
-
-## License
-
-MIT License
-
----
-
-<div align="center">
-
-**Made with ❤️ by sysadmins, for sysadmins**
-
-</div>
+Made with ❤️ by sysadmins, for sysadmins.
