@@ -40,6 +40,14 @@ Perfect for sysadmins, DevOps engineers, and anyone who touches Kubernetes inter
 
 ---
 
+## Demo (12s)
+
+See KCSI in action: install → TAB autocomplete → get pods
+
+[![asciicast](https://asciinema.org/a/MDTbe6ahLXfv80YleTkXyPG4o.svg)](https://asciinema.org/a/MDTbe6ahLXfv80YleTkXyPG4o)
+
+---
+
 ## Installation
 
 ### Quick install (macOS/Linux)
