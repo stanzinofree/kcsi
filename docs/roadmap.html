@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="roadmap.css">
 </head>
 <body>
+    <!-- Header/Nav auto-injected via kcsi-ui.js -->
+    <div id="kcsi-header"></div>
+
     <div class="container">
         <header>
             <h1>🗺️ kcsi Roadmap</h1>
@@ -301,19 +304,13 @@
             </div>
         </div>
 
-        <!-- Support CTA injected via support-cta.js -->
-
-        <footer>
-            <p>kcsi - Kubectl Cli Super Intuitive</p>
-            <p style="margin-top: 10px;">
-                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
-                <a href="index.html">Home</a> • 
-                <a href="guide.html">Quick Guide</a> •
-                <a href="cheatsheet.html">Cheatsheet</a> •
-                <a href="support.html">Support</a>
-            </p>
-        </footer>
+        <!-- Support CTA auto-injected via kcsi-ui.js -->
+        <div class="kcsi-support-slot"></div>
     </div>
-    <script src="assets/js/support-cta.js"></script>
+
+    <!-- Footer auto-injected via kcsi-ui.js -->
+    <div id="kcsi-footer"></div>
+
+    <script defer src="assets/js/kcsi-ui.js"></script>
 </body>
 </html>

@@ -829,3 +829,209 @@ pre code {
         gap: 1rem;
     }
 }
+
+/* ============================================================================
+   KCSI UNIFIED UI COMPONENTS (Header, Footer, Nav)
+   ============================================================================ */
+
+/* HEADER */
+.kcsi-header {
+    background: var(--kcsi-bg-surface);
+    border-bottom: 2px solid var(--kcsi-primary);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.kcsi-header-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.kcsi-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.kcsi-logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--kcsi-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.kcsi-logo:hover {
+    color: var(--kcsi-primary-light);
+}
+
+.kcsi-tagline {
+    font-size: 0.875rem;
+    color: var(--kcsi-text-secondary);
+    margin: 0;
+    max-width: 500px;
+}
+
+/* NAVIGATION */
+.kcsi-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-item {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: var(--kcsi-text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    font-size: 0.95rem;
+}
+
+.nav-item:hover {
+    background: var(--kcsi-bg-body);
+    color: var(--kcsi-primary);
+}
+
+.nav-active {
+    background: var(--kcsi-primary);
+    color: white;
+}
+
+.nav-active:hover {
+    background: var(--kcsi-primary-dark);
+    color: white;
+}
+
+.nav-highlight {
+    background: #ffdd00;
+    color: #000000;
+    font-weight: 600;
+}
+
+.nav-highlight:hover {
+    background: #ffee55;
+    color: #000000;
+}
+
+/* FOOTER */
+.kcsi-footer {
+    background: linear-gradient(135deg, #a8b5d1 0%, #c3dfe0 50%, #b4d4d3 100%);
+    color: var(--kcsi-text-primary);
+    padding: 3rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.kcsi-footer-content {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.kcsi-footer-brand {
+    margin-bottom: 2rem;
+}
+
+.kcsi-footer-brand h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--kcsi-text-primary);
+}
+
+.kcsi-footer-brand p {
+    opacity: 0.9;
+    margin: 0;
+}
+
+.kcsi-footer-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.kcsi-footer-links a {
+    color: var(--kcsi-text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.kcsi-footer-links a:hover {
+    color: var(--kcsi-primary);
+}
+
+.kcsi-footer-links svg {
+    vertical-align: middle;
+}
+
+.kcsi-footer-author {
+    margin-top: 1.5rem;
+}
+
+.kcsi-footer-author p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.kcsi-author-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.kcsi-author-links a {
+    color: var(--kcsi-text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color var(--transition-fast);
+}
+
+.kcsi-author-links a:hover {
+    color: var(--kcsi-primary);
+}
+
+/* RESPONSIVE HEADER/FOOTER */
+@media (max-width: 768px) {
+    .kcsi-header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .kcsi-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .nav-item {
+        font-size: 0.875rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .kcsi-tagline {
+        font-size: 0.8rem;
+    }
+    
+    .kcsi-footer-links,
+    .kcsi-author-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
