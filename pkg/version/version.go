@@ -12,6 +12,13 @@ import (
 //go:embed version.yaml
 var manifestData []byte
 
+// Build information injected via ldflags during build
+var (
+	version   string // Injected from git tag (e.g., "v0.6.3" -> "0.6.3")
+	buildDate string
+	gitCommit string
+)
+
 // Manifest holds the version and metadata information
 type Manifest struct {
 	Version      string   `yaml:"version"`
@@ -44,8 +51,15 @@ func init() {
 }
 
 // GetVersion returns the current version
+// Priority: injected version (from git tag) > manifest version > "dev"
 func GetVersion() string {
-	return manifest.Version
+	if version != "" {
+		return version
+	}
+	if manifest.Version != "" {
+		return manifest.Version
+	}
+	return "dev"
 }
 
 // GetVersionInfo returns formatted version information
@@ -61,8 +75,16 @@ func GetDetailedVersion() string {
 	sb.WriteString(fmt.Sprintf("Version: %s\n", manifest.Version))
 	sb.WriteString(fmt.Sprintf("Author: %s\n", manifest.Author))
 
-	if manifest.BuildDate != "" {
+	// Use injected buildDate if available, otherwise fall back to manifest
+	if buildDate != "" {
+		sb.WriteString(fmt.Sprintf("Build Date: %s\n", buildDate))
+	} else if manifest.BuildDate != "" {
 		sb.WriteString(fmt.Sprintf("Build Date: %s\n", manifest.BuildDate))
+	}
+
+	// Show git commit if available
+	if gitCommit != "" {
+		sb.WriteString(fmt.Sprintf("Git Commit: %s\n", gitCommit))
 	}
 
 	sb.WriteString(fmt.Sprintf("Go Version: %s\n", runtime.Version()))
@@ -116,4 +138,23 @@ func GetManifest() Manifest {
 // GetAuthor returns the author name
 func GetAuthor() string {
 	return manifest.Author
+}
+
+// GetBuildDate returns the build date (injected via ldflags or from manifest)
+func GetBuildDate() string {
+	if buildDate != "" {
+		return buildDate
+	}
+	if manifest.BuildDate != "" {
+		return manifest.BuildDate
+	}
+	return "unknown"
+}
+
+// GetGitCommit returns the git commit hash (injected via ldflags)
+func GetGitCommit() string {
+	if gitCommit != "" {
+		return gitCommit
+	}
+	return "unknown"
 }
