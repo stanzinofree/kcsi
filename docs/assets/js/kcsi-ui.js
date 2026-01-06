@@ -22,8 +22,7 @@
             { label: 'Home', href: 'index.html', icon: '🏠' },
             { label: 'Cheatsheet', href: 'cheatsheet.html', icon: '📖' },
             { label: 'Roadmap', href: 'roadmap.html', icon: '🗺️' },
-            { label: 'For Teams', href: 'teams.html', icon: '👥' },
-            { label: 'Support', href: 'support.html', icon: '☕', highlight: true }
+            { label: 'For Teams', href: 'teams.html', icon: '👥' }
         ],
         
         links: {
