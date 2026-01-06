@@ -97,7 +97,7 @@
                             ☕ Support
                         </a>
                         <a href="${KCSI_CONFIG.links.workshopRequest}" class="nav-item nav-cta-primary" target="_blank" rel="noopener">
-                            📅 Book a workshop
+                            💬 Start a Team Request
                         </a>
                     </nav>
                 </div>
