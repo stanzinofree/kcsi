@@ -224,7 +224,8 @@ func GetKubectlVersion() (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	cmd := exec.CommandContext(ctx, "kubectl", "version", "--client", "--short")
+	// Try new format first (kubectl 1.28+): kubectl version --client
+	cmd := exec.CommandContext(ctx, "kubectl", "version", "--client")
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -232,24 +233,96 @@ func GetKubectlVersion() (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		// Check if kubectl is not found
-		if ctx.Err() == context.DeadlineExceeded {
-			return "", fmt.Errorf("timeout")
+		// If new format fails, try legacy format: kubectl version --client --short
+		ctx2, cancel2 := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel2()
+
+		cmd2 := exec.CommandContext(ctx2, "kubectl", "version", "--client", "--short")
+		out.Reset()
+		stderr.Reset()
+		cmd2.Stdout = &out
+		cmd2.Stderr = &stderr
+
+		err2 := cmd2.Run()
+		if err2 != nil {
+			// Check if kubectl is not found
+			if ctx2.Err() == context.DeadlineExceeded {
+				return "", fmt.Errorf("timeout")
+			}
+			// Return stderr for debugging if available
+			if stderr.Len() > 0 {
+				return "", fmt.Errorf("error: %s", strings.TrimSpace(stderr.String()))
+			}
+			return "", fmt.Errorf("not found")
 		}
-		return "", fmt.Errorf("not found or error: %v", err)
 	}
 
-	// Parse output - format: "Client Version: v1.28.0" or just "v1.28.0"
+	// Parse output
 	output := strings.TrimSpace(out.String())
 	if output == "" {
 		return "", fmt.Errorf("empty output")
 	}
 
-	// Handle both old and new kubectl version output formats
+	// Handle different kubectl version output formats:
+	// 1. New format (JSON): {"clientVersion": {"gitVersion": "v1.31.0", ...}}
+	// 2. Old format: "Client Version: v1.28.0"
+	// 3. Very old format: "v1.28.0"
+
+	// Try to extract version from JSON format (kubectl 1.28+)
+	if strings.Contains(output, "\"gitVersion\"") {
+		// Extract version using simple string parsing
+		if start := strings.Index(output, "\"gitVersion\":"); start != -1 {
+			start += len("\"gitVersion\":")
+			// Skip whitespace and opening quote
+			for start < len(output) && (output[start] == ' ' || output[start] == '"') {
+				start++
+			}
+			// Find closing quote
+			end := start
+			for end < len(output) && output[end] != '"' {
+				end++
+			}
+			if end > start {
+				return output[start:end], nil
+			}
+		}
+	}
+
+	// Handle old text formats
 	if strings.Contains(output, "Client Version:") {
-		parts := strings.Split(output, "Client Version:")
-		if len(parts) > 1 {
-			return strings.TrimSpace(parts[1]), nil
+		// Extract just the first line with "Client Version:"
+		lines := strings.Split(output, "\n")
+		for _, line := range lines {
+			if strings.Contains(line, "Client Version:") {
+				parts := strings.Split(line, "Client Version:")
+				if len(parts) > 1 {
+					return strings.TrimSpace(parts[1]), nil
+				}
+			}
+		}
+	}
+
+	// Return first line if it looks like a version (and only that line)
+	lines := strings.Split(output, "\n")
+	if len(lines) > 0 {
+		firstLine := strings.TrimSpace(lines[0])
+		if strings.HasPrefix(firstLine, "v") || strings.HasPrefix(firstLine, "Client Version:") {
+			// Extract just the version part
+			if strings.HasPrefix(firstLine, "Client Version:") {
+				parts := strings.Split(firstLine, ":")
+				if len(parts) > 1 {
+					return strings.TrimSpace(parts[1]), nil
+				}
+			}
+			return firstLine, nil
+		}
+	}
+
+	// If all else fails, just return the first word that looks like a version
+	fields := strings.Fields(output)
+	for _, field := range fields {
+		if strings.HasPrefix(field, "v") && len(field) > 1 {
+			return field, nil
 		}
 	}
 
