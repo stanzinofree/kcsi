@@ -32,6 +32,12 @@ kcsi
 .DS_Store
 Thumbs.db
 
+# Backup files
+*.bak
+*.tmp
+*.orig
+*.old
+
 # Coverage reports
 coverage.out
 coverage.html
