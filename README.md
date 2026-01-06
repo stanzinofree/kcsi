@@ -162,6 +162,7 @@ kcsi delete            # Delete a resource (with confirmation)
 kcsi rollout status    # Check rollout status
 kcsi rollout restart   # Restart a deployment
 kcsi debug             # Debug a pod (ephemeral container)
+kcsi diag              # Generate diagnostics for issue reporting
 ```
 
 **Every command supports TAB completion.** Start typing, press TAB, select from the list.
@@ -207,6 +208,37 @@ KCSI is free and open source. If it saves you time, consider supporting:
 
 **For teams:**  
 60-minute onboarding workshop + custom command/alias pack + guardrail/preset suggestions available. Annual sponsors can prioritize feature requests and triage. Reach out via GitHub or sponsors page.
+
+---
+
+## Diagnostics
+
+When reporting issues or requesting support, use the `kcsi diag` command to generate a comprehensive diagnostics report:
+
+```bash
+kcsi diag
+```
+
+**What it includes:**
+- KCSI version information
+- System details (OS, architecture, Go version)
+- Kubernetes context and namespace
+- kubectl version and availability
+- Terminal environment
+
+**Safety:** The command does NOT print secrets, tokens, or kubeconfig contents. Only safe metadata is included.
+
+**Options:**
+```bash
+kcsi diag --cluster    # Include cluster reachability check
+kcsi diag --strict     # Exit with error if any check fails
+```
+
+**For support:**
+1. Run `kcsi diag` and copy the output
+2. Open a GitHub issue at https://github.com/stanzinofree/kcsi/issues
+3. Paste the diagnostics output in your issue
+4. Sponsors can request the `sponsor-priority` label for faster triage
 
 ---
 
