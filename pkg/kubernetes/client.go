@@ -2,10 +2,12 @@ package kubernetes
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 // JSONPath constants for kubectl queries
@@ -215,4 +217,106 @@ func GetStatefulSets(namespace string) ([]string, error) {
 
 	statefulsets := strings.Fields(strings.TrimSpace(output))
 	return statefulsets, nil
+}
+
+// GetKubectlVersion returns the kubectl client version with timeout
+func GetKubectlVersion() (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "kubectl", "version", "--client", "--short")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	if err != nil {
+		// Check if kubectl is not found
+		if ctx.Err() == context.DeadlineExceeded {
+			return "", fmt.Errorf("timeout")
+		}
+		return "", fmt.Errorf("not found or error: %v", err)
+	}
+
+	// Parse output - format: "Client Version: v1.28.0" or just "v1.28.0"
+	output := strings.TrimSpace(out.String())
+	if output == "" {
+		return "", fmt.Errorf("empty output")
+	}
+
+	// Handle both old and new kubectl version output formats
+	if strings.Contains(output, "Client Version:") {
+		parts := strings.Split(output, "Client Version:")
+		if len(parts) > 1 {
+			return strings.TrimSpace(parts[1]), nil
+		}
+	}
+
+	return output, nil
+}
+
+// GetClusterInfo returns cluster info with timeout (for --cluster flag)
+func GetClusterInfo() (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "kubectl", "cluster-info")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return "", fmt.Errorf("timeout (cluster unreachable)")
+		}
+		return "", fmt.Errorf("unreachable: %v", err)
+	}
+
+	return out.String(), nil
+}
+
+// GetCurrentContext returns the current kubeconfig context
+func GetCurrentContext() (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "kubectl", "config", "current-context")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	if err != nil {
+		return "unknown", fmt.Errorf("unable to determine context")
+	}
+
+	return strings.TrimSpace(out.String()), nil
+}
+
+// GetCurrentNamespace returns the current namespace from the context
+func GetCurrentNamespace() (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "kubectl", "config", "view", "--minify", "--output", "jsonpath={..namespace}")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	if err != nil {
+		return "default", nil // Default to "default" namespace if unable to determine
+	}
+
+	namespace := strings.TrimSpace(out.String())
+	if namespace == "" {
+		return "default", nil
+	}
+
+	return namespace, nil
 }
