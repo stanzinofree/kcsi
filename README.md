@@ -194,6 +194,7 @@ kcsi debug             # Debug a pod (ephemeral container)
 - **Full docs**: [https://stanzinofree.github.io/kcsi/](https://stanzinofree.github.io/kcsi/)
 - **Cheatsheet**: [https://stanzinofree.github.io/kcsi/cheatsheet.html](https://stanzinofree.github.io/kcsi/cheatsheet.html)
 - **Roadmap**: [https://stanzinofree.github.io/kcsi/roadmap.html](https://stanzinofree.github.io/kcsi/roadmap.html)
+- **Support**: [https://stanzinofree.github.io/kcsi/support.html](https://stanzinofree.github.io/kcsi/support.html)
 
 ---
 
