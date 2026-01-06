@@ -346,6 +346,13 @@ pre code {
     margin-top: 1rem;
 }
 
+.support-value {
+    font-size: 0.9rem;
+    color: var(--kcsi-text-secondary);
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
 /* ============================================================================
    UTILITY CLASSES
    ============================================================================ */
@@ -923,6 +930,30 @@ pre code {
 .nav-highlight:hover {
     background: #ffee55;
     color: #000000;
+}
+
+.nav-cta {
+    background: #ffdd00;
+    color: #000000;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+}
+
+.nav-cta:hover {
+    background: #ffee55;
+    color: #000000;
+}
+
+.nav-cta-primary {
+    background: var(--kcsi-primary);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+}
+
+.nav-cta-primary:hover {
+    background: var(--kcsi-primary-light);
+    color: white;
 }
 
 /* FOOTER */

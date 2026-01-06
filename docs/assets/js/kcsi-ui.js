@@ -14,7 +14,7 @@
     const KCSI_CONFIG = {
         brand: {
             name: 'KCSI',
-            tagline: 'kubectl for humans — Cascading TAB + guardrails for day-2 ops',
+            tagline: 'kubectl for humans — Cascading TAB + guardrails for day-2 ops.',
             description: 'Cascading TAB autocomplete + guardrails for Kubernetes day-2 operations'
         },
         
@@ -32,7 +32,8 @@
             license: 'https://github.com/stanzinofree/kcsi/blob/main/LICENSE',
             coffee: 'https://buymeacoffee.com/smilzao',
             sponsors: 'https://github.com/sponsors/stanzinofree',
-            teamRequest: 'https://github.com/stanzinofree/kcsi/issues/new?template=team-request.md&labels=teams,enterprise',
+            workshopRequest: 'https://github.com/stanzinofree/kcsi/discussions/new?category=workshops-teams',
+            teamsDiscussions: 'https://github.com/stanzinofree/kcsi/discussions/categories/workshops-teams',
             cv: 'https://cv.middei.info/',
             linkedin: 'https://www.linkedin.com/in/stanzinofree/',
             githubProfile: 'https://github.com/stanzinofree'
@@ -42,7 +43,8 @@
             name: 'Alessandro Middei'
         },
         
-        trustSignal: 'No telemetry by default • Open source • Audit the code yourself'
+        trustSignal: 'No telemetry by default.',
+        valueProposition: 'Support keeps KCSI maintained and improving.'
     };
     
     // ============================================================================
@@ -92,6 +94,12 @@
                     </div>
                     <nav class="kcsi-nav">
                         ${navItems}
+                        <a href="${KCSI_CONFIG.links.coffee}" class="nav-item nav-cta" target="_blank" rel="noopener">
+                            ☕ Support
+                        </a>
+                        <a href="${KCSI_CONFIG.links.workshopRequest}" class="nav-item nav-cta-primary" target="_blank" rel="noopener">
+                            📅 Book a workshop
+                        </a>
                     </nav>
                 </div>
             </header>
@@ -121,6 +129,7 @@
                         <a href="${KCSI_CONFIG.links.issues}" target="_blank" rel="noopener">Report Issue</a>
                         <a href="${KCSI_CONFIG.links.license}" target="_blank" rel="noopener">MIT License</a>
                         <a href="${KCSI_CONFIG.links.coffee}" target="_blank" rel="noopener">☕ Support</a>
+                        <a href="${KCSI_CONFIG.links.teamsDiscussions}" target="_blank" rel="noopener">👥 Teams</a>
                     </div>
                     
                     <div class="kcsi-footer-author">
@@ -152,11 +161,12 @@
                     <a href="${KCSI_CONFIG.links.sponsors}" class="btn btn-secondary" target="_blank" rel="noopener">
                         💝 GitHub Sponsors
                     </a>
-                    <a href="teams.html" class="btn btn-primary">
+                    <a href="${KCSI_CONFIG.links.teamsDiscussions}" class="btn btn-primary" target="_blank" rel="noopener">
                         👥 For Teams
                     </a>
                 </div>
                 <p class="support-note">${KCSI_CONFIG.trustSignal}</p>
+                <p class="support-value">${KCSI_CONFIG.valueProposition}</p>
             </div>
         `;
     }
