@@ -340,9 +340,10 @@ pre code {
 }
 
 .support-note {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: var(--kcsi-text-muted);
     font-style: italic;
+    margin-top: 1rem;
 }
 
 /* ============================================================================
@@ -674,12 +675,6 @@ pre code {
     justify-content: center;
     flex-wrap: wrap;
     margin: 1.5rem 0;
-}
-
-.support-note {
-    font-size: 0.85rem;
-    color: var(--kcsi-text-muted);
-    margin-top: 1rem;
 }
 
 /* AUDIENCE SECTION (homepage) */
