@@ -94,9 +94,6 @@
                     </div>
                     <nav class="kcsi-nav">
                         ${navItems}
-                        <a href="${KCSI_CONFIG.links.coffee}" class="nav-item nav-cta" target="_blank" rel="noopener">
-                            ☕ Support
-                        </a>
                         <a href="${KCSI_CONFIG.links.workshopRequest}" class="nav-item nav-cta-primary" target="_blank" rel="noopener">
                             📅 Book a workshop
                         </a>
