@@ -11,131 +11,130 @@
     <!-- Header/Nav auto-injected via kcsi-ui.js -->
     <div id="kcsi-header"></div>
 
-    <div class="container">
-        <!-- ABOVE THE FOLD -->
-        <header style="text-align: center; padding: 3rem 2rem; max-width: 800px; margin: 0 auto;">
-            <h1 style="font-size: 3em; margin-bottom: 1rem;">Support KCSI</h1>
-            <p class="subtitle" style="font-size: 1.3em; color: var(--kcsi-text-secondary); margin-bottom: 2rem;">
-                kubectl for humans — Cascading TAB + guardrails for day-2 ops
-            </p>
+    <!-- HERO SECTION -->
+    <div class="hero" style="background: var(--kcsi-gradient-hero); color: white; text-align: center; padding: 80px 40px;">
+        <h1 style="font-size: 4em; margin-bottom: 20px; color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);">Support KCSI</h1>
+        <p style="font-size: 1.3em; opacity: 0.95; max-width: 700px; margin: 0 auto 40px;">
+            kubectl for humans — Cascading TAB + guardrails for day-2 ops
+        </p>
+        
+        <!-- PRIMARY CTAs -->
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+            <a href="https://github.com/sponsors/stanzinofree" class="btn btn-primary btn-lg" target="_blank" rel="noopener" style="color: white; font-size: 1.1rem; padding: 1rem 2rem;">
+                💝 Sponsor monthly (most impactful)
+            </a>
+            <a href="https://buymeacoffee.com/smilzao" class="btn btn-support btn-lg" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                ☕ Buy Me a Coffee
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 60px 40px;">
+        
+        <!-- CHOOSE YOUR IMPACT -->
+        <section style="margin-bottom: 4rem;">
+            <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 3rem; color: var(--kcsi-text-primary);">Choose Your Impact</h2>
             
-            <!-- PRIMARY CTAs -->
-            <div class="support-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem;">
-                <a href="https://github.com/sponsors/stanzinofree" class="btn btn-primary btn-lg" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 1rem 2rem;">
-                    💝 Sponsor monthly (most impactful)
+            <!-- MONTHLY TIERS -->
+            <div style="background: #f8f9fa; padding: 3rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid var(--kcsi-primary);">
+                <h3 style="font-size: 1.8em; margin-bottom: 2rem; color: var(--kcsi-primary);">💝 Monthly Sponsors</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-weight: 600; font-size: 1.2em; color: var(--kcsi-primary); margin-bottom: 0.5rem;">$5/month — Coffee</p>
+                    <ul style="margin: 0.5rem 0 0 2rem; line-height: 2; font-size: 1.05em;">
+                        <li>Name in Supporters list (opt-in)</li>
+                        <li>Monthly update</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-weight: 600; font-size: 1.2em; color: var(--kcsi-primary); margin-bottom: 0.5rem;">$10/month — Early Paw</p>
+                    <ul style="margin: 0.5rem 0 0 2rem; line-height: 2; font-size: 1.05em;">
+                        <li>Priority triage (label <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">sponsor-priority</code>)</li>
+                        <li>Vote on 1 feature/month</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <p style="font-weight: 600; font-size: 1.2em; color: var(--kcsi-primary); margin-bottom: 0.5rem;">$49/month — Team Lite</p>
+                    <ul style="margin: 0.5rem 0 0 2rem; line-height: 2; font-size: 1.05em;">
+                        <li>1 office hour every three months</li>
+                        <li>1 preset pack standard</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ONE-TIME TIER -->
+            <div style="background: #fffbf0; padding: 3rem; border-radius: 15px; border-left: 4px solid #ffdd00;">
+                <h3 style="font-size: 1.8em; margin-bottom: 2rem; color: var(--kcsi-text-primary);">☕ One-Time Support</h3>
+                
+                <div>
+                    <p style="font-weight: 600; font-size: 1.2em; color: var(--kcsi-text-primary); margin-bottom: 0.5rem;">$25 one time — Thanks</p>
+                    <ul style="margin: 0.5rem 0 0 2rem; line-height: 2; font-size: 1.05em;">
+                        <li>Thanks + supporters wall</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUBLIC GOAL -->
+        <section style="margin-bottom: 4rem;">
+            <div style="padding: 2.5rem; background: #e8f4f8; border-radius: 15px; border-left: 4px solid var(--kcsi-info); text-align: center;">
+                <p style="font-size: 1.3em; font-weight: 600; color: var(--kcsi-text-primary); margin: 0;">
+                    🎯 Goal: At <strong>$200/month</strong> I'll dedicate <strong>2h/week</strong> to maintenance, docs, and packs.
+                </p>
+            </div>
+        </section>
+
+        <!-- TRUST BLOCK -->
+        <section style="margin-bottom: 4rem;">
+            <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 3rem; color: var(--kcsi-text-primary);">Why KCSI?</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="text-align: center; padding: 2.5rem; background: #f8f9fa; border-radius: 15px;">
+                    <p style="font-size: 3em; margin-bottom: 1rem;">🚫</p>
+                    <p style="font-weight: 600; font-size: 1.2em; margin-bottom: 0.5rem;">No telemetry by default</p>
+                    <p style="font-size: 1em; color: var(--kcsi-text-secondary);">Your clusters, your privacy</p>
+                </div>
+                <div style="text-align: center; padding: 2.5rem; background: #f8f9fa; border-radius: 15px;">
+                    <p style="font-size: 3em; margin-bottom: 1rem;">🔓</p>
+                    <p style="font-weight: 600; font-size: 1.2em; margin-bottom: 0.5rem;">Open source</p>
+                    <p style="font-size: 1em; color: var(--kcsi-text-secondary);">Audit-friendly, MIT licensed</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOR TEAMS -->
+        <section style="margin-bottom: 4rem;">
+            <div style="padding: 2.5rem; background: #f8f9fa; border-radius: 15px;">
+                <h3 style="font-size: 1.8em; margin-bottom: 1.5rem; color: var(--kcsi-text-primary);">👥 For Teams</h3>
+                <p style="font-size: 1.1em; margin-bottom: 2rem; color: var(--kcsi-text-secondary);">
+                    Need onboarding workshops, custom command packs, or guardrail configurations?
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="teams.html" class="btn btn-secondary" style="font-size: 1.05em;">
+                        View Team Packages
+                    </a>
+                    <a href="https://github.com/stanzinofree/kcsi/discussions/new?category=workshops-teams" class="btn btn-primary" target="_blank" rel="noopener" style="font-size: 1.05em;">
+                        📅 Book a Workshop
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section style="text-align: center; padding: 4rem 3rem; background: var(--kcsi-gradient-hero); border-radius: 15px; color: white;">
+            <h2 style="color: white; font-size: 2.5em; margin-bottom: 1.5rem;">Ready to Support?</h2>
+            <p style="font-size: 1.2em; margin-bottom: 2.5rem; opacity: 0.95;">Every contribution keeps KCSI free, fast, and independent.</p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/sponsors/stanzinofree" class="btn btn-primary btn-lg" target="_blank" rel="noopener" style="background: white; color: var(--kcsi-primary); font-size: 1.1rem; padding: 1rem 2rem;">
+                    💝 Become a Sponsor
                 </a>
                 <a href="https://buymeacoffee.com/smilzao" class="btn btn-support btn-lg" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 1rem 2rem;">
                     ☕ Buy Me a Coffee
                 </a>
             </div>
-        </header>
-
-        <main style="max-width: 900px; margin: 0 auto; padding: 2rem;">
-            
-            <!-- CHOOSE YOUR IMPACT -->
-            <section style="margin: 3rem 0;">
-                <h2 style="text-align: center; margin-bottom: 2rem;">Choose Your Impact</h2>
-                
-                <!-- MONTHLY TIERS -->
-                <div class="tier-card" style="margin-bottom: 2rem; padding: 2rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid var(--kcsi-primary);">
-                    <h3 style="margin-bottom: 0.5rem;">💝 Monthly Sponsors</h3>
-                    
-                    <div style="margin: 1.5rem 0;">
-                        <p style="font-weight: 600; color: var(--kcsi-primary);">$5/month — Coffee</p>
-                        <ul style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
-                            <li>Name in Supporters list (opt-in)</li>
-                            <li>Monthly update</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="margin: 1.5rem 0;">
-                        <p style="font-weight: 600; color: var(--kcsi-primary);">$10/month — Early Paw</p>
-                        <ul style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
-                            <li>Priority triage (label <code>sponsor-priority</code>)</li>
-                            <li>Vote on 1 feature/month</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="margin: 1.5rem 0;">
-                        <p style="font-weight: 600; color: var(--kcsi-primary);">$49/month — Team Lite</p>
-                        <ul style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
-                            <li>1 office hour every three months</li>
-                            <li>1 preset pack standard</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- ONE-TIME TIER -->
-                <div class="tier-card" style="padding: 2rem; background: #fffbf0; border-radius: 12px; border-left: 4px solid #ffdd00;">
-                    <h3 style="margin-bottom: 0.5rem;">☕ One-Time Support</h3>
-                    
-                    <div style="margin: 1.5rem 0;">
-                        <p style="font-weight: 600; color: var(--kcsi-text-primary);">$25 one time — Thanks</p>
-                        <ul style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
-                            <li>Thanks + supporters wall</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PUBLIC GOAL -->
-            <section style="margin: 3rem 0;">
-                <div class="callout callout-info" style="padding: 2rem; background: #e8f4f8; border-radius: 12px; border-left: 4px solid var(--kcsi-info);">
-                    <p style="font-size: 1.1em; font-weight: 600; margin: 0;">
-                        🎯 Goal: At <strong>$200/month</strong> I'll dedicate <strong>2h/week</strong> to maintenance, docs, and packs.
-                    </p>
-                </div>
-            </section>
-
-            <!-- TRUST BLOCK -->
-            <section style="margin: 3rem 0;">
-                <h2 style="text-align: center; margin-bottom: 2rem;">Why KCSI?</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 12px;">
-                        <p style="font-size: 2em; margin-bottom: 0.5rem;">🚫</p>
-                        <p style="font-weight: 600; margin-bottom: 0.5rem;">No telemetry by default</p>
-                        <p style="font-size: 0.9em; color: var(--kcsi-text-secondary);">Your clusters, your privacy</p>
-                    </div>
-                    <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 12px;">
-                        <p style="font-size: 2em; margin-bottom: 0.5rem;">🔓</p>
-                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Open source</p>
-                        <p style="font-size: 0.9em; color: var(--kcsi-text-secondary);">Audit-friendly, MIT licensed</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- FOR TEAMS -->
-            <section style="margin: 3rem 0;">
-                <div class="callout callout-note" style="padding: 2rem; background: #f8f9fa; border-radius: 12px;">
-                    <h3 style="margin-bottom: 1rem;">👥 For Teams</h3>
-                    <p style="margin-bottom: 1rem;">
-                        Need onboarding workshops, custom command packs, or guardrail configurations?
-                    </p>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="teams.html" class="btn btn-secondary">
-                            View Team Packages
-                        </a>
-                        <a href="https://github.com/stanzinofree/kcsi/discussions/new?category=workshops-teams" class="btn btn-primary" target="_blank" rel="noopener">
-                            📅 Book a Workshop
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- FINAL CTA -->
-            <section style="margin: 4rem 0; text-align: center; padding: 3rem 2rem; background: var(--kcsi-gradient-hero); border-radius: 12px; color: white;">
-                <h2 style="color: white; margin-bottom: 1rem;">Ready to Support?</h2>
-                <p style="margin-bottom: 2rem; opacity: 0.95;">Every contribution keeps KCSI free, fast, and independent.</p>
-                <div class="support-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://github.com/sponsors/stanzinofree" class="btn btn-primary btn-lg" target="_blank" rel="noopener" style="background: white; color: var(--kcsi-primary); font-size: 1.1rem; padding: 1rem 2rem;">
-                        💝 Become a Sponsor
-                    </a>
-                    <a href="https://buymeacoffee.com/smilzao" class="btn btn-support btn-lg" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 1rem 2rem;">
-                        ☕ Buy Me a Coffee
-                    </a>
-                </div>
-            </section>
-        </main>
+        </section>
     </div>
 
     <!-- Footer auto-injected via kcsi-ui.js -->

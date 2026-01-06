@@ -12,291 +12,297 @@
     <!-- Header/Nav auto-injected via kcsi-ui.js -->
     <div id="kcsi-header"></div>
 
-    <div class="container">
-        <header>
-            <h1>🗺️ kcsi Roadmap</h1>
-            <p>Feature Development & Future Plans</p>
-        </header>
+    <!-- HERO SECTION -->
+    <div class="hero" style="background: var(--kcsi-gradient-hero); color: white; text-align: center; padding: 80px 40px;">
+        <h1 style="font-size: 4em; margin-bottom: 20px; color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);">🗺️ kcsi Roadmap</h1>
+        <p style="font-size: 1.3em; opacity: 0.95; max-width: 700px; margin: 0 auto;">
+            Feature Development & Future Plans
+        </p>
+    </div>
 
-        <div class="progress-summary">
-            <div class="stat-card">
-                <div class="stat-number">47</div>
-                <div class="stat-label">Completed Features</div>
+    <!-- PROGRESS SUMMARY -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 60px 40px;">
+        
+        <div class="progress-summary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 4rem;">
+            <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">47</div>
+                <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Completed Features</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Categories</div>
+            <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">5</div>
+                <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Categories</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Planned Features</div>
+            <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">12</div>
+                <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Planned Features</div>
             </div>
         </div>
 
+        <!-- CONTENT -->
         <div class="content">
             <!-- Core Features -->
-            <div class="phase completed">
+            <div class="phase completed" style="background: #f8f9fa; padding: 2.5rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 4px solid var(--kcsi-success);">
                 <div class="phase-header">
-                    <div class="phase-title">
-                        ✅ Core Features
-                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    <div class="phase-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.8em; color: var(--kcsi-text-primary); margin: 0;">✅ Core Features</h2>
+                        <span class="phase-badge badge-completed" style="background: var(--kcsi-success); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9em; font-weight: 600;">✓ Completed</span>
                     </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar-container" style="background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 2rem;">
+                    <div class="progress-bar" style="width: 100%; height: 100%; background: var(--kcsi-success); border-radius: 4px;"></div>
                 </div>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Get Commands:</strong> pods, services, deployments, nodes, namespaces, configmaps, secrets</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Describe Commands:</strong> all resource types with autocompletion</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Logs:</strong> full flags support (-f, --tail, -p, -c)</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Delete Commands:</strong> pods, services, deployments, configmaps, secrets with confirmation</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Apply:</strong> apply Kubernetes manifests from files or directories</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Edit:</strong> edit resources with automatic backup before changes</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Rollout:</strong> restart, status, history, undo for deployments/daemonsets/statefulsets</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Output Formats:</strong> -o flag support (wide, yaml, json) for all get commands</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Aliases:</strong> svc, deploy, cm, ns, no for common resources</div>
                     </li>
                 </ul>
             </div>
 
             <!-- Interactive & Debugging -->
-            <div class="phase completed">
+            <div class="phase completed" style="background: #f8f9fa; padding: 2.5rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 4px solid var(--kcsi-success);">
                 <div class="phase-header">
-                    <div class="phase-title">
-                        🔧 Interactive & Debugging
-                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    <div class="phase-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.8em; color: var(--kcsi-text-primary); margin: 0;">🔧 Interactive & Debugging</h2>
+                        <span class="phase-badge badge-completed" style="background: var(--kcsi-success); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9em; font-weight: 600;">✓ Completed</span>
                     </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar-container" style="background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 2rem;">
+                    <div class="progress-bar" style="width: 100%; height: 100%; background: var(--kcsi-success); border-radius: 4px;"></div>
                 </div>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Attach:</strong> automatic shell detection (bash/zsh/sh)</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Execute:</strong> run custom commands in pods</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Port Forward:</strong> with port validation and availability check</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Debug:</strong> ephemeral containers with smart image selection (netshoot/alpine/busybox)</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Events:</strong> namespace filtering and watch mode</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Check Errors:</strong> find problematic pods with troubleshooting suggestions</div>
                     </li>
                 </ul>
             </div>
 
             <!-- Advanced Features -->
-            <div class="phase completed">
+            <div class="phase completed" style="background: #f8f9fa; padding: 2.5rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 4px solid var(--kcsi-success);">
                 <div class="phase-header">
-                    <div class="phase-title">
-                        🚀 Advanced Features
-                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    <div class="phase-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.8em; color: var(--kcsi-text-primary); margin: 0;">🚀 Advanced Features</h2>
+                        <span class="phase-badge badge-completed" style="background: var(--kcsi-success); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9em; font-weight: 600;">✓ Completed</span>
                     </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar-container" style="background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 2rem;">
+                    <div class="progress-bar" style="width: 100%; height: 100%; background: var(--kcsi-success); border-radius: 4px;"></div>
                 </div>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Internal Domains:</strong> list all Kubernetes FQDNs (services and pods)</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>PVC Pods:</strong> show PVCs with their associated pods</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>PVC Unbound:</strong> identify storage issues</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Top:</strong> resource usage for pods and nodes</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Dig:</strong> DNS debugging with namespace-first syntax</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Secrets Decoded:</strong> view all keys in a secret with base64 decoding</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Secrets Show:</strong> display specific secret keys decoded</div>
                     </li>
                 </ul>
             </div>
 
             <!-- Quality & Developer Experience -->
-            <div class="phase completed">
+            <div class="phase completed" style="background: #f8f9fa; padding: 2.5rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 4px solid var(--kcsi-success);">
                 <div class="phase-header">
-                    <div class="phase-title">
-                        ⚙️ Quality & Developer Experience
-                        <span class="phase-badge badge-completed">✓ Completed</span>
+                    <div class="phase-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.8em; color: var(--kcsi-text-primary); margin: 0;">⚙️ Quality & Developer Experience</h2>
+                        <span class="phase-badge badge-completed" style="background: var(--kcsi-success); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9em; font-weight: 600;">✓ Completed</span>
                     </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar-container" style="background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 2rem;">
+                    <div class="progress-bar" style="width: 100%; height: 100%; background: var(--kcsi-success); border-radius: 4px;"></div>
                 </div>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Smart Autocompletion:</strong> cascading (namespace → resource), container autocompletion</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Namespace-first Syntax:</strong> better autocompletion workflow</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Safety Features:</strong> confirmation prompts, --force flag for automation</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Code Quality:</strong> SonarCloud integration, cognitive complexity reduction</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Documentation:</strong> WCAG AA accessibility, comprehensive guides and examples</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Git Hooks:</strong> automatic code formatting with gofmt</div>
                     </li>
-                    <li class="task-item">
-                        <div class="task-checkbox done">✓</div>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Backup System:</strong> automatic resource backup before editing</div>
                     </li>
                 </ul>
             </div>
 
             <!-- Planned Features -->
-            <div class="phase pending">
+            <div class="phase pending" style="background: #f8f9fa; padding: 2.5rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 4px solid var(--kcsi-warning);">
                 <div class="phase-header">
-                    <div class="phase-title">
-                        📋 Planned Features
-                        <span class="phase-badge badge-pending">Planned</span>
+                    <div class="phase-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.8em; color: var(--kcsi-text-primary); margin: 0;">📋 Planned Features</h2>
+                        <span class="phase-badge badge-pending" style="background: var(--kcsi-warning); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9em; font-weight: 600;">Planned</span>
                     </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 0%"></div>
+                <div class="progress-bar-container" style="background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 2rem;">
+                    <div class="progress-bar" style="width: 0%; height: 100%; background: var(--kcsi-warning); border-radius: 4px;"></div>
                 </div>
 
                 <!-- Performance -->
-                <div style="margin-top: 20px;">
-                    <h3 style="color: var(--heading-color); margin-bottom: 10px;">⚡ Performance</h3>
-                    <ul class="task-list">
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.4em; color: var(--kcsi-text-primary); margin-bottom: 1.5rem;">⚡ Performance</h3>
+                    <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Caching System:</strong> faster autocompletion with intelligent cache invalidation</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Parallel Queries:</strong> concurrent kubectl calls for faster data retrieval</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Fuzzy Matching:</strong> resource name matching with typo tolerance</div>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Utilities -->
-                <div style="margin-top: 20px;">
-                    <h3 style="color: var(--heading-color); margin-bottom: 10px;">🛠️ Utilities</h3>
-                    <ul class="task-list">
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                <div style="margin-top: 2.5rem;">
+                    <h3 style="font-size: 1.4em; color: var(--kcsi-text-primary); margin-bottom: 1.5rem;">🛠️ Utilities</h3>
+                    <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>List Contexts:</strong> show available Kubernetes contexts with current indicator</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Switch Context:</strong> quick context switching with autocompletion</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Default Namespace:</strong> set and manage default namespace per context</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Resource Backup:</strong> manual backup command for critical resources</div>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Formatting & Visualization -->
-                <div style="margin-top: 20px;">
-                    <h3 style="color: var(--heading-color); margin-bottom: 10px;">🎨 Formatting & Visualization</h3>
-                    <ul class="task-list">
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                <div style="margin-top: 2.5rem;">
+                    <h3 style="font-size: 1.4em; color: var(--kcsi-text-primary); margin-bottom: 1.5rem;">🎨 Formatting & Visualization</h3>
+                    <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Pretty Print:</strong> enhanced JSON/YAML formatting with syntax highlighting</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Resource Visualization:</strong> ASCII graphs for pod relationships and dependencies</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Table Formatting:</strong> improved table output with color-coding and icons</div>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Cluster Operations -->
-                <div style="margin-top: 20px;">
-                    <h3 style="color: var(--heading-color); margin-bottom: 10px;">🌐 Cluster Operations</h3>
-                    <ul class="task-list">
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                <div style="margin-top: 2.5rem;">
+                    <h3 style="font-size: 1.4em; color: var(--kcsi-text-primary); margin-bottom: 1.5rem;">🌐 Cluster Operations</h3>
+                    <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Cluster Dump:</strong> export complete cluster state for backup/analysis</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Health Check:</strong> comprehensive cluster health report</div>
                         </li>
-                        <li class="task-item">
-                            <div class="task-checkbox todo"></div>
+                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Custom Aliases:</strong> user-defined command aliases and shortcuts</div>
                         </li>
                     </ul>
