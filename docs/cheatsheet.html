@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="cheatsheet.css">
 </head>
 <body>
+    <!-- Header/Nav auto-injected via kcsi-ui.js -->
+    <div id="kcsi-header"></div>
+
     <div class="container">
         <header>
-            <h1>📚 kcsi Cheatsheet</h1>
+            <h1>📚 KCSI Cheatsheet</h1>
             <p>Quick Reference for All Commands</p>
         </header>
 
@@ -442,18 +445,12 @@
             </div>
         </div>
 
-        <!-- Support CTA injected via support-cta.js -->
-
-        <footer>
-            <p>kcsi - Kubectl Cli Super Intuitive</p>
-            <p style="margin-top: 10px;">
-                <a href="https://github.com/stanzinofree/kcsi">GitHub</a> • 
-                <a href="guide.html">Quick Guide</a> •
-                <a href="roadmap.html">Roadmap</a> •
-                <a href="support.html">Support</a>
-            </p>
-        </footer>
+        <!-- Support CTA auto-injected via kcsi-ui.js -->
+        <div class="kcsi-support-slot"></div>
     </div>
+
+    <!-- Footer auto-injected via kcsi-ui.js -->
+    <div id="kcsi-footer"></div>
 
     <script>
         const searchInput = document.getElementById('searchInput');
@@ -508,6 +505,6 @@
             }
         });
     </script>
-    <script src="assets/js/support-cta.js"></script>
+    <script defer src="assets/js/kcsi-ui.js"></script>
 </body>
 </html>
