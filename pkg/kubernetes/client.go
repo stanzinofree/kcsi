@@ -393,3 +393,13 @@ func GetCurrentNamespace() (string, error) {
 
 	return namespace, nil
 }
+
+// GetKubectlPath returns the path to kubectl binary (best effort)
+func GetKubectlPath() string {
+	// Try to find kubectl in PATH using exec.LookPath
+	path, err := exec.LookPath("kubectl")
+	if err != nil {
+		return "not found"
+	}
+	return path
+}

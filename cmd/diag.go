@@ -17,6 +17,7 @@ import (
 var (
 	diagCluster bool
 	diagStrict  bool
+	diagMd      bool
 )
 
 var diagCmd = &cobra.Command{
@@ -38,11 +39,17 @@ func init() {
 	rootCmd.AddCommand(diagCmd)
 	diagCmd.Flags().BoolVar(&diagCluster, "cluster", false, "Include cluster reachability check (requires active cluster connection)")
 	diagCmd.Flags().BoolVar(&diagStrict, "strict", false, "Exit with non-zero code if any check fails")
+	diagCmd.Flags().BoolVar(&diagMd, "md", false, "Wrap output in markdown code block for easy GitHub pasting")
 }
 
 func runDiag(_ *cobra.Command, _ []string) error {
 	var sb strings.Builder
 	hasErrors := false
+
+	// Add markdown code block opening if --md flag is set
+	if diagMd {
+		fmt.Println("```text")
+	}
 
 	// Header
 	sb.WriteString("==============================================\n")
@@ -124,14 +131,20 @@ func runDiag(_ *cobra.Command, _ []string) error {
 		sb.WriteString(fmt.Sprintf("  kubectl:    %s\n", kubectlVersion))
 	}
 
+	// kubectl path check (best effort)
+	kubectlPath := kubernetes.GetKubectlPath()
+	sb.WriteString(fmt.Sprintf("  kubectl path: %s\n", kubectlPath))
+
 	// Cluster reachability (only if --cluster flag is set)
 	if diagCluster {
 		clusterInfo, err := kubernetes.GetClusterInfo()
 		if err != nil {
-			sb.WriteString(fmt.Sprintf("  Cluster:    unreachable or error: %v\n", err))
+			sb.WriteString("  Cluster:    unreachable\n")
+			// Print error message on indented line
+			sb.WriteString(fmt.Sprintf("              error: %v\n", err))
 			hasErrors = true
 		} else {
-			sb.WriteString(fmt.Sprintf("  Cluster:    reachable\n"))
+			sb.WriteString("  Cluster:    reachable\n")
 			// Show first line of cluster-info (usually the control plane endpoint)
 			lines := strings.Split(strings.TrimSpace(clusterInfo), "\n")
 			if len(lines) > 0 {
@@ -155,7 +168,7 @@ func runDiag(_ *cobra.Command, _ []string) error {
 		if _, err := os.Stat(kcsiConfigDir); err == nil {
 			sb.WriteString(fmt.Sprintf("  Config Dir: %s (exists)\n", kcsiConfigDir))
 		} else {
-			sb.WriteString(fmt.Sprintf("  Config Dir: %s (not found)\n", kcsiConfigDir))
+			sb.WriteString(fmt.Sprintf("  Config Dir: %s (will be created when needed)\n", kcsiConfigDir))
 		}
 	} else {
 		sb.WriteString("  Config Dir: unable to determine home directory\n")
@@ -168,6 +181,13 @@ func runDiag(_ *cobra.Command, _ []string) error {
 	sb.WriteString("==============================================\n\n")
 	sb.WriteString("⚠️  Safety: This command does not print secrets, but\n")
 	sb.WriteString("    review the output before sharing logs publicly.\n\n")
+
+	// Add copy/paste tip if not using --md flag
+	if !diagMd {
+		sb.WriteString("💡  Tip: Paste this output inside a GitHub code block\n")
+		sb.WriteString("    (```text ... ```) or use --md flag for auto-wrapping.\n\n")
+	}
+
 	sb.WriteString("📝  Next Steps:\n")
 	sb.WriteString("    1. Open an issue: https://github.com/stanzinofree/kcsi/issues\n")
 	sb.WriteString("    2. Paste this output in the issue description\n")
@@ -179,6 +199,11 @@ func runDiag(_ *cobra.Command, _ []string) error {
 
 	// Print the complete diagnostics report
 	fmt.Print(sb.String())
+
+	// Add markdown code block closing if --md flag is set
+	if diagMd {
+		fmt.Println("```")
+	}
 
 	// Exit with error if --strict is set and there were errors
 	if diagStrict && hasErrors {
