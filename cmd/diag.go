@@ -56,10 +56,9 @@ func runDiag(_ *cobra.Command, _ []string) error {
 	sb.WriteString("----------------------------------------------\n")
 	sb.WriteString("KCSI Version\n")
 	sb.WriteString("----------------------------------------------\n")
-	manifest := version.GetManifest()
 	sb.WriteString(fmt.Sprintf("  Version:    %s\n", version.GetVersion()))
-	sb.WriteString(fmt.Sprintf("  Build Date: %s\n", getBuildDate(manifest.BuildDate)))
-	sb.WriteString(fmt.Sprintf("  Git Commit: %s\n", "unknown")) // Will be set during build
+	sb.WriteString(fmt.Sprintf("  Build Date: %s\n", version.GetBuildDate()))
+	sb.WriteString(fmt.Sprintf("  Git Commit: %s\n", version.GetGitCommit()))
 	sb.WriteString("\n")
 
 	// System Information
@@ -187,14 +186,6 @@ func runDiag(_ *cobra.Command, _ []string) error {
 	}
 
 	return nil
-}
-
-// getBuildDate returns the build date or "unknown" if not set
-func getBuildDate(buildDate string) string {
-	if buildDate == "" {
-		return "unknown"
-	}
-	return buildDate
 }
 
 // getKubeconfigPath returns the kubeconfig path being used

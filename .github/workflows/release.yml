@@ -40,6 +40,18 @@ jobs:
       run: |
         mkdir -p bin
         
+        # Get build information
+        VERSION="${{ steps.get_version.outputs.VERSION }}"
+        BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        GIT_COMMIT=$(git rev-parse --short HEAD)
+        
+        echo "Building version: ${VERSION}"
+        echo "Build date: ${BUILD_DATE}"
+        echo "Git commit: ${GIT_COMMIT}"
+        
+        # Prepare ldflags
+        LDFLAGS="-s -w -X 'github.com/stanzinofree/kcsi/pkg/version.version=${VERSION}' -X 'github.com/stanzinofree/kcsi/pkg/version.buildDate=${BUILD_DATE}' -X 'github.com/stanzinofree/kcsi/pkg/version.gitCommit=${GIT_COMMIT}'"
+        
         # Build for all platforms
         platforms=(
           "darwin/amd64"
@@ -63,7 +75,7 @@ jobs:
           fi
           
           echo "Building for ${GOOS}/${GOARCH}..."
-          env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="-s -w" .
+          env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="${LDFLAGS}" .
         done
         
         # List built binaries

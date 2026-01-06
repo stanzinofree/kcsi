@@ -23,19 +23,39 @@ fi
 
 BUILD_DIR="bin"
 
+# Get build information
+BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+GIT_COMMIT=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+
+# Try to get version from git tag first, fall back to VERSION from version.yaml
+GIT_TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
+if [[ -n "$GIT_TAG" ]]; then
+    # Remove 'v' prefix if present (v0.6.3 -> 0.6.3)
+    BUILD_VERSION="${GIT_TAG#v}"
+    echo "Using version from git tag: ${GIT_TAG} -> ${BUILD_VERSION}"
+else
+    # Fall back to version.yaml
+    BUILD_VERSION="${VERSION}"
+    echo "Using version from ${VERSION_FILE}: ${BUILD_VERSION}"
+fi
+
 # Colors for output
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}Building ${APP_NAME} v${VERSION}${NC}"
-echo -e "${YELLOW}Version source: ${VERSION_FILE}${NC}"
+echo -e "${BLUE}Building ${APP_NAME} v${BUILD_VERSION}${NC}"
+echo -e "${YELLOW}Build Date: ${BUILD_DATE}${NC}"
+echo -e "${YELLOW}Git Commit: ${GIT_COMMIT}${NC}"
 echo ""
 
 # Clean previous builds
 rm -rf ${BUILD_DIR}
 mkdir -p ${BUILD_DIR}
+
+# Prepare ldflags to inject build information
+LDFLAGS="-s -w -X 'github.com/stanzinofree/kcsi/pkg/version.version=${BUILD_VERSION}' -X 'github.com/stanzinofree/kcsi/pkg/version.buildDate=${BUILD_DATE}' -X 'github.com/stanzinofree/kcsi/pkg/version.gitCommit=${GIT_COMMIT}'"
 
 # Build for different platforms
 platforms=(
@@ -61,7 +81,7 @@ for platform in "${platforms[@]}"; do
 
     echo -e "${GREEN}Building for ${GOOS}/${GOARCH}...${NC}"
 
-    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="-s -w" .
+    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags="${LDFLAGS}" .
 
     if [[ $? -ne 0 ]]; then
         echo "An error occurred building for ${GOOS}/${GOARCH}! Aborting..." >&2
