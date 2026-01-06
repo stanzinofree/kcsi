@@ -32,6 +32,7 @@
             license: 'https://github.com/stanzinofree/kcsi/blob/main/LICENSE',
             coffee: 'https://buymeacoffee.com/smilzao',
             sponsors: 'https://github.com/sponsors/stanzinofree',
+            teamRequest: 'https://github.com/stanzinofree/kcsi/issues/new?template=team-request.md&labels=teams,enterprise',
             cv: 'https://cv.middei.info/',
             linkedin: 'https://www.linkedin.com/in/stanzinofree/',
             githubProfile: 'https://github.com/stanzinofree'
