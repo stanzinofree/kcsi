@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+
+	kcsicontext "github.com/stanzinofree/kcsi/pkg/context"
 )
 
 // JSONPath constants for kubectl queries
@@ -17,9 +19,21 @@ const (
 	flagAllNamespaces      = "--all-namespaces"
 )
 
+// setKubeconfigEnv sets the KUBECONFIG environment variable if a kcsi context is active
+func setKubeconfigEnv(cmd *exec.Cmd) {
+	// Check if there's an active kcsi context
+	ctx, err := kcsicontext.GetCurrentContext()
+	if err == nil && ctx != nil {
+		// Set KUBECONFIG to the context's kubeconfig path
+		cmd.Env = append(os.Environ(), fmt.Sprintf("KUBECONFIG=%s", ctx.KubeconfigPath))
+	}
+}
+
 // ExecuteKubectl runs a kubectl command and returns the output
 func ExecuteKubectl(args ...string) (string, error) {
 	cmd := exec.Command("kubectl", args...)
+	setKubeconfigEnv(cmd)
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -36,6 +50,8 @@ func ExecuteKubectl(args ...string) (string, error) {
 // ExecuteKubectlInteractive runs a kubectl command with stdin/stdout/stderr attached
 func ExecuteKubectlInteractive(args ...string) error {
 	cmd := exec.Command("kubectl", args...)
+	setKubeconfigEnv(cmd)
+
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -226,6 +242,8 @@ func GetKubectlVersion() (string, error) {
 
 	// Try new format first (kubectl 1.28+): kubectl version --client
 	cmd := exec.CommandContext(ctx, "kubectl", "version", "--client")
+	setKubeconfigEnv(cmd)
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -238,6 +256,8 @@ func GetKubectlVersion() (string, error) {
 		defer cancel2()
 
 		cmd2 := exec.CommandContext(ctx2, "kubectl", "version", "--client", "--short")
+		setKubeconfigEnv(cmd2)
+
 		out.Reset()
 		stderr.Reset()
 		cmd2.Stdout = &out
@@ -335,6 +355,8 @@ func GetClusterInfo() (string, error) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "kubectl", "cluster-info")
+	setKubeconfigEnv(cmd)
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -357,6 +379,8 @@ func GetCurrentContext() (string, error) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "kubectl", "config", "current-context")
+	setKubeconfigEnv(cmd)
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -376,6 +400,8 @@ func GetCurrentNamespace() (string, error) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "kubectl", "config", "view", "--minify", "--output", "jsonpath={..namespace}")
+	setKubeconfigEnv(cmd)
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out

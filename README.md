@@ -163,6 +163,7 @@ kcsi rollout status    # Check rollout status
 kcsi rollout restart   # Restart a deployment
 kcsi debug             # Debug a pod (ephemeral container)
 kcsi diag              # Generate diagnostics for issue reporting
+kcsi context           # Manage multiple cluster contexts
 ```
 
 **Every command supports TAB completion.** Start typing, press TAB, select from the list.
@@ -243,6 +244,67 @@ kcsi diag --strict     # Exit with error if any check fails
 ---
 
 ## Advanced
+
+<details>
+<summary><strong>Context management (multi-cluster)</strong></summary>
+
+**Manage multiple Kubernetes clusters without touching system kubeconfig**
+
+KCSI provides a built-in context management system that keeps your cluster configurations isolated from the system kubeconfig (`~/.kube/config`).
+
+**Import a kubeconfig for a new cluster**
+```bash
+# Import copies the kubeconfig to ~/.kcsi/contexts/<name>/kube.config
+kcsi context import prod ~/Downloads/prod-cluster.yaml --description "Production cluster"
+kcsi context import staging ~/path/to/staging.yaml --description "Staging environment"
+```
+
+**Reference an existing kubeconfig (without copying)**
+```bash
+# Add creates a reference without copying the file
+kcsi context add dev ~/.kube/dev-config --description "Development cluster"
+```
+
+**List available contexts**
+```bash
+kcsi context list
+# Output shows current context with * marker:
+# CURRENT   NAME       KUBECONFIG                                          DESCRIPTION
+# *         prod       ~/.kcsi/contexts/prod/kube.config                  Production cluster
+#           staging    ~/.kcsi/contexts/staging/kube.config               Staging environment
+```
+
+**Switch between contexts**
+```bash
+kcsi context use staging
+# ✓ Switched to context 'staging'
+
+# All kcsi commands now use the staging cluster
+kcsi get pods
+```
+
+**View current context**
+```bash
+kcsi context current
+# Current context: staging
+# Kubeconfig: ~/.kcsi/contexts/staging/kube.config
+# Description: Staging environment
+```
+
+**Remove a context**
+```bash
+kcsi context remove old-cluster
+# Removes the context and deletes imported files
+```
+
+**Key features:**
+- System kubeconfig (`~/.kube/config`) is never modified
+- Each context is isolated in `~/.kcsi/contexts/<name>/`
+- Configuration stored in `~/.kcsi/contexts.yaml`
+- All kcsi commands automatically use the active context
+- Switch contexts instantly without kubectl config commands
+
+</details>
 
 <details>
 <summary><strong>Logs & exec</strong></summary>
