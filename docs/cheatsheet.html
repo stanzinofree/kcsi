@@ -417,6 +417,56 @@
                 </div>
             </div>
 
+            <!-- Context Management Commands -->
+            <div class="category">
+                <div class="category-title">
+                    🌐 Multi-Cluster Context Management
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="context import add cluster kubeconfig multi">
+                        <div class="command-syntax">kcsi context import &lt;name&gt; &lt;kubeconfig&gt;</div>
+                        <div class="command-description">Import kubeconfig and manage it in ~/.kcsi/contexts/</div>
+                        <div class="command-example">$ kcsi context import prod ~/prod.yaml -d "Production"</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context add reference existing cluster">
+                        <div class="command-syntax">kcsi context add &lt;name&gt; &lt;kubeconfig&gt;</div>
+                        <div class="command-description">Add reference to existing kubeconfig without copying</div>
+                        <div class="command-example">$ kcsi context add dev ~/.kube/dev-config</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context list ls show all">
+                        <div class="command-syntax">kcsi context list</div>
+                        <div class="command-description">List all contexts with current marker (alias: ls)</div>
+                        <div class="command-example">$ kcsi context ls</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context use switch change active">
+                        <div class="command-syntax">kcsi context use &lt;name&gt;</div>
+                        <div class="command-description">Switch to different cluster context</div>
+                        <div class="command-example">$ kcsi context use staging</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context current active show">
+                        <div class="command-syntax">kcsi context current</div>
+                        <div class="command-description">Display currently active context</div>
+                        <div class="command-example">$ kcsi context current</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context remove delete rm cleanup">
+                        <div class="command-syntax">kcsi context remove &lt;name&gt;</div>
+                        <div class="command-description">Remove context and delete imported files (aliases: rm, delete)</div>
+                        <div class="command-example">$ kcsi context rm old-cluster</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Project Info Commands -->
             <div class="category">
                 <div class="category-title">

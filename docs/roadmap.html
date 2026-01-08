@@ -25,7 +25,7 @@
         
         <div class="progress-summary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 4rem;">
             <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">47</div>
+                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">48</div>
                 <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Completed Features</div>
             </div>
             <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
@@ -33,7 +33,7 @@
                 <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Categories</div>
             </div>
             <div class="stat-card" style="background: white; padding: 2.5rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">12</div>
+                <div class="stat-number" style="font-size: 3.5em; font-weight: 700; color: var(--kcsi-primary); margin-bottom: 0.5rem;">10</div>
                 <div class="stat-label" style="font-size: 1.1em; color: var(--kcsi-text-secondary);">Planned Features</div>
             </div>
         </div>
@@ -170,6 +170,10 @@
                         <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
                         <div class="task-text done"><strong>Secrets Show:</strong> display specific secret keys decoded</div>
                     </li>
+                    <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
+                        <div class="task-checkbox done" style="color: var(--kcsi-success); font-weight: bold; margin-right: 1rem; font-size: 1.2em;">✓</div>
+                        <div class="task-text done"><strong>Context Management:</strong> multi-cluster context management without touching system kubeconfig (import, add, list, use, current, remove)</div>
+                    </li>
                 </ul>
             </div>
 
@@ -251,14 +255,6 @@
                 <div style="margin-top: 2.5rem;">
                     <h3 style="font-size: 1.4em; color: var(--kcsi-text-primary); margin-bottom: 1.5rem;">🛠️ Utilities</h3>
                     <ul class="task-list" style="list-style: none; padding: 0; margin: 0;">
-                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
-                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
-                            <div class="task-text"><strong>List Contexts:</strong> show available Kubernetes contexts with current indicator</div>
-                        </li>
-                        <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
-                            <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
-                            <div class="task-text"><strong>Switch Context:</strong> quick context switching with autocompletion</div>
-                        </li>
                         <li class="task-item" style="display: flex; align-items: flex-start; padding: 0.75rem 0; font-size: 1.05em; line-height: 1.6;">
                             <div class="task-checkbox todo" style="color: var(--kcsi-text-muted); margin-right: 1rem; font-size: 1.2em;">○</div>
                             <div class="task-text"><strong>Default Namespace:</strong> set and manage default namespace per context</div>
