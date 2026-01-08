@@ -178,6 +178,17 @@ kcsi context           # Manage multiple cluster contexts
 - **kubectl muscle memory compatible** – Same verbs (`get`, `describe`, `logs`, `attach`), same mental model. Zero learning curve.
 - **Cross-platform single binary** – Written in Go. No dependencies, no runtime, no containers.
 
+### 🌐 New in v0.7.0 — Multi-Cluster Context Management
+
+Manage multiple Kubernetes clusters without modifying your system kubeconfig:
+
+- **Isolated context storage** in `~/.kcsi/contexts/` — your `~/.kube/config` stays untouched
+- **Import or reference kubeconfigs** with `kcsi context import` / `kcsi context add`
+- **Switch contexts instantly** with `kcsi context use` — all kcsi commands respect the active context
+- **Full command set**: `import`, `add`, `list`, `use`, `current`, `remove`
+
+[See full context management documentation in Advanced section below](#advanced) | [View v0.7.0 changelog](https://github.com/stanzinofree/kcsi/blob/main/CHANGELOG.md#070---2026-01-08)
+
 ---
 
 ## Safety & Security notes
