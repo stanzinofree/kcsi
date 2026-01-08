@@ -116,6 +116,7 @@
 .tag-logs { background: #fff3cd; color: #856404; }
 .tag-exec { background: #e7d4f5; color: #5a2a7a; }
 .tag-diagnostic { background: #e2e3e5; color: #383d41; }
+.tag-context { background: #cfe2ff; color: #084298; }
 
 .no-results {
     text-align: center;
