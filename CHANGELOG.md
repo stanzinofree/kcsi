@@ -7,6 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-01-08
+
+### Added - Context Management for Multi-Cluster Operations
+
+#### New Command
+- **Context Management** - Manage multiple Kubernetes clusters without modifying system kubeconfig:
+  - `kcsi context import <name> <kubeconfig-path>` - Import and copy kubeconfig to managed directory
+  - `kcsi context add <name> <kubeconfig-path>` - Add reference to existing kubeconfig
+  - `kcsi context list` (alias: `ls`) - List all configured contexts with current marker
+  - `kcsi context use <name>` - Switch to a different cluster context
+  - `kcsi context current` - Display currently active context
+  - `kcsi context remove <name>` (aliases: `rm`, `delete`) - Remove a context and its files
+  - `--description` / `-d` flag for adding context descriptions
+  - Full autocompletion for context names
+
+#### Infrastructure
+- New `pkg/context` package for context management:
+  - `Context` struct for representing cluster configurations
+  - `Config` struct for managing contexts.yaml
+  - Configuration stored in `~/.kcsi/contexts.yaml`
+  - Imported kubeconfigs stored in `~/.kcsi/contexts/<name>/kube.config`
+  - `InitializeKcsiDir()` creates directory structure on first use
+  - `LoadConfig()` / `SaveConfig()` for configuration persistence
+  - `AddContext()` / `ImportContext()` for adding clusters
+  - `RemoveContext()` for cleanup with file deletion
+  - `SetCurrentContext()` / `GetCurrentContext()` for active context tracking
+  - `GetContextKubeconfigPath()` for path resolution
+- Enhanced `pkg/kubernetes/client.go`:
+  - `setKubeconfigEnv()` helper sets KUBECONFIG environment variable
+  - All kubectl command executions now respect active kcsi context
+  - Integrated with `ExecuteKubectl()`, `ExecuteKubectlInteractive()`
+  - Applied to all CommandContext calls (version, cluster-info, config commands)
+- Context isolation from system kubeconfig:
+  - System `~/.kube/config` is never modified
+  - Each kcsi context uses its own KUBECONFIG environment variable
+  - Contexts are completely isolated from kubectl's default behavior
+
+### Changed
+- All kubectl operations now use active kcsi context when configured
+- Version bumped to 0.7.0
+- Updated README with Context Management section in Advanced features
+
+### Technical Details
+- Context configurations use YAML format with gopkg.in/yaml.v3
+- Import operation copies kubeconfig files with 0600 permissions for security
+- Add operation creates references without copying files
+- Remove operation deletes both configuration and imported files
+- Current context tracked in contexts.yaml for persistence across sessions
+- All commands automatically detect and use active context via environment variables
+
+### Migration Notes
+- Existing kcsi installations continue to use system kubeconfig until contexts are configured
+- First context import/add creates `~/.kcsi/` directory structure automatically
+- No breaking changes to existing command syntax or behavior
+
 ## [0.6.0] - 2025-12-27
 
 ### Added - Phase 6: Advanced Operations & Roadmap Reorganization
