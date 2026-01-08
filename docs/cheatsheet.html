@@ -43,6 +43,16 @@
                 The TAB autocomplete is muscle memory now." – DevOps Engineer, SaaS Startup
             </div>
 
+            <!-- New in v0.7.0 -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+                <strong style="font-size: 1.2em;">🌐 New in v0.7.0: Multi-Cluster Context Management</strong>
+                <p style="margin: 0.5rem 0 0 0; opacity: 0.95;">
+                    Manage multiple Kubernetes clusters without touching your system kubeconfig. 
+                    Import, switch, and isolate contexts with <code style="background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 4px;">kcsi context</code> commands. 
+                    <a href="#context-management" style="color: white; text-decoration: underline; font-weight: 600;">Jump to Context Commands ↓</a>
+                </p>
+            </div>
+
             <div class="no-results" id="noResults">
                 No commands found matching your search.
             </div>
@@ -413,6 +423,56 @@
                         <div class="command-description">Find all pods with issues (not Running/Completed)</div>
                         <div class="command-example">$ kcsi check err</div>
                         <span class="tag tag-diagnostic">DIAGNOSTIC</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Context Management Commands -->
+            <div class="category" id="context-management">
+                <div class="category-title">
+                    🌐 Multi-Cluster Context Management
+                </div>
+                <div class="command-grid">
+                    <div class="command-card" data-tags="context import add cluster kubeconfig multi">
+                        <div class="command-syntax">kcsi context import &lt;name&gt; &lt;kubeconfig&gt;</div>
+                        <div class="command-description">Import kubeconfig and manage it in ~/.kcsi/contexts/</div>
+                        <div class="command-example">$ kcsi context import prod ~/prod.yaml -d "Production"</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context add reference existing cluster">
+                        <div class="command-syntax">kcsi context add &lt;name&gt; &lt;kubeconfig&gt;</div>
+                        <div class="command-description">Add reference to existing kubeconfig without copying</div>
+                        <div class="command-example">$ kcsi context add dev ~/.kube/dev-config</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context list ls show all">
+                        <div class="command-syntax">kcsi context list</div>
+                        <div class="command-description">List all contexts with current marker (alias: ls)</div>
+                        <div class="command-example">$ kcsi context ls</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context use switch change active">
+                        <div class="command-syntax">kcsi context use &lt;name&gt;</div>
+                        <div class="command-description">Switch to different cluster context</div>
+                        <div class="command-example">$ kcsi context use staging</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context current active show">
+                        <div class="command-syntax">kcsi context current</div>
+                        <div class="command-description">Display currently active context</div>
+                        <div class="command-example">$ kcsi context current</div>
+                        <span class="tag tag-context">CONTEXT</span>
+                    </div>
+
+                    <div class="command-card" data-tags="context remove delete rm cleanup">
+                        <div class="command-syntax">kcsi context remove &lt;name&gt;</div>
+                        <div class="command-description">Remove context and delete imported files (aliases: rm, delete)</div>
+                        <div class="command-example">$ kcsi context rm old-cluster</div>
+                        <span class="tag tag-context">CONTEXT</span>
                     </div>
                 </div>
             </div>
