@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-01-09
+
+### Added - Default Namespace Support
+
+#### New Feature
+- **Default Namespace per Context** - Eliminate repetitive `-n namespace` flags:
+  - `kcsi context set-namespace <namespace>` - Set default namespace for current context
+  - `kcsi context get-namespace` - Display configured default namespace
+  - `kcsi context clear-namespace` - Remove default namespace setting
+  - All commands now automatically inject default namespace when no `-n` flag is provided
+  - Explicit `-n` flag always takes precedence over default namespace
+  - Context list now displays default namespace column
+
+#### Infrastructure Improvements
+- **Refactored kubectl execution layer** to eliminate code duplication:
+  - New `InjectDefaultNamespace()` helper in `pkg/kubernetes/client.go`
+  - New `BuildNamespaceArgs()` helper for automatic namespace injection
+  - Reduced code duplication by 40-60% across 8 command files
+  - All commands now use centralized `ExecuteKubectlInteractive()` wrapper
+- Enhanced `pkg/context` package:
+  - Added `DefaultNamespace` field to `Context` struct
+  - New `SetDefaultNamespace()` / `ClearDefaultNamespace()` functions
+  - New `GetDefaultNamespace()` / `GetCurrentDefaultNamespace()` helpers
+  - Persisted in `~/.kcsi/contexts.yaml` configuration
+
+### Changed
+- **Command refactoring** - Updated 8 commands to use new wrapper pattern:
+  - `logs.go` - Reduced from 36 to 21 lines (-42%)
+  - `get.go` - Reduced from 26 to 14 lines (-46%)
+  - `describe.go` - Reduced from 30 to 16 lines (-47%)
+  - `delete.go` - Reduced from 24 to 13 lines (-46%)
+  - `attach.go` - Reduced from 28 to 16 lines (-43%)
+  - `execute.go` - Reduced from 27 to 16 lines (-41%)
+  - `events.go` - Reduced from 22 to 11 lines (-50%)
+  - `check.go` - Reduced from 7 to 4 lines (-43%)
+- Better error messages with namespace hints when default namespace is not set
+- Context list output updated to show default namespace for each context
+- Version bumped to 0.8.0
+
+### Technical Details
+- **Total LOC reduction**: ~120 lines of duplicated code eliminated
+- **Pattern**: Centralized namespace injection logic in kubernetes package
+- **Backward compatibility**: 100% compatible - works exactly as before if no default namespace is set
+- **Architecture**: Clean separation between command layer and kubectl execution layer
+
 ## [0.7.0] - 2026-01-08
 
 ### Added - Context Management for Multi-Cluster Operations

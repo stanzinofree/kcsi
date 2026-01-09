@@ -109,7 +109,7 @@ var contextListCmd = &cobra.Command{
 		currentName, _ := context.GetCurrentContextName()
 
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
-		fmt.Fprintln(w, "CURRENT\tNAME\tKUBECONFIG\tDESCRIPTION")
+		fmt.Fprintln(w, "CURRENT\tNAME\tKUBECONFIG\tDEFAULT NS\tDESCRIPTION")
 
 		for _, ctx := range contexts {
 			current := ""
@@ -120,7 +120,11 @@ var contextListCmd = &cobra.Command{
 			if description == "" {
 				description = "-"
 			}
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", current, ctx.Name, ctx.KubeconfigPath, description)
+			defaultNS := ctx.DefaultNamespace
+			if defaultNS == "" {
+				defaultNS = "-"
+			}
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", current, ctx.Name, ctx.KubeconfigPath, defaultNS, description)
 		}
 
 		w.Flush()
@@ -190,6 +194,92 @@ var contextRemoveCmd = &cobra.Command{
 	},
 }
 
+var contextSetNamespaceCmd = &cobra.Command{
+	Use:   "set-namespace <namespace>",
+	Short: "Set default namespace for current context",
+	Long: `Set a default namespace for the current active context.
+When a default namespace is set, all kcsi commands will use it automatically 
+if no -n/--namespace flag is explicitly provided.`,
+	Args: cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		namespace := args[0]
+
+		// Get current context name
+		currentName, err := context.GetCurrentContextName()
+		if err != nil {
+			return err
+		}
+		if currentName == "" {
+			return fmt.Errorf("no active context. Use 'kcsi context use <name>' first")
+		}
+
+		// Set default namespace
+		if err := context.SetDefaultNamespace(currentName, namespace); err != nil {
+			return err
+		}
+
+		fmt.Printf("✓ Default namespace set to '%s' for context '%s'\n", namespace, currentName)
+		fmt.Println("\nAll kcsi commands will now use this namespace by default.")
+		fmt.Println("You can still override it with -n/--namespace flag.")
+
+		return nil
+	},
+}
+
+var contextClearNamespaceCmd = &cobra.Command{
+	Use:   "clear-namespace",
+	Short: "Clear default namespace for current context",
+	Long: `Remove the default namespace setting from the current active context.
+After clearing, kcsi commands will use kubectl's default behavior (usually 'default' namespace).`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		// Get current context name
+		currentName, err := context.GetCurrentContextName()
+		if err != nil {
+			return err
+		}
+		if currentName == "" {
+			return fmt.Errorf("no active context. Use 'kcsi context use <name>' first")
+		}
+
+		// Clear default namespace
+		if err := context.ClearDefaultNamespace(currentName); err != nil {
+			return err
+		}
+
+		fmt.Printf("✓ Default namespace cleared for context '%s'\n", currentName)
+		fmt.Println("\nkcsi commands will now use kubectl's default namespace behavior.")
+
+		return nil
+	},
+}
+
+var contextGetNamespaceCmd = &cobra.Command{
+	Use:   "get-namespace",
+	Short: "Show default namespace for current context",
+	Long:  `Display the default namespace configured for the current active context.`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		// Get current context
+		ctx, err := context.GetCurrentContext()
+		if err != nil {
+			if err.Error() == "no current context set" {
+				fmt.Println("No context currently active")
+				fmt.Println("\nUse 'kcsi context use <name>' to activate a context")
+				return nil
+			}
+			return err
+		}
+
+		if ctx.DefaultNamespace == "" {
+			fmt.Printf("No default namespace set for context '%s'\n", ctx.Name)
+			fmt.Println("\nUse 'kcsi context set-namespace <namespace>' to set one")
+		} else {
+			fmt.Printf("Default namespace for context '%s': %s\n", ctx.Name, ctx.DefaultNamespace)
+		}
+
+		return nil
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(contextCmd)
 
@@ -200,6 +290,9 @@ func init() {
 	contextCmd.AddCommand(contextUseCmd)
 	contextCmd.AddCommand(contextCurrentCmd)
 	contextCmd.AddCommand(contextRemoveCmd)
+	contextCmd.AddCommand(contextSetNamespaceCmd)
+	contextCmd.AddCommand(contextClearNamespaceCmd)
+	contextCmd.AddCommand(contextGetNamespaceCmd)
 
 	// Add flags
 	contextAddCmd.Flags().StringP("description", "d", "", "Description of the context")

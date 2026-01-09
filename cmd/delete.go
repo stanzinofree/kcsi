@@ -4,11 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/stanzinofree/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var deleteCmd = &cobra.Command{
@@ -67,24 +67,13 @@ func runKubectlDelete(resourceType, namespace string, args []string, force bool)
 		}
 	}
 
-	kubectlArgs := []string{"delete", resourceType, resourceName}
-
-	if namespace != "" {
-		kubectlArgs = append(kubectlArgs, "-n", namespace)
-	}
+	// Build kubectl command with namespace injection
+	kubectlArgs := kubernetes.BuildNamespaceArgs([]string{"delete", resourceType, resourceName}, namespace)
 
 	fmt.Printf("Deleting %s '%s'...\n", resourceType, resourceName)
 
-	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-	kubectlCmd.Stdout = os.Stdout
-	kubectlCmd.Stderr = os.Stderr
-	kubectlCmd.Stdin = os.Stdin
-
-	if err := kubectlCmd.Run(); err != nil {
-		return fmt.Errorf("failed to execute kubectl: %w", err)
-	}
-
-	return nil
+	// Execute kubectl using the helper
+	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 }
 
 // Pod

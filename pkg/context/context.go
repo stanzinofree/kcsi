@@ -18,9 +18,10 @@ const (
 
 // Context represents a kcsi context configuration
 type Context struct {
-	Name           string `yaml:"name"`
-	KubeconfigPath string `yaml:"kubeconfig_path"`
-	Description    string `yaml:"description,omitempty"`
+	Name             string `yaml:"name"`
+	KubeconfigPath   string `yaml:"kubeconfig_path"`
+	Description      string `yaml:"description,omitempty"`
+	DefaultNamespace string `yaml:"default_namespace,omitempty"`
 }
 
 // Config represents the contexts configuration file
@@ -324,4 +325,53 @@ func GetCurrentContextName() (string, error) {
 	}
 
 	return config.CurrentContext, nil
+}
+
+// SetDefaultNamespace sets the default namespace for a specific context
+func SetDefaultNamespace(contextName, namespace string) error {
+	config, err := LoadConfig()
+	if err != nil {
+		return err
+	}
+
+	// Find the context and update its default namespace
+	found := false
+	for i, ctx := range config.Contexts {
+		if ctx.Name == contextName {
+			config.Contexts[i].DefaultNamespace = namespace
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("context '%s' not found", contextName)
+	}
+
+	return SaveConfig(config)
+}
+
+// ClearDefaultNamespace removes the default namespace from a specific context
+func ClearDefaultNamespace(contextName string) error {
+	return SetDefaultNamespace(contextName, "")
+}
+
+// GetDefaultNamespace returns the default namespace for a specific context
+func GetDefaultNamespace(contextName string) (string, error) {
+	ctx, err := GetContext(contextName)
+	if err != nil {
+		return "", err
+	}
+
+	return ctx.DefaultNamespace, nil
+}
+
+// GetCurrentDefaultNamespace returns the default namespace for the current active context
+func GetCurrentDefaultNamespace() (string, error) {
+	ctx, err := GetCurrentContext()
+	if err != nil {
+		return "", err
+	}
+
+	return ctx.DefaultNamespace, nil
 }

@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/spf13/cobra"
 	"github.com/stanzinofree/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var executeCmd = &cobra.Command{
@@ -38,12 +37,8 @@ func runExecute(_ *cobra.Command, args []string) error {
 	podName := args[0]
 	command := args[1:]
 
-	kubectlArgs := []string{"exec"}
-
-	if executeNamespace != "" {
-		kubectlArgs = append(kubectlArgs, "-n", executeNamespace)
-	}
-
+	// Build kubectl command with namespace injection
+	kubectlArgs := kubernetes.BuildNamespaceArgs([]string{"exec"}, executeNamespace)
 	kubectlArgs = append(kubectlArgs, podName)
 
 	if executeContainer != "" {
@@ -53,18 +48,13 @@ func runExecute(_ *cobra.Command, args []string) error {
 	kubectlArgs = append(kubectlArgs, "--")
 	kubectlArgs = append(kubectlArgs, command...)
 
-	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-	kubectlCmd.Stdout = os.Stdout
-	kubectlCmd.Stderr = os.Stderr
-	kubectlCmd.Stdin = os.Stdin
-
-	if err := kubectlCmd.Run(); err != nil {
+	if err := kubernetes.ExecuteKubectlInteractive(kubectlArgs...); err != nil {
 		// Provide helpful error message if pod not found
-		errMsg := err.Error()
-		if executeNamespace == "" {
+		effectiveNS := kubernetes.InjectDefaultNamespace(executeNamespace)
+		if effectiveNS == "" {
 			return fmt.Errorf("failed to execute command: %w\nHint: Did you forget to specify the namespace with -n?", err)
 		}
-		return fmt.Errorf("failed to execute command: %s", errMsg)
+		return fmt.Errorf("failed to execute command: %w", err)
 	}
 
 	return nil

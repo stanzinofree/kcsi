@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/spf13/cobra"
 	"github.com/stanzinofree/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var logsCmd = &cobra.Command{
@@ -43,13 +42,8 @@ func init() {
 func runLogs(_ *cobra.Command, args []string) error {
 	podName := args[0]
 
-	// Build kubectl command
-	kubectlArgs := []string{"logs"}
-
-	if logsNamespace != "" {
-		kubectlArgs = append(kubectlArgs, "-n", logsNamespace)
-	}
-
+	// Build kubectl command with namespace injection
+	kubectlArgs := kubernetes.BuildNamespaceArgs([]string{"logs"}, logsNamespace)
 	kubectlArgs = append(kubectlArgs, podName)
 
 	if logsFollow {
@@ -68,15 +62,6 @@ func runLogs(_ *cobra.Command, args []string) error {
 		kubectlArgs = append(kubectlArgs, "-c", logsContainer)
 	}
 
-	// Execute kubectl
-	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-	kubectlCmd.Stdout = os.Stdout
-	kubectlCmd.Stderr = os.Stderr
-	kubectlCmd.Stdin = os.Stdin
-
-	if err := kubectlCmd.Run(); err != nil {
-		return fmt.Errorf("failed to execute kubectl: %w", err)
-	}
-
-	return nil
+	// Execute kubectl using the helper
+	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 }
