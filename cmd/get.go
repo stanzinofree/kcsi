@@ -1,12 +1,9 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
-
 	"github.com/spf13/cobra"
 	"github.com/stanzinofree/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var getCmd = &cobra.Command{
@@ -32,11 +29,8 @@ var (
 
 // Generic kubectl get command runner
 func runKubectlGet(resourceType, namespace, output string, args []string) error {
-	kubectlArgs := []string{"get", resourceType}
-
-	if namespace != "" {
-		kubectlArgs = append(kubectlArgs, "-n", namespace)
-	}
+	// Build kubectl command with namespace injection
+	kubectlArgs := kubernetes.BuildNamespaceArgs([]string{"get", resourceType}, namespace)
 
 	if output != "" {
 		kubectlArgs = append(kubectlArgs, "-o", output)
@@ -45,16 +39,8 @@ func runKubectlGet(resourceType, namespace, output string, args []string) error 
 	// Append any additional args passed
 	kubectlArgs = append(kubectlArgs, args...)
 
-	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-	kubectlCmd.Stdout = os.Stdout
-	kubectlCmd.Stderr = os.Stderr
-	kubectlCmd.Stdin = os.Stdin
-
-	if err := kubectlCmd.Run(); err != nil {
-		return fmt.Errorf("failed to execute kubectl: %w", err)
-	}
-
-	return nil
+	// Execute kubectl using the helper
+	return kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 }
 
 // Pods command

@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"os/exec"
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var checkCmd = &cobra.Command{
@@ -33,10 +33,7 @@ func runCheckErrors(_ *cobra.Command, _ []string) error {
 	fmt.Println()
 
 	// Get all pods with wide output
-	kubectlArgs := []string{"get", "pods", flagAllNamespaces, "-o", "wide"}
-
-	kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-	output, err := kubectlCmd.Output()
+	output, err := kubernetes.ExecuteKubectl("get", "pods", flagAllNamespaces, "-o", "wide")
 	if err != nil {
 		return fmt.Errorf("failed to execute kubectl: %w", err)
 	}

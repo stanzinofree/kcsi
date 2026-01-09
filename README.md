@@ -178,14 +178,15 @@ kcsi context           # Manage multiple cluster contexts
 - **kubectl muscle memory compatible** – Same verbs (`get`, `describe`, `logs`, `attach`), same mental model. Zero learning curve.
 - **Cross-platform single binary** – Written in Go. No dependencies, no runtime, no containers.
 
-### 🌐 New in v0.7.0 — Multi-Cluster Context Management
+### 🌐 Multi-Cluster Context Management (v0.7.0+)
 
 Manage multiple Kubernetes clusters without modifying your system kubeconfig:
 
 - **Isolated context storage** in `~/.kcsi/contexts/` — your `~/.kube/config` stays untouched
 - **Import or reference kubeconfigs** with `kcsi context import` / `kcsi context add`
 - **Switch contexts instantly** with `kcsi context use` — all kcsi commands respect the active context
-- **Full command set**: `import`, `add`, `list`, `use`, `current`, `remove`
+- **Default namespace per context** (v0.8.0) — set once, stop typing `-n production` everywhere
+- **Full command set**: `import`, `add`, `list`, `use`, `current`, `remove`, `set-namespace`, `get-namespace`, `clear-namespace`
 
 [See full context management documentation in Advanced section below](#advanced) | [View v0.7.0 changelog](https://github.com/stanzinofree/kcsi/blob/main/CHANGELOG.md#070---2026-01-08)
 
@@ -308,12 +309,40 @@ kcsi context remove old-cluster
 # Removes the context and deletes imported files
 ```
 
+**Set default namespace for a context (NEW in v0.8.0)**
+```bash
+# Set default namespace for current context
+kcsi context set-namespace production
+# ✓ Default namespace set to 'production' for context 'my-cluster'
+
+# Now all commands use 'production' by default
+kcsi get pods           # uses production namespace
+kcsi logs my-pod        # uses production namespace
+kcsi describe pod nginx # uses production namespace
+
+# You can still override with -n flag
+kcsi get pods -n kube-system   # explicitly use kube-system
+```
+
+**View default namespace**
+```bash
+kcsi context get-namespace
+# Default namespace for context 'my-cluster': production
+```
+
+**Clear default namespace**
+```bash
+kcsi context clear-namespace
+# ✓ Default namespace cleared for context 'my-cluster'
+```
+
 **Key features:**
 - System kubeconfig (`~/.kube/config`) is never modified
 - Each context is isolated in `~/.kcsi/contexts/<name>/`
 - Configuration stored in `~/.kcsi/contexts.yaml`
 - All kcsi commands automatically use the active context
 - Switch contexts instantly without kubectl config commands
+- Set default namespace per context to eliminate repetitive `-n` flags
 
 </details>
 

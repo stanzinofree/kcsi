@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/spf13/cobra"
 	"github.com/stanzinofree/kcsi/pkg/completion"
+	"github.com/stanzinofree/kcsi/pkg/kubernetes"
 )
 
 var attachCmd = &cobra.Command{
@@ -36,12 +35,8 @@ func runAttach(_ *cobra.Command, args []string) error {
 	shells := []string{"bash", "zsh", "sh"}
 
 	for _, shell := range shells {
-		kubectlArgs := []string{"exec", "-it"}
-
-		if attachNamespace != "" {
-			kubectlArgs = append(kubectlArgs, "-n", attachNamespace)
-		}
-
+		// Build kubectl command with namespace injection
+		kubectlArgs := kubernetes.BuildNamespaceArgs([]string{"exec", "-it"}, attachNamespace)
 		kubectlArgs = append(kubectlArgs, podName)
 
 		if attachContainer != "" {
@@ -52,12 +47,7 @@ func runAttach(_ *cobra.Command, args []string) error {
 
 		fmt.Printf("Trying to attach with %s...\n", shell)
 
-		kubectlCmd := exec.Command("kubectl", kubectlArgs...)
-		kubectlCmd.Stdout = os.Stdout
-		kubectlCmd.Stderr = os.Stderr
-		kubectlCmd.Stdin = os.Stdin
-
-		err := kubectlCmd.Run()
+		err := kubernetes.ExecuteKubectlInteractive(kubectlArgs...)
 		if err == nil {
 			// Successfully attached
 			return nil
@@ -68,7 +58,8 @@ func runAttach(_ *cobra.Command, args []string) error {
 	}
 
 	// Provide helpful error message
-	if attachNamespace == "" {
+	effectiveNS := kubernetes.InjectDefaultNamespace(attachNamespace)
+	if effectiveNS == "" {
 		return fmt.Errorf("no interactive shell found in pod %s\nHint: Did you forget to specify the namespace with -n?", podName)
 	}
 	return fmt.Errorf("no interactive shell found in pod %s", podName)

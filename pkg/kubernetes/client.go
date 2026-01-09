@@ -64,6 +64,41 @@ func ExecuteKubectlInteractive(args ...string) error {
 	return nil
 }
 
+// InjectDefaultNamespace injects the default namespace from kcsi context if namespace is empty
+// Returns the namespace to use (either the provided one or the default from context)
+func InjectDefaultNamespace(namespace string) string {
+	// If namespace is explicitly provided, use it
+	if namespace != "" {
+		return namespace
+	}
+
+	// Try to get default namespace from kcsi context
+	ctx, err := kcsicontext.GetCurrentContext()
+	if err == nil && ctx != nil && ctx.DefaultNamespace != "" {
+		return ctx.DefaultNamespace
+	}
+
+	// No default namespace configured, return empty (kubectl will use its default)
+	return ""
+}
+
+// BuildNamespaceArgs builds kubectl args with namespace injection
+// If namespace is empty, tries to use default namespace from kcsi context
+// Returns args with -n flag added if namespace is determined
+func BuildNamespaceArgs(baseArgs []string, namespace string) []string {
+	effectiveNamespace := InjectDefaultNamespace(namespace)
+
+	if effectiveNamespace != "" {
+		// Insert -n <namespace> after the base args
+		args := make([]string, 0, len(baseArgs)+2)
+		args = append(args, baseArgs...)
+		args = append(args, "-n", effectiveNamespace)
+		return args
+	}
+
+	return baseArgs
+}
+
 // GetNamespaces returns a list of all namespaces in the cluster
 func GetNamespaces() ([]string, error) {
 	output, err := ExecuteKubectl("get", "namespaces", "-o", jsonPathMetadataName)
